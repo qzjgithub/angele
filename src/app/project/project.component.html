@@ -1,0 +1,4 @@
+<section>
+  <header><h1>{{project.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || project[tip.key]}}</span></header>
+  <p>{{project.description}}</p>
+</section>

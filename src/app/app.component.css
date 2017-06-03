@@ -1,0 +1,29 @@
+.page-header{
+  width: 100%;
+  /*position: absolute;*/
+  height: 40px;
+}
+
+.navLinks{
+  padding-left: 8px;
+}
+.navLinks a{
+  height: 25px;
+  border-right: 1px solid #cccccc;
+  display: inline-block;
+  line-height: 25px;
+  margin-top: 7px;
+  padding: 0 16px;
+  text-decoration:none;
+  font-size: 15px;
+  color: #222222;
+}
+.navLinks a.active{
+  /*background-color: #5caaec;
+  color: #ffffff;
+  border: 0;*/
+  border: 1px solid #cccccc;
+}
+section{
+  height:100%;
+}
