@@ -11,6 +11,8 @@ import { TreeComponent } from './tree/tree.component';
 import { TreenodeComponent } from './tree/treenode/treenode.component';
 import { PositionComponent } from './position/position.component';
 import { ProjectComponent } from './project/project.component';
+import { ComFrameComponent } from './component/com-frame/com-frame.component';
+import { InputComponent } from './component/input/input.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -25,7 +27,9 @@ const routes: Routes = [
     TreeComponent,
     TreenodeComponent,
     PositionComponent,
-    ProjectComponent
+    ProjectComponent,
+    ComFrameComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,

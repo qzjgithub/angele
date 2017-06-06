@@ -1,0 +1,4 @@
+<section>
+  <header><h1>{{object.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || object[tip.key]}}</span></header>
+  <ng-content></ng-content>
+</section>

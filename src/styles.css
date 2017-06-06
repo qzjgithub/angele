@@ -4,16 +4,20 @@ html,body{
   width: 100%;
   overflow: hidden;
 }
-html,body,h1,h2,h3,h4,h5,h6,li,ul,a,p{
+body{
+  min-width: 800px;
+  overflow: auto;
+}
+html,body,h1,h2,h3,h4,h5,h6,li,ul,a,p,i{
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 12px;
+  font-style:  normal;
   font-family: "微软雅黑", sans-serif;
   letter-spacing: 1px;
   font-weight: normal;
 }
-
 /*********************box start*************************/
 .horizontal{
   display:-moz-box;
@@ -92,4 +96,8 @@ html,body,h1,h2,h3,h4,h5,h6,li,ul,a,p{
   width: 200px;
   display: block;
   border: 1px solid #cccccc;
+}
+.container{
+  min-width: 600px;
+  overflow: auto;
 }
