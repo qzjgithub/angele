@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { deepAssign } from '../../../com-util';
-import {FormControl, AbstractControl, Validators} from "@angular/forms";
+import * as util from '../../../com-util';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  AbstractControl,
+  Validators} from "@angular/forms";
 
 @Component({
   selector: 'com-input',
@@ -17,13 +22,19 @@ export class InputComponent implements OnInit {
    * 当前的formControl
    */
   control: AbstractControl;
+  formGroup: FormGroup;
   /**
    * 验证错误信息
    */
   validMsg:Object;
 
-  constructor() {
-    this.param = deepAssign({
+  /**
+   * 当前应该显示的错误信息关键字
+   */
+  errorKey:Object;
+
+  constructor(fb: FormBuilder) {
+    this.param = util.deepAssign({
       /**
        * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
        * 默认'value'
@@ -39,7 +50,7 @@ export class InputComponent implements OnInit {
        * 检查数据长度，如1-128
        * 默认无不存在，不限制长度
        */
-      // length:'',
+       length:'3-6',
       /**
        * 要填写数据的格式类型
        * IP,EMAIL,NUMBER,TEXT(普通文本)...
@@ -85,19 +96,51 @@ export class InputComponent implements OnInit {
        */
       placeholder:''
     },this.param);
+    this.validMsg = {};
+    /*this.formGroup = fb.group({
+      'control':  ['', Validators.compose(this.setValidator())]
+    });*/
+    //创建一个control
     this.control = new FormControl(this.param['name']);
+    //this.control = this.formGroup.controls['control'];
+    //设置control的验证规则
     this.control.setValidators(this.setValidator());
+
+    this.control.valueChanges.subscribe(
+      (value: string) => {
+        var keys = Object.keys(this.validMsg);
+        console.log(this.control.errors);
+        if(!this.control.errors){
+          this.errorKey = '';
+        } else {
+          for(let i = 0;i < keys.length; i++){
+            if(this.control.errors && this.control.errors[keys[i]]){
+              this.errorKey = keys[i];
+              break;
+            }
+          }
+        }
+      }
+    );
   }
 
   ngOnInit() {
   }
 
+  /**
+   * 根据传入的参数设置次输入项的验证规则
+   * @returns {Array}
+     */
   setValidator(){
     let validator = [];
-    validator = [...validator,...this.setRequiredValidator()];
+    validator = [...this.setRequiredValidator(),...this.setLengthValidator(),...this.setDataTypeValidator()];
     return validator;
   }
 
+  /**
+   * 设置是否必填的验证规则
+   * @returns {Array}
+     */
   setRequiredValidator(){
     let required = this.param['required'];
     let validator = [];
@@ -108,22 +151,39 @@ export class InputComponent implements OnInit {
     return validator;
   }
 
+  /**
+   * 设置长度验证规则
+   * @returns {Array}
+     */
   setLengthValidator(){
     let length = this.param['length'];
-    let validator = [];
-    if(length){
-      let index = length.indexOf('-');
-      if(index===0){
-        let max = length.substring(1,length.length);
-        Validators.maxLength(max);
-      }
+    if(!length) return [];
+    //验证规则数组，‘-’符号位置，最小长度，最大长度
+    let validator = [],index = length.indexOf('-'),min,max;
+    if(index===0){
+      max = length.substring(1,length.length);
+    }else if(index===(length.length - 1)){
+      min = length.substring(0,length.length - 1);
+    }else if(index > -1){
+      let lenArr = length.split('-');
+      min = lenArr[0];
+      max = lenArr[1];
     }
+    max = util.getIntTrue(max);
+    max > -1 && validator.push(Validators.maxLength(util.getIntTrue(max)));
+    this.validMsg['maxlength'] = max > -1 ? ('最大长度为'+ max) : '';
+
+    min = util.getIntTrue(min);
+    min > -1 && validator.push(Validators.minLength(min));
+    this.validMsg['minlength'] = max > -1 ? ('最小长度为'+ min) : '';
     return validator;
   }
 
+  /**
+   * 设置数据类型验证
+   */
   setDataTypeValidator(){
-    let dataType = this.param['dataType'];
-    let msg = '';
+    let dataType = this.param['dataType'],msg = '',validator = [];
     if(dataType instanceof Object){
       msg = dataType['msg'];
       dataType = dataType['type'];
@@ -131,9 +191,12 @@ export class InputComponent implements OnInit {
 
     switch(dataType){
       case 'TEXT':
-        let reg = /^\S$/;
-        Validators.pattern(reg);
+        let reg = /^\S*$/;
+        validator.push(Validators.pattern(reg));
+        this.validMsg['pattern'] = msg || '正则验证不通过';
+        break;
     }
+    return validator;
   }
 
 }
