@@ -14,6 +14,7 @@ export function deepAssign(...objects){
 
 function merge(a, b){
   let keys = Object.keys(b);
+  if(!keys.length) a = b;
   keys.forEach(e => {
     if(b[e] instanceof Object){
       a[e] = merge(a[e] instanceof Object ? a[e] : {},b[e]);

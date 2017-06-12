@@ -1,3 +1,4 @@
 <div [class]="param.class || ''">
-  <input>
+  <input [formControl]="control" [placeholder]="param.placeholder" [value]="param.value">
+  <div ngif="!control.valid" class="error-msg">{{validMsg[errorKey]}}</div>
 </div>
