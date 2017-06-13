@@ -32,7 +32,7 @@ export class InputComponent implements OnInit {
        * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
        * 默认'value'
        */
-      name:'value',
+      name:'test',
       /**
        * 是否可以为空
        * true表示不可为空,如果要自定义提示消息，可直接传入字符串
