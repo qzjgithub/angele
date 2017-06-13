@@ -1,7 +1,4 @@
 <div [class]="param.class || ''">
-  <!--<form [formGroup]="formGroup">-->
-  <input type="text"
-         [formControl]="control">
-  <div *ngIf="!control.valid">{{validMsg[errorKey]}}</div>
-  <!--</form>-->
+  <input [formControl]="control" [placeholder]="param.placeholder" [value]="param.value">
+  <div *ngIf="!control.valid" class="error-msg">{{validMsg[errorKey]}}</div>
 </div>

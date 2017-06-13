@@ -22,7 +22,6 @@ export class InputComponent implements OnInit {
    * 当前的formControl
    */
   control: AbstractControl;
-  formGroup: FormGroup;
   /**
    * 验证错误信息
    */
@@ -31,15 +30,17 @@ export class InputComponent implements OnInit {
   /**
    * 当前应该显示的错误信息关键字
    */
-  errorKey:Object;
+  errorKey:String;
 
-  constructor(fb: FormBuilder) {
-    this.param = util.deepAssign({
+  patternState:String;
+
+  constructor() {
+    this.param = deepAssign({
       /**
        * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
        * 默认'value'
        */
-      name:'value',
+      name:'test',
       /**
        * 是否可以为空
        * true表示不可为空,如果要自定义提示消息，可直接传入字符串
@@ -63,6 +64,7 @@ export class InputComponent implements OnInit {
        * 在dataType验证成功之后才做验证
        * 默认不存在
        * 逐条验证，reg是验证正则，msg是验证出错的提示信息
+       * name表示给此条验证一个名字，可用于获取此条验证是否通过。可为空，为空则默认为'reg_'+index，index是此条验证在数组中的位置
        *
        * reg也可以接收一个方法，返回true表示成功，返回false表示验证失败
        * 方法由本组件调用，内部传入输入框值function(value)
@@ -70,7 +72,7 @@ export class InputComponent implements OnInit {
        * reg可接受一个请求路径，默认以json格式传入{value:value}
        * 返回json{result:true}表示验证通过，返回json{result:false}表示验证失败
        */
-      //regular: [{reg:/^\S$/,msg:''}]，
+      regular: [{reg:/^[\S]+$/,msg:'不能有空格换行',name:''}],
       /**
        * 是否是密码框
        * false表示不是
@@ -94,34 +96,40 @@ export class InputComponent implements OnInit {
       /**
        * 未输入内容时的提示消息
        */
-      placeholder:''
+      placeholder:'请输入×××',
+      /**
+       * 默认值
+       */
+      value: '',
+      /**
+       * 输入框模式
+       * 分为display（展示）和edit（编辑）
+       * 默认为edit
+       */
+      pattern:'edit',
+      /**
+       * 输入项的禁用状态
+       * true表示被禁用，false表示启用
+       * 默认false
+       * display模式下也可启用，鼠标进入时转化
+       */
+      disabled: false
     },this.param);
     this.validMsg = {};
-    /*this.formGroup = fb.group({
-      'control':  ['', Validators.compose(this.setValidator())]
-    });*/
-    //创建一个control
+    this.patternState = this.param['pattern'];
     this.control = new FormControl(this.param['name']);
     //this.control = this.formGroup.controls['control'];
     //设置control的验证规则
     this.control.setValidators(this.setValidator());
-
-    this.control.valueChanges.subscribe(
-      (value: string) => {
-        var keys = Object.keys(this.validMsg);
-        console.log(this.control.errors);
-        if(!this.control.errors){
-          this.errorKey = '';
-        } else {
-          for(let i = 0;i < keys.length; i++){
-            if(this.control.errors && this.control.errors[keys[i]]){
-              this.errorKey = keys[i];
-              break;
-            }
-          }
-        }
+    this.control.valueChanges.subscribe((value) => {
+      console.log(this.control.errors);
+      if(this.control.errors){
+        var keys = Object.keys(this.control.errors);
+        this.errorKey = keys[0];
+      }else{
+        this.errorKey = '';
       }
-    );
+    });
   }
 
   ngOnInit() {
@@ -196,6 +204,18 @@ export class InputComponent implements OnInit {
         this.validMsg['pattern'] = msg || '正则验证不通过';
         break;
     }
+    return validator;
+  }
+
+  setRegValidator(){
+    let regular = this.param['regular'];
+    let validator = [], keys = Object.keys(regular);
+    keys.length && keys.forEach((e,i) => {
+      var item = regular[e];
+      let name = item.name || ('reg_'+i);
+      validator.push(Validators.patternName(item.reg, name));
+      this.validMsg[name] = item.msg;
+    });
     return validator;
   }
 
