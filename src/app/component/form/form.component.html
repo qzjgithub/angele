@@ -1,3 +1,9 @@
-<p>
-  form works!
-</p>
+<form [formGroup]="form">
+  <header>{{title || ''}}</header>
+  <section>
+    <div></div>
+  </section>
+  <!--<div *ngIf="!form.valid">出现了说明，input出错响应了</div>
+  <com-input (backControl)="getControl($event,'sku')"></com-input>
+  <ng-content></ng-content>-->
+</form>

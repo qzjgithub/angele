@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import * as util from '../../../com-util';
 import {
   FormBuilder,
@@ -13,6 +13,13 @@ import {
   styleUrls: ['input.component.css']
 })
 export class InputComponent implements OnInit {
+
+
+  /**
+   * 在control生成以后就返回给form表单
+   * @type {EventEmitter<number>}
+   */
+  @Output() backControl: EventEmitter<AbstractControl> = new EventEmitter<AbstractControl>();
 
   /**
    * 需要传入的参数
@@ -35,7 +42,8 @@ export class InputComponent implements OnInit {
   patternState:String;
 
   constructor() {
-    this.param = deepAssign({
+    console.log('input constructor');
+    this.param = util.deepAssign({
       /**
        * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
        * 默认'value'
@@ -117,8 +125,7 @@ export class InputComponent implements OnInit {
     },this.param);
     this.validMsg = {};
     this.patternState = this.param['pattern'];
-    this.control = new FormControl(this.param['name']);
-    //this.control = this.formGroup.controls['control'];
+    this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
     this.control.setValidators(this.setValidator());
     this.control.valueChanges.subscribe((value) => {
@@ -133,6 +140,8 @@ export class InputComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('input init');
+    this.backControl.emit(this.control);
   }
 
   /**
