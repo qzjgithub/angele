@@ -1,4 +1,10 @@
 <section>
-  <header><h1>{{object.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || object[tip.key]}}</span></header>
-  <ng-content></ng-content>
+  <header><h1>{{data.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || data[tip.key]}}</span></header>
+  <article>
+    <p *ngIf="brefIsDisplay">{{data.description}}</p>
+    <ng-content *ngIf="!brefIsDisplay"></ng-content>
+  </article>
+  <aside>
+    <button (click)="toggleBref()" class="plain">{{brefIsDisplay?'展开↓':'收起↑'}}</button>
+  </aside>
 </section>

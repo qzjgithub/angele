@@ -2,6 +2,7 @@ section{
   margin: 8px;
   border: 1px solid #cccccc;
   padding: 16px;
+  position: relative;
 }
 header{
   line-height: 26px;
@@ -17,4 +18,13 @@ header>h1{
 header>span{
   float: right;
   margin-left: 8px;
+}
+
+aside{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+aside button{
+  text-decoration: underline;
 }

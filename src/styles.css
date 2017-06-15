@@ -92,6 +92,32 @@ html,body,h1,h2,h3,h4,h5,h6,li,ul,a,p,i{
   -ms-flex:1;
 }
 /*********************box end*************************/
+/*********************button start*************************/
+button{
+  height: 25px;
+  width: auto;
+  min-width: 55px;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+button:focus{
+  outline: none;
+}
+button.plain{
+  color: #666666;
+}
+button.plain:hover{
+  color: #222222;
+}
+button.border{
+  border: 1px solid #999999;
+}
+button.border:hover{
+  border-color: #666666;
+}
+/*********************button end*************************/
+/*********************tree start*************************/
 .tree{
   width: 200px;
   display: block;
@@ -101,3 +127,4 @@ html,body,h1,h2,h3,h4,h5,h6,li,ul,a,p,i{
   min-width: 600px;
   overflow: auto;
 }
+/*********************tree end*************************/

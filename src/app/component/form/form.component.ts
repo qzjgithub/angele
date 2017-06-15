@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {FormGroup, AbstractControl} from "@angular/forms";
 import * as util from '../../../com-util';
 
@@ -18,6 +18,8 @@ export class FormComponent implements OnInit {
    * 生成form所需参数
    */
   param: Object;
+
+  @Output() backForm: EventEmitter<AbstractControl> = new EventEmitter<AbstractControl>();
 
   constructor() {
     console.log('form constructor');
@@ -60,13 +62,11 @@ export class FormComponent implements OnInit {
       }
     );
   }
-
   ngOnInit() {
+    this.backForm.emit(this.form);
   }
-
   getControl(event: AbstractControl,name: string){
     this.form.addControl(name,event);
     console.log(this.form.controls);
   }
-
 }
