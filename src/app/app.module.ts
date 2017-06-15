@@ -13,7 +13,9 @@ import { PositionComponent } from './position/position.component';
 import { ProjectComponent } from './project/project.component';
 import { ComFrameComponent } from './component/com-frame/com-frame.component';
 import { InputComponent } from './component/input/input.component';
-import { FormComponent } from './component/form/form.component';
+import { LocalProItemComponent } from './local-pro/local-pro-item/local-pro-item.component';
+import {appStoreProviders} from "../control/app.store";
+import {PROJECT_PROVIDERS} from "../control/project/project.service";
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -31,7 +33,7 @@ const routes: Routes = [
     ProjectComponent,
     ComFrameComponent,
     InputComponent,
-    FormComponent
+    LocalProItemComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,9 @@ const routes: Routes = [
     RouterModule.forRoot(routes)
   ],
   providers: [
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    appStoreProviders,
+    PROJECT_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })

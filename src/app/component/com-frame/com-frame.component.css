@@ -25,6 +25,6 @@ aside{
   right: 0;
   bottom: 0;
 }
-aside button{
+aside button.plain:hover{
   text-decoration: underline;
 }

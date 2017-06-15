@@ -1,4 +1,4 @@
 <div [class]="param.class || ''">
-  <input [formControl]="control" [placeholder]="param.placeholder" [value]="param.value">
+  <input [formControl]="control" [placeholder]="param.placeholder" [name]="param.name">
   <div *ngIf="!control.valid" class="error-msg">{{validMsg[errorKey]}}</div>
 </div>

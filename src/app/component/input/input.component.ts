@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
 import * as util from '../../../com-util';
 import {
   FormBuilder,
@@ -24,6 +24,7 @@ export class InputComponent implements OnInit {
   /**
    * 需要传入的参数
    */
+  @Input()
   param : Object;
   /**
    * 当前的formControl

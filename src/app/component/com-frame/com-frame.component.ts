@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 
 @Component({
   selector: 'com-frame',
@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ComFrameComponent implements OnInit {
 
-  // @Input()
+  /**
+   * 传进来要展示的数据
+   */
+  @Input()
   data : Object;
 
   // @Input()
@@ -20,12 +23,13 @@ export class ComFrameComponent implements OnInit {
 
   constructor() {
     //传进来的要展示的数据
-    this.data = {name:'project1',modify:'20170602',url:'project1',description:'asdfasdfasdf as;dfj;asd ;awejf[saidjf fj ;dfj adj'}
+    this.data = {name:'project1',modify_time:'20170602',url:'project1',comment:'asdfasdfasdf as;dfj;asd ;awejf[saidjf fj ;dfj adj'}
     //在右上角要展示的内容
     this.tips = [
-      {key:'modify',name:'修改时间'},
+      {key:'modify_time',name:'修改时间'},
       {key:'url',name:'默认路径',value:'/project1/test'}
-    ]
+    ];
+    //默认展示简介
     this.brefIsDisplay = true;
   }
 

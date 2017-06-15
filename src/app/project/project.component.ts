@@ -13,8 +13,6 @@ export class ProjectComponent implements OnInit {
   // @Input()
   tips: Array<any>;
 
-
-
   state: String;//fold,unfold,redact
 
   constructor() {
