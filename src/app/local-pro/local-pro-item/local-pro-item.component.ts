@@ -54,7 +54,8 @@ export class LocalProItemComponent implements OnInit {
     this.param = {};
     this.param['url'] = {
       name:'url',
-      placeholder:'请输入路径'
+      placeholder:'请输入路径',
+      value:this.editData['url']
     }
   }
 
