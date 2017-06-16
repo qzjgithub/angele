@@ -1,4 +1,19 @@
-<div [class]="param.class || ''">
-  <input [formControl]="control" [placeholder]="param.placeholder" [name]="param.name" [(ngModel)]="param.value">
-  <div *ngIf="!control.valid" class="error-msg">{{validMsg[errorKey]}}</div>
-</div>
+<section
+  [class]="param.class||''"
+  [class]="param.pattern"
+  >
+  <input
+    [formControl]="control"
+    [placeholder]="param.pattern!=='display'?param.placeholder:''"
+    [name]="param.name"
+    [(ngModel)]="param.value"
+    [disabled]="param.disabled"
+    [class.error]="control.touched &&! control.valid"
+  >
+  <div
+    *ngIf="!(param.pattern==='display' && param.disabled) &&
+     control.touched && !control.valid"
+    class="error-msg">
+    {{validMsg[errorKey]}}
+  </div>
+</section>

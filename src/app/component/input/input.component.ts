@@ -40,10 +40,14 @@ export class InputComponent implements OnInit {
    */
   errorKey:String;
 
-  patternState:String;
+  /**
+   * 当前输入项应该展现的模式
+   */
+  // patternState:String;
 
   constructor() {
     console.log('input constructor');
+    //设置参数默认值
     this.param = util.deepAssign({
       /**
        * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
@@ -60,7 +64,7 @@ export class InputComponent implements OnInit {
        * 检查数据长度，如1-128
        * 默认无不存在，不限制长度
        */
-       length:'3-6',
+       // length:'3-6',
       /**
        * 要填写数据的格式类型
        * IP,EMAIL,NUMBER,TEXT(普通文本)...
@@ -81,7 +85,7 @@ export class InputComponent implements OnInit {
        * reg可接受一个请求路径，默认以json格式传入{value:value}
        * 返回json{result:true}表示验证通过，返回json{result:false}表示验证失败
        */
-      regular: [{reg:/^[\S]+$/,msg:'不能有空格换行',name:''}],
+      // regular: [{reg:/^[\S]+$/,msg:'不能有空格换行',name:''}],
       /**
        * 是否是密码框
        * false表示不是
@@ -105,7 +109,7 @@ export class InputComponent implements OnInit {
       /**
        * 未输入内容时的提示消息
        */
-      placeholder:'请输入×××',
+      // placeholder:'请输入×××',
       /**
        * 默认值
        */
@@ -124,13 +128,18 @@ export class InputComponent implements OnInit {
        */
       disabled: false
     },this.param);
+    //初始化错误消息
     this.validMsg = {};
-    this.patternState = this.param['pattern'];
+    //初始化编辑状态
+    // this.patternState = this.param['pattern'];
+    //初始化control
     this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
     this.control.setValidators(this.setValidator());
+    //监听值得改变
     this.control.valueChanges.subscribe((value) => {
       console.log(this.control.errors);
+      //更新错误消息的key
       if(this.control.errors){
         var keys = Object.keys(this.control.errors);
         this.errorKey = keys[0];
@@ -217,6 +226,10 @@ export class InputComponent implements OnInit {
     return validator;
   }
 
+  /**
+   * 设置自定义验证
+   * @returns {Array}
+   */
   setRegValidator(){
     let regular = this.param['regular'];
     let validator = [], keys = Object.keys(regular);
