@@ -9,7 +9,7 @@ let project: Project = {
   creae_user: "user1",
   create_time: new Date(),
   modify_time: new Date(),
-  comment: "测试所用项目",
+  comment: "传进去了读不到？",
   path: "/project1/test1",
   port: 8080,
   status: "stop",

@@ -1,4 +1,4 @@
-import {Component, OnInit, EventEmitter, Output, Input} from '@angular/core';
+import {Component, OnInit, EventEmitter, Output, Input, OnChanges, SimpleChanges} from '@angular/core';
 import * as util from '../../../com-util';
 import {
   FormBuilder,
@@ -12,9 +12,7 @@ import {
   templateUrl: 'input.component.html',
   styleUrls: ['input.component.css']
 })
-export class InputComponent implements OnInit {
-
-
+export class InputComponent implements OnInit ,OnChanges{
   /**
    * 在control生成以后就返回给form表单
    * @type {EventEmitter<number>}
@@ -47,91 +45,12 @@ export class InputComponent implements OnInit {
 
   constructor() {
     console.log('input constructor');
-    //设置参数默认值
-    this.param = util.deepAssign({
-      /**
-       * 次输入框的名字，唯一标识，获取value时value的名字，传入后台的数据名字
-       * 默认'value'
-       */
-      name:'test',
-      /**
-       * 是否可以为空
-       * true表示不可为空,如果要自定义提示消息，可直接传入字符串
-       * 默认为true
-       */
-      required: true,
-      /**
-       * 检查数据长度，如1-128
-       * 默认无不存在，不限制长度
-       */
-       // length:'3-6',
-      /**
-       * 要填写数据的格式类型
-       * IP,EMAIL,NUMBER,TEXT(普通文本)...
-       * 默认为TEXT
-       * 可写{type:'TEXT',msg:'自定义提示信息'}的形式来重写提示信息
-       */
-      dataType: 'TEXT',
-      /**
-       * 添加额外的正则验证
-       * 在dataType验证成功之后才做验证
-       * 默认不存在
-       * 逐条验证，reg是验证正则，msg是验证出错的提示信息
-       * name表示给此条验证一个名字，可用于获取此条验证是否通过。可为空，为空则默认为'reg_'+index，index是此条验证在数组中的位置
-       *
-       * reg也可以接收一个方法，返回true表示成功，返回false表示验证失败
-       * 方法由本组件调用，内部传入输入框值function(value)
-       *
-       * reg可接受一个请求路径，默认以json格式传入{value:value}
-       * 返回json{result:true}表示验证通过，返回json{result:false}表示验证失败
-       */
-      // regular: [{reg:/^[\S]+$/,msg:'不能有空格换行',name:''}],
-      /**
-       * 是否是密码框
-       * false表示不是
-       * 默认false
-       */
-      password: false,
-      /**
-       * 定义在输入框右边框内的小图标，按数组顺序依次显示
-       * 默认不存在
-       * 提供几种默认样式"SELECT","EYE"等
-       * 也可自定义class
-       * 字符串表示class或种类，对象加入event字段表示是否启用默认样式的默认事件
-       */
-      // icon:['SELECT',{class:'EYE',event:true},'common'],
-      /**
-       * 加在com-input元素下第一个子元素的class
-       * 提供用户自定义样式的入口
-       * 默认不存在
-       */
-      // class:'',
-      /**
-       * 未输入内容时的提示消息
-       */
-      // placeholder:'请输入×××',
-      /**
-       * 默认值
-       */
-      value: '',
-      /**
-       * 输入框模式
-       * 分为display（展示）和edit（编辑）
-       * 默认为edit
-       */
-      pattern:'edit',
-      /**
-       * 输入项的禁用状态
-       * true表示被禁用，false表示启用
-       * 默认false
-       * display模式下也可启用，鼠标进入时转化
-       */
-      disabled: false
-    },this.param);
     //初始化错误消息
     this.validMsg = {};
-    //初始化编辑状态
-    // this.patternState = this.param['pattern'];
+
+  }
+
+  ngOnInit() {
     //初始化control
     this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
@@ -139,19 +58,25 @@ export class InputComponent implements OnInit {
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
       console.log(this.control.errors);
+      let errors = {};
       //更新错误消息的key
-      if(this.control.errors){
-        var keys = Object.keys(this.control.errors);
+      if(errors = this.control.errors || this.control.validator(this.control)){
+        var keys = Object.keys(errors);
         this.errorKey = keys[0];
       }else{
         this.errorKey = '';
       }
     });
-  }
-
-  ngOnInit() {
     console.log('input init');
     this.backControl.emit(this.control);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    /*if(this.control){
+      let p = changes['param'] && changes['param']['currentValue'];
+      p.disabled ? this.control.disable():this.control.enable();
+    }*/
   }
 
   /**
