@@ -16,6 +16,7 @@ import { InputComponent } from './component/input/input.component';
 import { LocalProItemComponent } from './local-pro/local-pro-item/local-pro-item.component';
 import {appStoreProviders} from "../control/app.store";
 import {PROJECT_PROVIDERS} from "../control/project/project.service";
+import { SelectComponent } from './component/select/select.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -33,7 +34,8 @@ const routes: Routes = [
     ProjectComponent,
     ComFrameComponent,
     InputComponent,
-    LocalProItemComponent
+    LocalProItemComponent,
+    SelectComponent
   ],
   imports: [
     BrowserModule,

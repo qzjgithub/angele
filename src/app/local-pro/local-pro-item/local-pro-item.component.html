@@ -1,12 +1,32 @@
 <com-frame [data]="project">
-  <form [formGroup]="form">
-    <ul>
+  <form [formGroup]="form" class="horizontal">
+    <ul class="flex">
       <li>
         <label>路径：</label>
-        <com-input (backControl)="getControl($event,'url')" [param]="param['url']"></com-input>
+        <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
+      </li>
+      <li>
+        <label>端口：</label>
+        <com-input (backControl)="getControl($event,param['port']['name'])" [param]="param['port']"></com-input>
+      </li>
+      <li>
+        <label>权限：</label>
+        <com-input (backControl)="getControl($event,param['limit']['name'])" [param]="param['limit']"></com-input>
+      </li>
+      <li>
+        <label>创建人：</label>
+        <com-input (backControl)="getControl($event,param['create_user']['name'])" [param]="param['create_user']"></com-input>
+      </li>
+      <li>
+        <label>负责人：</label>
+        <com-input (backControl)="getControl($event,param['principal']['name'])" [param]="param['principal']"></com-input>
+      </li>
+      <li>
+        <label>介绍：</label>
+        <com-input (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-input>
       </li>
     </ul>
   </form>
-  <input [(ngModel)]="param['url'].pattern">
-  <input type="checkbox" [(ngModel)]="param['url'].disabled">
+  <input #pattern (keyup)="setUrlParam(pattern)" value="{{param['path']['pattern']}}">
+  <button (click)="toggle()">aaa</button>
 </com-frame>

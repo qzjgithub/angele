@@ -37,7 +37,7 @@ export class LocalProItemComponent implements OnInit {
     this.form = new FormGroup({});
 
     //设置表单参数
-    this.setParam();
+    this.getParam();
     console.log('local-pro-constructor over');
   }
 
@@ -56,21 +56,51 @@ export class LocalProItemComponent implements OnInit {
   getControl(event:AbstractControl, name:string){
     this.form.addControl(name,event);
   }
-  setParam(){
+  getParam(){
     this.param = {};
-    this.param['url'] = deepAssign(input.param,{
-      class:'test',
-      name:'url',
-      placeholder:'请输入路径',
-      value:'',//this.editData['url'],
-      disabled:true,
-      pattern:'edit',
-      length:'3-8'
-    })
+    this.param['path'] = {
+      name:'path',
+      dataType: 'path'
+    }
+    this.param['port'] = {
+      name:'port',
+      dataType: 'number'
+    }
+    this.param['limit'] = {
+      name:'limit',
+    }
+    this.param['create_user'] = {
+      name:'create_user',
+    }
+    this.param['principal'] = {
+      name:'principal',
+    }
+    this.param['comment'] = {
+      name:'comment',
+    }
+
   }
 
   setValue(){
-    this.param['url']['value'] = this.editData['url'];
+    this.setParamByKey('path',{value: this.editData['path']});
+  }
+
+  toggle(){
+    this.setParamByKey('path',{disabled: !this.param['path']['disabled']});
+  }
+  setUrlParam(pattern){
+    this.setParamByKey('path',{pattern: pattern});
+  }
+
+  setParamOneValue(valueKey,value){
+    let keys = Object.keys(this.param);
+    keys.forEach((v, i) => {
+      this.setParamByKey(v,{[valueKey]:value});
+    })
+  }
+
+  setParamByKey(key, data){
+    this.param[key] = deepAssign(this.param[key],data);
   }
 
 }

@@ -6,6 +6,7 @@ import {
   FormControl,
   AbstractControl,
   Validators} from "@angular/forms";
+import * as input from './input.model';
 
 @Component({
   selector: 'com-input',
@@ -51,6 +52,8 @@ export class InputComponent implements OnInit ,OnChanges{
   }
 
   ngOnInit() {
+    //初始化param
+    this.param = util.deepAssign(input.param,this.param);
     //初始化control
     this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
@@ -73,10 +76,11 @@ export class InputComponent implements OnInit ,OnChanges{
 
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
-    /*if(this.control){
+    if(this.control){
+      //设置输入项的disable和enable状态
       let p = changes['param'] && changes['param']['currentValue'];
       p.disabled ? this.control.disable():this.control.enable();
-    }*/
+    }
   }
 
   /**
@@ -85,7 +89,7 @@ export class InputComponent implements OnInit ,OnChanges{
      */
   setValidator(){
     let validator = [];
-    validator = [...this.setRequiredValidator(),...this.setLengthValidator(),...this.setDataTypeValidator()];
+    validator = [...this.setRequiredValidator(),...this.setLengthValidator(),...this.setDataTypeValidator(),...this.setRegValidator()];
     return validator;
   }
 
@@ -136,16 +140,29 @@ export class InputComponent implements OnInit ,OnChanges{
    */
   setDataTypeValidator(){
     let dataType = this.param['dataType'],msg = '',validator = [];
+    if(!dataType) return [];
     if(dataType instanceof Object){
       msg = dataType['msg'];
       dataType = dataType['type'];
     }
 
+    dataType = dataType.toUpperCase();
+    let reg;
     switch(dataType){
       case 'TEXT':
-        let reg = /^\S*$/;
+        reg = /^\S*$/;
         validator.push(Validators.pattern(reg));
         this.validMsg['pattern'] = msg || '正则验证不通过';
+        break;
+      case 'PATH':
+        reg = /^\/([\S]+\/)*$/;
+        validator.push(Validators.pattern(reg));
+        this.validMsg['pattern'] = msg || '不符合路径规则';
+        break;
+      case 'NUMBER':
+        reg = /^\d+$/;
+        validator.push(Validators.pattern(reg));
+        this.validMsg['pattern'] = msg || '输入的不全是数字';
         break;
     }
     return validator;
@@ -157,6 +174,7 @@ export class InputComponent implements OnInit ,OnChanges{
    */
   setRegValidator(){
     let regular = this.param['regular'];
+    if(!regular) return [];
     let validator = [], keys = Object.keys(regular);
     keys.length && keys.forEach((e,i) => {
       var item = regular[e];

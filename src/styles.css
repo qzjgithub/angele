@@ -128,3 +128,12 @@ button.border:hover{
   overflow: auto;
 }
 /*********************tree end*************************/
+/*********************form start*************************/
+form label{
+  display: inline-block;
+  width: 100px;
+  text-align: right;
+  vertical-align: top;
+  margin-top: 2px;
+}
+/*********************form end*************************/
