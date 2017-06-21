@@ -99,7 +99,7 @@ export const param = {
   /**
    * 实际值获取方式
    * 如果是字符串，读取data中此关键字的数据
-   * 如果是方法，获取该方法执行后的返回值
+   * 如果是方法，获取该方法执行后的返回值,方法内传入某条数据value,此条索引index,整个数组arr
    * 默认value
    */
   realValue:'value'

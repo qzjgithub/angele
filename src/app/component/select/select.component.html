@@ -6,12 +6,19 @@
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
-    [(ngModel)]="param.value"
+    [(ngModel)]="value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
-  <articl>
-    <p>{{}}</p>
-  </articl>
+  <article>
+    <p (click)="toggleList()"
+       [class.disabled]="this.param['disabled'] || !Object.keys(this.data).length"
+    >
+      {{data[value] ? data[value]['text']:'暂无数据'}}
+    </p>
+    <ul *ngIf="status">
+      <li *ngFor="let v of Object.keys(data)" (click)="select(v)">{{data[v]['text']}}</li>
+    </ul>
+  </article>
   <footer>
     <div
       *ngIf="!(param.pattern==='display'&& param.disabled) &&

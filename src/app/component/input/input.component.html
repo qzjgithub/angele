@@ -6,7 +6,7 @@
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
-    [(ngModel)]="param.value"
+    [(ngModel)]="value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
   <footer>

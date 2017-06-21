@@ -71,6 +71,7 @@ export class LocalProItemComponent implements OnInit {
     }
     this.param['create_user'] = {
       name:'create_user',
+      data: [{text:'user1',vlaue:1},{text:'user2',value:2}]
     }
     this.param['principal'] = {
       name:'principal',
