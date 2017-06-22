@@ -1,15 +1,17 @@
 <section
-  [class]="param.class||''"
-  [class]="param.pattern"
+  class="input-frame {{param.class||''}}"
+  [class.display]="param['pattern']==='display'"
   >
   <input
+    [type]="param.password ? 'password':'text'"
+    class="input-item"
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
     [(ngModel)]="value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
-  >
-  <footer>
+    >
+  <footer class="input-footer">
     <div
       *ngIf="!(param.pattern==='display'&& param.disabled) &&
       control.touched && errorKey"

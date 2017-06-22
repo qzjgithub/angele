@@ -57,6 +57,7 @@ export class InputComponent implements OnInit ,OnChanges{
   ngOnInit() {
     //初始化param
     this.param = util.deepAssign(input.param,this.param);
+    //初始化值
     this.value = this.param['value'];
     //初始化control
     this.control = new FormControl({value: this.value,disabled: this.param['disabled']});

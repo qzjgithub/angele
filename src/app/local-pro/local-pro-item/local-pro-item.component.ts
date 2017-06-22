@@ -71,7 +71,7 @@ export class LocalProItemComponent implements OnInit {
     }
     this.param['create_user'] = {
       name:'create_user',
-      data: [{text:'user1',vlaue:1},{text:'user2',value:2}]
+      data: [{text:'user1',value:1},{text:'user2',value:2}]
     }
     this.param['principal'] = {
       name:'principal',
@@ -87,10 +87,10 @@ export class LocalProItemComponent implements OnInit {
   }
 
   toggle(){
-    this.setParamByKey('path',{disabled: !this.param['path']['disabled']});
+    this.setParamOneValue('disabled',!this.param['path']['disabled']);
   }
   setUrlParam(pattern){
-    this.setParamByKey('path',{pattern: pattern});
+    this.setParamOneValue('pattern',pattern.value);
   }
 
   setParamOneValue(valueKey,value){

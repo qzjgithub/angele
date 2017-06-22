@@ -17,6 +17,7 @@ import { LocalProItemComponent } from './local-pro/local-pro-item/local-pro-item
 import {appStoreProviders} from "../control/app.store";
 import {PROJECT_PROVIDERS} from "../control/project/project.service";
 import { SelectComponent } from './component/select/select.component';
+import {DisabledDirective} from "./component/disabled/disabled.directive";
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -27,6 +28,7 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    DisabledDirective,
     LocalProComponent,
     TreeComponent,
     TreenodeComponent,

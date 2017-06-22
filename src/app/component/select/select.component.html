@@ -1,25 +1,30 @@
 <section
-  [class]="param.class||''"
-  [class]="param.pattern"
+  class="input-frame {{param.class||''}}"
+  [class.display]="param['pattern']==='display'"
 >
   <input
+    class="input-item"
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
     [(ngModel)]="value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
-  <article>
-    <p (click)="toggleList()"
-       [class.disabled]="this.param['disabled'] || !Object.keys(this.data).length"
-    >
-      {{data[value] ? data[value]['text']:'暂无数据'}}
+  <article class="select-frame">
+    <p (click)="toggleList($event)"
+       class="input-item"
+       [class.active]="!param['disabled'] && status"
+       [class.disabled]="param['disabled'] || !valueKeys.length"
+       [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
+      >
+      <i></i>
+      {{valueKeys.length ? (data[value] ? data[value]['text'] : param.placeholder) : '暂无数据'}}
     </p>
     <ul *ngIf="status">
-      <li *ngFor="let v of Object.keys(data)" (click)="select(v)">{{data[v]['text']}}</li>
+      <li *ngFor="let v of valueKeys" (click)="select(v)">{{data[v]['text']}}</li>
     </ul>
   </article>
-  <footer>
+  <footer class="input-footer">
     <div
       *ngIf="!(param.pattern==='display'&& param.disabled) &&
       control.touched && errorKey"

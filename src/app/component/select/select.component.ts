@@ -1,8 +1,12 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, Inject} from '@angular/core';
 import {AbstractControl, FormControl} from "@angular/forms";
 import * as select from './select.model';
 import * as util from '../../../com-util';
 import {MapType} from "@angular/compiler/src/output/output_ast";
+import {AppState} from "../../../control/app.reducer";
+import {Store} from "redux";
+import {AppStore} from "../../../control/app.store";
+import {getClickEntity} from "../../../control/common/common.reducer";
 
 @Component({
   selector: 'com-select',
@@ -64,12 +68,19 @@ export class SelectComponent implements OnInit {
    */
   value:any;
 
-  constructor() {
+  /**
+   * 值的数组
+   */
+  valueKeys:Array<string>;
+
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
     //初始化错误消息
     this.validMsg = {};
     this.status = false;
     this.data = {};
     this.value = '';
+    this.valueKeys = [];
+    this.store.subscribe(()=> this.hideList());
   }
 
   ngOnInit() {
@@ -82,6 +93,8 @@ export class SelectComponent implements OnInit {
     // this.control.setValidators(this.setValidator());
     //设置可选数据键值对
     this.setData();
+    //设置value值数组
+    this.valueKeys = Object.keys(this.data);
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
       console.log(this.control.errors);
@@ -98,6 +111,18 @@ export class SelectComponent implements OnInit {
     this.backControl.emit(this.control);
   }
 
+  /**
+   *
+   */
+  hideList(){
+    console.log('on click');
+    const state = this.store.getState();
+    let click = getClickEntity(state);
+    if(click.status){
+      this.status = false;
+    }
+    console.log('on click end');
+  }
   /**
    * 设置可选项的键值对
    */
@@ -132,6 +157,10 @@ export class SelectComponent implements OnInit {
     });
   }
 
+  /**
+   * 下拉列表被点中事件
+   * @param v
+   */
   select(v){
     let ov = this.value;
     this.value = v;
@@ -141,15 +170,22 @@ export class SelectComponent implements OnInit {
       item: this.data[v],
       oldItem: this.data[ov]
     };
+    this.status = !this.status;
     this.selected.emit(param);
     ov!==v && this.changed.emit(param);
   }
 
-  toggleList(){
-    if(this.param['disabled'] || !Object.keys(this.data).length){
+  /**
+   * 下拉列表切换事件
+   */
+  toggleList(event){
+    console.log('list click');
+    if(this.param['disabled'] || !this.valueKeys.length){
       return;
     }
-    this.status = !status;
+    this.status = !this.status;
+    console.log('list click end');
+    event.stopPropagation();
   }
 
 }
