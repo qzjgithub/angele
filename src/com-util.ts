@@ -1,6 +1,7 @@
 /**
  * Created by admin on 2017/6/5.
  */
+import {Validators} from "@angular/forms";
 /**
  * 深度拷贝对象
  * @param objects 对象数组
@@ -49,4 +50,18 @@ export function getIntTrue(number){
   }else{
     return -1;
   }
+}
+
+/**
+ * 设置是否必填的验证规则
+ * @returns {Array}
+ */
+export function setRequiredValidator(param, validMsg){
+  let required = param['required'];
+  let validator = [];
+  if(required){
+    validMsg['required'] = typeof required === 'string' ? required : '不可为空';
+    validator.push(Validators.required);
+  }
+  return validator;
 }

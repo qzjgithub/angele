@@ -4,7 +4,7 @@ section>input{
 /**
 article style start
  */
-article{
+/*article{
   position: absolute;
   width: 100%;
   background: #ffffff;
@@ -42,7 +42,7 @@ article>ul>li:last-child{
 article>ul>li:hover{
   cursor: pointer;
   background-color:#f0f8ff;
-}
+}*/
 /**
 article style end
  */

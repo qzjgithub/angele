@@ -1,0 +1,21 @@
+<section
+  class="input-frame {{param.class||''}}"
+  [class.display]="param['pattern']==='display'"
+>
+  <textarea
+    class="input-item"
+    [formControl]="control"
+    [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
+    [name]="param.name"
+    [(ngModel)]="value"
+    [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
+  ></textarea>
+  <footer class="input-footer">
+    <div
+      *ngIf="!(param.pattern==='display'&& param.disabled) &&
+      control.touched && errorKey"
+      class="error-msg">
+      {{validMsg[errorKey]}}
+    </div>
+  </footer>
+</section>

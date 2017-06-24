@@ -12,7 +12,7 @@
   >
   <article class="select-frame">
     <p (click)="toggleList($event)"
-       class="input-item"
+       class="input-item select-text"
        [class.active]="!param['disabled'] && status"
        [class.disabled]="param['disabled'] || !valueKeys.length"
        [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
@@ -20,7 +20,7 @@
       <i></i>
       {{valueKeys.length ? (data[value] ? data[value]['text'] : param.placeholder) : '暂无数据'}}
     </p>
-    <ul *ngIf="status">
+    <ul *ngIf="status" class="select-list">
       <li *ngFor="let v of valueKeys" (click)="select(v)">{{data[v]['text']}}</li>
     </ul>
   </article>

@@ -40,9 +40,8 @@ export class InputComponent implements OnInit ,OnChanges{
   errorKey:String;
 
   /**
-   * 当前输入项应该展现的模式
+   * 当前值
    */
-  // patternState:String;
   value:String;
 
   constructor() {
@@ -92,9 +91,10 @@ export class InputComponent implements OnInit ,OnChanges{
    * 根据传入的参数设置次输入项的验证规则
    * @returns {Array}
      */
+
   setValidator(){
     let validator = [];
-    validator = [...this.setRequiredValidator(),...this.setLengthValidator(),...this.setDataTypeValidator(),...this.setRegValidator()];
+    validator = [...util.setRequiredValidator(this.param,this.validMsg),...this.setLengthValidator(),...this.setDataTypeValidator(),...this.setRegValidator()];
     return validator;
   }
 

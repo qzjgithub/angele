@@ -219,11 +219,20 @@ select style start
   background: #ffffff;
   top: 0;
   z-index: 100;
+}
+.select-text{
   cursor: pointer;
 }
-.select-text.active{
+.input-frame .select-text.disabled{
+  cursor: default;
+}
+.input-frame.display .input-item.select-text.active{
   border:1px solid #999999;
 }
+.input-frame.display .input-item.select-text.active>i{
+  opacity: 1;
+}
+
 .select-text>i{
   float: right;
   display: inline-block;
@@ -235,9 +244,58 @@ select style start
   margin-top: 7px;
   margin-right: 6px;
 }
+
+
+/**
+小三角的样式 start
+ */
+.select-text>i:focus{
+  opacity:1;
+}
+.select-text>i:hover{
+  opacity:1;
+}
+.input-frame.display .select-text>i{
+  opacity:0;
+}
+.select-text.error.disabled:hover>i{
+  opacity:1;
+}
+.select-text.error.disabled:focus>i{
+  opacity:1;
+}
+.input-frame.display .select-text.disabled>i{
+  opacity:0;
+}
+.input-frame.display .select-text:hover>i{
+  opacity:1;
+}
+.input-frame.display .select-text:focus>i{
+  opacity:1;
+}
+.input-frame.display .select-text.error>i{
+  opacity:1;
+}
+.input-frame.display .select-text.error:hover>i{
+  opacity:1;
+}
+.input-frame.display .select-text.error:focus>i{
+  opacity:1;
+}
+.input-frame.display .select-text.disabled:hover>i{
+  opacity:0;
+}
+.input-frame.display .select-text.disabled:focus>i{
+  opacity:0;
+}
+/**
+小三角的样式 end
+ */
+
 .select-list{
   border: 1px solid #999999;
   border-top: 0;
+  cursor: pointer;
 }
 .select-list>li{
   border-bottom: 1px solid #999999;
@@ -249,7 +307,6 @@ select style start
   border-bottom: 0;
 }
 .select-list>li:hover{
-  cursor: pointer;
   background-color:#f0f8ff;
 }
 /**

@@ -18,6 +18,7 @@ import {appStoreProviders} from "../control/app.store";
 import {PROJECT_PROVIDERS} from "../control/project/project.service";
 import { SelectComponent } from './component/select/select.component';
 import {DisabledDirective} from "./component/disabled/disabled.directive";
+import { TextareaComponent } from './component/textarea/textarea.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -37,7 +38,8 @@ const routes: Routes = [
     ComFrameComponent,
     InputComponent,
     LocalProItemComponent,
-    SelectComponent
+    SelectComponent,
+    TextareaComponent
   ],
   imports: [
     BrowserModule,
