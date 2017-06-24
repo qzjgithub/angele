@@ -4,7 +4,7 @@ import * as textarea from './textarea.model';
 import * as util from '../../../com-util';
 
 @Component({
-  selector: 'app-textarea',
+  selector: 'com-textarea',
   templateUrl: 'textarea.component.html',
   styleUrls: ['textarea.component.css']
 })

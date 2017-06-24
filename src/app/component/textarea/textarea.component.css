@@ -1,0 +1,6 @@
+textarea{
+  resize: vertical;
+  overflow: hidden;
+  height: 50px;
+  max-height: 100px;
+}
