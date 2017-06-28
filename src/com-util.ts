@@ -65,3 +65,81 @@ export function setRequiredValidator(param, validMsg){
   }
   return validator;
 }
+
+/**
+ * 设置长度验证规则
+ * @returns {Array}
+ */
+export function setLengthValidator(param,validMsg){
+  let length = param['length'];
+  if(!length) return [];
+  //验证规则数组，‘-’符号位置，最小长度，最大长度
+  let validator = [],index = length.indexOf('-'),min,max;
+  if(index===0){
+    max = length.substring(1,length.length);
+  }else if(index===(length.length - 1)){
+    min = length.substring(0,length.length - 1);
+  }else if(index > -1){
+    let lenArr = length.split('-');
+    min = lenArr[0];
+    max = lenArr[1];
+  }
+  max = getIntTrue(max);
+  max > -1 && validator.push(Validators.maxLength(getIntTrue(max)));
+  validMsg['maxlength'] = max > -1 ? ('最大长度为'+ max) : '';
+
+  min = getIntTrue(min);
+  min > -1 && validator.push(Validators.minLength(min));
+  validMsg['minlength'] = max > -1 ? ('最小长度为'+ min) : '';
+  return validator;
+}
+
+/**
+ * 设置数据类型验证
+ */
+export function setDataTypeValidator(param,validMsg){
+  let dataType = param['dataType'],msg = '',validator = [];
+  if(!dataType) return [];
+  if(dataType instanceof Object){
+    msg = dataType['msg'];
+    dataType = dataType['type'];
+  }
+
+  dataType = dataType.toUpperCase();
+  let reg;
+  switch(dataType){
+    case 'TEXT':
+      reg = /^\S*$/;
+      validator.push(Validators.pattern(reg));
+     validMsg['pattern'] = msg || '正则验证不通过';
+      break;
+    case 'PATH':
+      reg = /^\/([\S]+\/)*$/;
+      validator.push(Validators.pattern(reg));
+      validMsg['pattern'] = msg || '不符合路径规则';
+      break;
+    case 'NUMBER':
+      reg = /^\d+$/;
+      validator.push(Validators.pattern(reg));
+      validMsg['pattern'] = msg || '输入的不全是数字';
+      break;
+  }
+  return validator;
+}
+
+/**
+ * 设置自定义验证
+ * @returns {Array}
+ */
+export function setRegValidator(param,validMsg){
+  let regular = param['regular'];
+  if(!regular) return [];
+  let validator = [], keys = Object.keys(regular);
+  keys.length && keys.forEach((e,i) => {
+    var item = regular[e];
+    let name = item.name || ('reg_'+i);
+    validator.push(Validators.patternName(item.reg, name));
+    validMsg[name] = item.msg;
+  });
+  return validator;
+}

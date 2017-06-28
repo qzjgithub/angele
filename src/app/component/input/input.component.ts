@@ -94,7 +94,10 @@ export class InputComponent implements OnInit ,OnChanges{
 
   setValidator(){
     let validator = [];
-    validator = [...util.setRequiredValidator(this.param,this.validMsg),...this.setLengthValidator(),...this.setDataTypeValidator(),...this.setRegValidator()];
+    validator = [...util.setRequiredValidator(this.param,this.validMsg),
+      ...util.setLengthValidator(this.param,this.validMsg),
+      ...util.setDataTypeValidator(this.param,this.validMsg),
+      ...util.setRegValidator(this.param,this.validMsg)];
     return validator;
   }
 

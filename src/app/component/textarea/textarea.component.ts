@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormControl} from "@angular/forms";
 import * as textarea from './textarea.model';
 import * as util from '../../../com-util';
@@ -53,6 +53,44 @@ export class TextareaComponent implements OnInit {
     this.value = this.param['value'];
     //初始化control
     this.control = new FormControl({value: this.value,disabled: this.param['disabled']});
+    //设置control的验证规则
+    this.control.setValidators(this.setValidator());
+    //监听值得改变
+    this.control.valueChanges.subscribe((value) => {
+      console.log(this.control.errors);
+      let errors = {};
+      //更新错误消息的key
+      if(errors = this.control.errors || this.control.validator(this.control)){
+        var keys = Object.keys(errors);
+        this.errorKey = keys[0];
+      }else{
+        this.errorKey = '';
+      }
+    });
+    console.log('textarea init');
+    this.backControl.emit(this.control);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    if(this.control){
+      //设置输入项的disable和enable状态
+      let p = changes['param'] && changes['param']['currentValue'];
+      p.disabled ? this.control.disable():this.control.enable();
+    }
+  }
+
+  /**
+   * 根据传入的参数设置次输入项的验证规则
+   * @returns {Array}
+   */
+  setValidator(){
+    let validator = [];
+    validator = [...util.setRequiredValidator(this.param,this.validMsg),
+      ...util.setLengthValidator(this.param,this.validMsg),
+      ...util.setDataTypeValidator(this.param,this.validMsg),
+      ...util.setRegValidator(this.param,this.validMsg)];
+    return validator;
   }
 
 }
