@@ -1,5 +1,6 @@
 <com-frame [data]="project">
-  <form [formGroup]="form" class="horizontal">
+  <form [formGroup]="form">
+    <h2 class="form-title">基本信息</h2>
     <ul class="flex">
       <li>
         <label>路径：</label>
@@ -26,6 +27,15 @@
         <com-textarea (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-textarea>
       </li>
     </ul>
+    <aside class="form-aside">
+      <div><i class="big-arrow" title="双击固定"></i></div>
+      <ul>
+        <li>
+          <button>编辑</button>
+          <button>锁定</button>
+        </li>
+      </ul>
+    </aside>
   </form>
   <input #pattern (keyup)="setUrlParam(pattern)" value="{{param['path']['pattern']}}">
   <button (click)="toggle()">aaa</button>
