@@ -5,7 +5,7 @@ export interface Project {
   id: string;
   name: string;
   principal: string;
-  creae_user: string;
+  create_user: string;
   create_time: Date;
   modify_time?: Date;
   comment?: string;

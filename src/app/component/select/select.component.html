@@ -10,7 +10,7 @@
     [(ngModel)]="value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
-  <article class="select-frame">
+  <article class="select-frame" [class.zindex]="status">
     <p (click)="toggleList($event)"
        class="input-item select-text"
        [class.active]="!param['disabled'] && status"

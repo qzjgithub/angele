@@ -93,4 +93,11 @@ export class TextareaComponent implements OnInit {
     return validator;
   }
 
+  /**
+   * match(/[\x00-\xff]/g)
+   */
+  setTextareaSize(){
+
+  }
+
 }

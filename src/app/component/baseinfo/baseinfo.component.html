@@ -1,0 +1,49 @@
+<form [formGroup]="form" class="form-content">
+  <h2 class="form-title">基本信息</h2>
+  <ul>
+    <li>
+      <label>路径：</label>
+      <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
+    </li>
+    <li>
+      <label>端口：</label>
+      <com-input (backControl)="getControl($event,param['port']['name'])" [param]="param['port']"></com-input>
+    </li>
+    <li>
+      <label>权限：</label>
+      <com-input (backControl)="getControl($event,param['limit']['name'])" [param]="param['limit']"></com-input>
+    </li>
+    <li>
+      <label>创建人：</label>
+      <com-select (backControl)="getControl($event,param['create_user']['name'])" [param]="param['create_user']"></com-select>
+    </li>
+    <li>
+      <label>负责人：</label>
+      <com-select (backControl)="getControl($event,param['principal']['name'])" [param]="param['principal']"></com-select>
+    </li>
+    <li>
+      <label>介绍：</label>
+      <com-textarea (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-textarea>
+    </li>
+  </ul>
+  <footer *ngIf="form.touched && !disabled">
+    <button>保存</button>
+    <button>重置</button>
+  </footer>
+  <aside class="form-aside">
+    <div><i class="big-arrow" title="双击固定"></i></div>
+    <ul>
+      <li>
+        <button (click)="togglePattern('edit')">编辑</button>
+      </li>
+      <li>
+        <button
+          (click)="toggleDisabled()"
+          *ngIf="pattern=='display'"
+        >
+          {{disabled ? '解锁': '锁定'}}
+        </button>
+      </li>
+    </ul>
+  </aside>
+</form>

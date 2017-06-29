@@ -18,6 +18,7 @@ import {appStoreProviders} from "../control/app.store";
 import {PROJECT_PROVIDERS} from "../control/project/project.service";
 import { SelectComponent } from './component/select/select.component';
 import { TextareaComponent } from './component/textarea/textarea.component';
+import { BaseinfoComponent } from './component/baseinfo/baseinfo.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -37,7 +38,8 @@ const routes: Routes = [
     InputComponent,
     LocalProItemComponent,
     SelectComponent,
-    TextareaComponent
+    TextareaComponent,
+    BaseinfoComponent
   ],
   imports: [
     BrowserModule,

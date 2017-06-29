@@ -129,7 +129,10 @@ button.border:hover{
 }
 /*********************tree end*************************/
 /*********************form start*************************/
-form label{
+.form-content{
+  position: relative;
+}
+.form-content label{
   display: inline-block;
   width: 100px;
   text-align: right;
@@ -220,6 +223,9 @@ select style start
   top: 0;
   z-index: 100;
 }
+.select-frame.zindex{
+  z-index:101;
+}
 .select-text{
   cursor: pointer;
 }
@@ -244,7 +250,6 @@ select style start
   margin-top: 7px;
   margin-right: 6px;
 }
-
 
 /**
 小三角的样式 start
@@ -322,7 +327,19 @@ form-aside start
 .form-aside{
   position: absolute;
   right:0;
+  top:0;
   width:55px;
+  border:1px solid #999999;
+  color: #666666;
+}
+.form-aide>div{
+  border-bottom:1px solid #999999;
+}
+.form-aide>ul>li{
+  border-bottom:1px solid #999999;
+}
+.form-aide>ul>li:last-child{
+  border-bottom:0;
 }
 .big-arrow{
   display: block;

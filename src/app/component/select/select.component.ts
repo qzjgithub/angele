@@ -127,10 +127,13 @@ export class SelectComponent implements OnInit {
    * 设置可选项的键值对
    */
   setData(){
-    if(!this.param['data'].length) return;
-    this.param['data'].forEach((v,i,arr)=>{
+    var keys = Object.keys(this.param['data']);
+    if(!keys.length) return;
+    let arr = this.param['data']
+    keys.forEach((key,i)=>{
       //文本模型，实际文本，值模型，实际值
       let mtext,text,mvalue,value;
+      let v = arr[key];
       mtext = this.param['realText'];
       switch(typeof mtext){
         case 'function':

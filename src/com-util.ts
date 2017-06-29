@@ -26,12 +26,12 @@ export function deepAssign(...objects){
  */
 function merge(a, b){
   let keys = Object.keys(b);
-  if(!keys.length) a = b;
+  // if(!keys.length) a = b;
   keys.forEach(e => {
     if(b[e] instanceof Function){
       a[e] = b[e];
     }else if(b[e] instanceof Object){
-      a[e] = merge(a[e] instanceof Object ? a[e] : {},b[e]);
+      a[e] = deepAssign(a[e] instanceof Object ? a[e] : {},b[e]);
     } else {
       a[e] = b[e];
     }
@@ -142,4 +142,35 @@ export function setRegValidator(param,validMsg){
     validMsg[name] = item.msg;
   });
   return validator;
+}
+
+/**
+ * 根据key值设置所有参数的key属性为同一个值
+ * @param valueKey
+ * @param value
+ */
+export function setParamOneValue(valueKey,value,param){
+  let keys = Object.keys(param);
+  keys.forEach((v, i) => {
+    setParamByKey(v,{[valueKey]:value},param);
+  })
+}
+
+/**
+ * 根据key值重新设置参数值
+ * @param key
+ * @param data
+ */
+export function setParamByKey(key, data,param){
+  param[key] = deepAssign(param[key],data);
+}
+
+/**
+ * 根据一条数据设置所有输入项的值
+ */
+export function setValue(data,param){
+  var keys = Object.keys(param);
+  keys.forEach((v, i) => {
+    setParamByKey(v,{['value']:data[v]},param);
+  })
 }
