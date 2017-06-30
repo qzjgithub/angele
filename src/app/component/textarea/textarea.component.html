@@ -2,12 +2,12 @@
   class="input-frame {{param.class||''}}"
   [class.display]="param['pattern']==='display'"
 >
-  <textarea
+  <textarea #txta
     class="input-item"
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
-    [(ngModel)]="value"
+    [(ngModel)]="param.value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   ></textarea>
   <footer class="input-footer">

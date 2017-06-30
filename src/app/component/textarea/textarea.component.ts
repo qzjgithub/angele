@@ -1,4 +1,7 @@
-import {Component, OnInit, Input, EventEmitter, Output, SimpleChanges} from '@angular/core';
+import {
+  Component, OnInit, Input, EventEmitter, Output, SimpleChanges, TemplateRef, ViewChild,
+  ElementRef, AfterViewInit, AfterViewChecked, DoCheck, ChangeDetectorRef, IterableDiffers, IterableDiffer, OnChanges
+} from '@angular/core';
 import {AbstractControl, FormControl} from "@angular/forms";
 import * as textarea from './textarea.model';
 import * as util from '../../../com-util';
@@ -8,7 +11,10 @@ import * as util from '../../../com-util';
   templateUrl: 'textarea.component.html',
   styleUrls: ['textarea.component.css']
 })
-export class TextareaComponent implements OnInit {
+export class TextareaComponent implements OnInit ,
+  OnChanges,
+  AfterViewInit{
+
 
   /**
    * 在control生成以后就返回给form表单
@@ -20,7 +26,7 @@ export class TextareaComponent implements OnInit {
    * 需要传入的参数
    */
   @Input()
-  param : Object;
+  param : any;
   /**
    * 当前的formControl
    */
@@ -36,23 +42,22 @@ export class TextareaComponent implements OnInit {
   errorKey:String;
 
   /**
-   * 当前值
+   * textarea DOM元素
    */
-  value:String;
+  @ViewChild('txta')
+  txtadom: ElementRef;
+
   constructor() {
     //初始化消息
     this.validMsg = {};
     this.errorKey = '';
-    this.value = '';
   }
 
   ngOnInit() {
     //初始化param
     this.param = util.deepAssign(textarea.param,this.param);
-    //初始化值
-    this.value = this.param['value'];
     //初始化control
-    this.control = new FormControl({value: this.value,disabled: this.param['disabled']});
+    this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
     this.control.setValidators(this.setValidator());
     //监听值得改变
@@ -74,9 +79,14 @@ export class TextareaComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if(this.control){
+      let cp = changes['param'] && changes['param']['currentValue'];
+      let pp = changes['param'] && changes['param']['previousValue'];
+
       //设置输入项的disable和enable状态
-      let p = changes['param'] && changes['param']['currentValue'];
-      p.disabled ? this.control.disable():this.control.enable();
+      cp.disabled !== pp.disabled && (cp.disabled ? this.control.disable() : this.control.enable());
+
+      //如果为display，则重新计算textarea的高度
+      cp.pattern === 'display' && this.setTextareaSize();
     }
   }
 
@@ -94,10 +104,33 @@ export class TextareaComponent implements OnInit {
   }
 
   /**
-   * match(/[\x00-\xff]/g)
+   * 设置textarea展示的最大高度
    */
   setTextareaSize(){
+    //当前值
+    let value = this.param['value'];
+    let txtadom = this.txtadom.nativeElement;
+    //当前元素width
+    let width = parseInt(txtadom.offsetWidth);
+    //默认300px
+    width = width <= 0 ? 300 : width;
+    if(!value) return;
+    //获取单字节字符
+    let singleChar = value.match(/[\x00-\xff]/g);
+    //获取双字节字符
+    let doubleChar = value.match(/[^\x00-\xff]/g);
+    //算总字符长度
+    let len = (singleChar ? singleChar.length : 0) + (doubleChar ? 2 * doubleChar.length : 0);
+    //算出每行能够展示的字符数，一个字符占7px，目测得出
+    let rowNumber = parseInt(((width - 16) / 7).toFixed(0));
+    //算出总行数乘以每行高度，一行高25px，目测得出
+    let height = 25 * len / rowNumber + 2 + 'px';
+    txtadom.style.height =  height;
+    // txtadom.style.maxHeight =  height;
+  }
 
+  ngAfterViewInit(): void {
+    this.param.pattern === 'display' && this.setTextareaSize();
   }
 
 }

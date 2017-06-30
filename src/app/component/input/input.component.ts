@@ -39,27 +39,19 @@ export class InputComponent implements OnInit ,OnChanges{
    */
   errorKey:String;
 
-  /**
-   * 当前值
-   */
-  value:String;
-
   constructor() {
     console.log('input constructor');
     //初始化消息
     this.validMsg = {};
     this.errorKey = '';
-    this.value = '';
 
   }
 
   ngOnInit() {
     //初始化param
     this.param = util.deepAssign(input.param,this.param);
-    //初始化值
-    this.value = this.param['value'];
     //初始化control
-    this.control = new FormControl({value: this.value,disabled: this.param['disabled']});
+    this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
     //设置control的验证规则
     this.control.setValidators(this.setValidator());
     //监听值得改变
@@ -81,9 +73,11 @@ export class InputComponent implements OnInit ,OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if(this.control){
+      let cp = changes['param'] && changes['param']['currentValue'];
+      let pp = changes['param'] && changes['param']['previousValue'];
+
       //设置输入项的disable和enable状态
-      let p = changes['param'] && changes['param']['currentValue'];
-      p.disabled ? this.control.disable():this.control.enable();
+      cp.disabled !== pp.disabled && (cp.disabled ? this.control.disable() : this.control.enable());
     }
   }
 

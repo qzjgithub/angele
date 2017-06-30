@@ -26,12 +26,15 @@
       <com-textarea (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-textarea>
     </li>
   </ul>
-  <footer *ngIf="form.touched && !disabled">
-    <button>保存</button>
-    <button>重置</button>
+  <footer *ngIf="!disabled && form.touched && form.dirty" class="form-footer">
+    <button *ngIf="!form.invalid" class="plain border">
+      保存
+    </button><button (click)="reset()" class="plain border">
+      重置
+    </button>
   </footer>
   <aside class="form-aside">
-    <div><i class="big-arrow" title="双击固定"></i></div>
+    <div (click)="showAside($event)"><i class="big-arrow"></i></div>
     <ul>
       <li>
         <button (click)="togglePattern('edit')">编辑</button>

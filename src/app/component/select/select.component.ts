@@ -64,11 +64,6 @@ export class SelectComponent implements OnInit {
   data:Object;
 
   /**
-   * 实际值
-   */
-  value:any;
-
-  /**
    * 值的数组
    */
   valueKeys:Array<string>;
@@ -78,7 +73,6 @@ export class SelectComponent implements OnInit {
     this.validMsg = {};
     this.status = false;
     this.data = {};
-    this.value = '';
     this.valueKeys = [];
     this.store.subscribe(()=> this.hideList());
   }
@@ -86,9 +80,8 @@ export class SelectComponent implements OnInit {
   ngOnInit() {
     //初始化param
     this.param = util.deepAssign(select.param,this.param);
-    this.value = this.param['value'];
     //初始化control
-    this.control = new FormControl({value: this.value,disabled: true});
+    this.control = new FormControl({value: this.param['value'],disabled: true});
     //设置control的验证规则
     // this.control.setValidators(this.setValidator());
     //设置可选数据键值对
@@ -165,8 +158,8 @@ export class SelectComponent implements OnInit {
    * @param v
    */
   select(v){
-    let ov = this.value;
-    this.value = v;
+    let ov = this.param['value'];
+    this.param['value'] = v;
     let param = {
       value: v,
       oldValue: ov,

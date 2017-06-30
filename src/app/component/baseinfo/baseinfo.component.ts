@@ -113,4 +113,25 @@ export class BaseinfoComponent implements OnInit {
   togglePattern(pattern){
     util.setParamOneValue('pattern',pattern,this.param);
   }
+
+  /**
+   * 重置表单
+   */
+  reset(){
+    util.setValue(this.project,this.param);
+    this.togglePattern('display');
+  }
+
+  /**
+   * 旁边按钮的隐藏和展示
+   */
+  showAside(event){
+    console.log(event);
+    let el = event.target;
+    el = el.tagName === 'I' ? el.parentElement : el ;
+    let uldom = el.parentElement.lastElementChild;
+    let len = uldom.children.length;
+    let status = parseInt(uldom.style.height);
+    uldom.style.height = (status <=0 ? 26 * len : 0) + 'px';
+  }
 }

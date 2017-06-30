@@ -331,15 +331,26 @@ form-aside start
   width:55px;
   border:1px solid #999999;
   color: #666666;
+  opacity: 0.4;
 }
-.form-aide>div{
-  border-bottom:1px solid #999999;
+.form-aside:hover{
+  opacity: 1;
 }
-.form-aide>ul>li{
-  border-bottom:1px solid #999999;
+.form-aside>div{
+  height: 20px;
+  line-height: 20px;
+  box-sizing: border-box;
 }
-.form-aide>ul>li:last-child{
-  border-bottom:0;
+.form-aside>ul{
+  height: 0;
+  overflow: hidden;
+  transition: height linear 500ms;
+}
+.form-aside>ul>li{
+  border-top:1px solid #999999;
+}
+.form-aside>ul>li:first-child{
+  border-top:0;
 }
 .big-arrow{
   display: block;
@@ -365,5 +376,17 @@ form-aside start
 }
 /**
 form-aside end
+ */
+/**
+form-footer start
+ */
+.form-footer{
+  padding-left: 108px;
+}
+.form-footer>button{
+  margin-left: 8px;
+}
+/**
+form-footer end
  */
 /*********************form end*************************/

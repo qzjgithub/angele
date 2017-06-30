@@ -7,7 +7,7 @@
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
-    [(ngModel)]="value"
+    [(ngModel)]="param.value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
   <article class="select-frame" [class.zindex]="status">
@@ -18,7 +18,7 @@
        [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
       >
       <i></i>
-      {{valueKeys.length ? (data[value] ? data[value]['text'] : param.placeholder) : '暂无数据'}}
+      {{valueKeys.length ? (data[param.value] ? data[param.value]['text'] : param.placeholder) : '暂无数据'}}
     </p>
     <ul *ngIf="status" class="select-list">
       <li *ngFor="let v of valueKeys" (click)="select(v)">{{data[v]['text']}}</li>
