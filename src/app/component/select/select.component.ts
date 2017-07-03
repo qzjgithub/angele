@@ -168,7 +168,10 @@ export class SelectComponent implements OnInit {
     };
     this.status = !this.status;
     this.selected.emit(param);
-    ov!==v && this.changed.emit(param);
+    if(ov!==v){
+      this.control.markAsDirty();
+      this.changed.emit(param);
+    }
   }
 
   /**
@@ -180,6 +183,7 @@ export class SelectComponent implements OnInit {
       return;
     }
     this.status = !this.status;
+    this.control.markAsTouched();
     console.log('list click end');
     event.stopPropagation();
   }

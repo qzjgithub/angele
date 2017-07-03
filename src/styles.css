@@ -337,9 +337,8 @@ form-aside start
   opacity: 1;
 }
 .form-aside>div{
-  height: 20px;
-  line-height: 20px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 .form-aside>ul{
   height: 0;
@@ -348,9 +347,6 @@ form-aside start
 }
 .form-aside>ul>li{
   border-top:1px solid #999999;
-}
-.form-aside>ul>li:first-child{
-  border-top:0;
 }
 .big-arrow{
   display: block;
@@ -381,10 +377,10 @@ form-aside end
 form-footer start
  */
 .form-footer{
-  padding-left: 108px;
+  padding-left: 106px;
 }
 .form-footer>button{
-  margin-left: 8px;
+  margin-right: 8px;
 }
 /**
 form-footer end

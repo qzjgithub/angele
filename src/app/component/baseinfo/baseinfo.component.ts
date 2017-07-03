@@ -118,7 +118,7 @@ export class BaseinfoComponent implements OnInit {
    * 重置表单
    */
   reset(){
-    util.setValue(this.project,this.param);
+    this.form.reset(this.project);
     this.togglePattern('display');
   }
 
@@ -132,6 +132,6 @@ export class BaseinfoComponent implements OnInit {
     let uldom = el.parentElement.lastElementChild;
     let len = uldom.children.length;
     let status = parseInt(uldom.style.height);
-    uldom.style.height = (status <=0 ? 26 * len : 0) + 'px';
+    uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
   }
 }
