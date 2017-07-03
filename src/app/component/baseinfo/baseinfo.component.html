@@ -2,34 +2,38 @@
   <h2 class="form-title">基本信息</h2>
   <ul>
     <li>
-      <label>路径：</label>
+      <label>路径</label>
       <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
     </li>
     <li>
-      <label>端口：</label>
+      <label>端口</label>
       <com-input (backControl)="getControl($event,param['port']['name'])" [param]="param['port']"></com-input>
     </li>
     <li>
-      <label>权限：</label>
+      <label>权限</label>
       <com-input (backControl)="getControl($event,param['limit']['name'])" [param]="param['limit']"></com-input>
     </li>
     <li>
-      <label>创建人：</label>
+      <label>创建人</label>
       <com-select (backControl)="getControl($event,param['create_user']['name'])" [param]="param['create_user']"></com-select>
     </li>
     <li>
-      <label>负责人：</label>
+      <label>负责人</label>
       <com-select (backControl)="getControl($event,param['principal']['name'])" [param]="param['principal']"></com-select>
     </li>
     <li>
-      <label>介绍：</label>
+      <label>介绍</label>
       <com-textarea (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-textarea>
     </li>
   </ul>
-  <footer *ngIf="!disabled && form.touched && form.dirty" class="form-footer">
-    <button *ngIf="!form.invalid" class="plain border">
+  <footer *ngIf="!disabled" class="form-footer">
+    <button (click)="save()"
+            *ngIf="form.dirty && form.touched && !form.invalid"
+            class="plain border">
       保存
-    </button><button (click)="reset()" class="plain border">
+    </button><button (click)="reset()"
+                     class="plain border"
+                     *ngIf="form.touched || pattern!=='display'">
       重置
     </button>
   </footer>
@@ -37,10 +41,13 @@
     <div (click)="showAside($event)"><i class="big-arrow"></i></div>
     <ul>
       <li>
-        <button (click)="togglePattern('edit')">编辑</button>
+        <button class="plain"
+                (click)="togglePattern('edit')"
+                *ngIf="!disabled"
+        >编辑</button>
       </li>
       <li>
-        <button
+        <button class="plain"
           (click)="toggleDisabled()"
           *ngIf="pattern=='display'"
         >

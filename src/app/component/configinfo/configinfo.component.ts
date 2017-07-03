@@ -1,18 +1,17 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormGroup, AbstractControl} from "@angular/forms";
-import {Project} from "../../../control/project/project.model";
 import * as util from "../../../com-util";
 
 @Component({
-  selector: 'com-baseinfo',
-  templateUrl: 'baseinfo.component.html',
-  styleUrls: ['baseinfo.component.css'],
+  selector: 'com-configinfo',
+  templateUrl: 'configinfo.component.html',
+  styleUrls: ['configinfo.component.css'],
   host: {
     class: 'flex',
     style: 'display:block'
   }
 })
-export class BaseinfoComponent implements OnInit {
+export class ConfiginfoComponent implements OnInit {
 
   /**
    * 表单
@@ -20,15 +19,15 @@ export class BaseinfoComponent implements OnInit {
   form: FormGroup;
 
   /**
-   * 当前项目
+   * 当前项目配置列表
    */
   @Input()
-  project: Project;
+  config: Array<any>;
 
   /**
    * 编辑和展示的内容
    */
-  editData: Project;
+  editConfig: Array<any>;
 
   /**
    * 表单要传入的参数
@@ -45,6 +44,11 @@ export class BaseinfoComponent implements OnInit {
    */
   pattern: string;
 
+  /**
+   * 键值对数据
+   */
+  data: Object;
+
   constructor() {
     //实例化表单
     this.form = new FormGroup({});
@@ -52,16 +56,19 @@ export class BaseinfoComponent implements OnInit {
     //设置表单参数
     this.setParam();
 
+    this.data = {};
     this.disabled = false;
     this.pattern = 'display';
   }
 
   ngOnInit() {
+    this.setData();
     //生成新的一份project数据，可用于编辑
-    this.editData = Object.assign({},this.project);
-    util.setValue(this.editData, this.param);
+    this.editConfig = Object.assign({},this.config[0]);
+    util.setParamByKey('name',{data: this.getNameSelectData()},this.param);
+    util.setValue(this.editConfig, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
-    console.log('baseinfo oninit over');
+    console.log('configinfo oninit over');
   }
 
   /**
@@ -78,28 +85,38 @@ export class BaseinfoComponent implements OnInit {
    */
   setParam(){
     this.param = {};
-    this.param['path'] = {
-      name:'path',
-      dataType: 'path'
+    this.param['name'] = {
+      name:'name',
+      dataType: 'TEXT'
     }
-    this.param['port'] = {
+    this.param['type'] = {
       name:'port',
-      dataType: 'number'
+      data: [
+        {value: 'error',text:'error'},
+        {value: 'right',text:'right'},
+        {value: 'request',text:'request'},
+      ]
     }
-    this.param['limit'] = {
-      name:'limit',
+    this.param['content'] = {
+      name:'content'
     }
-    this.param['create_user'] = {
-      name:'create_user',
-      data: [{text:'user1',value:'1'},{text:'user2',value:'2'}]
-    }
-    this.param['principal'] = {
-      name:'principal',
-      data : [{text:'user1',value:'1'},{text:'user2',value:'2'}]
-    }
-    this.param['comment'] = {
-      name:'comment',
-    }
+  }
+
+  /**
+   * 设置键值对数据
+   */
+  setData(){
+    this.config.forEach((e,i) => {
+      this.data[e.name] = e;
+    });
+  }
+
+  getNameSelectData(){
+    let arr = [];
+    this.config.forEach((e,i) => {
+      arr.push({value:e.name,text:e.name});
+    });
+    return arr;
   }
 
   /**
@@ -123,9 +140,9 @@ export class BaseinfoComponent implements OnInit {
    * 重置表单
    */
   reset(){
-    this.form.reset(this.project);
+    this.form.reset(this.config[0]);
     this.pattern = 'display';
-    this.togglePattern(this.pattern);
+    this.togglePattern('display');
   }
 
   /**
@@ -145,4 +162,5 @@ export class BaseinfoComponent implements OnInit {
     let status = parseInt(uldom.style.height);
     uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
   }
+
 }

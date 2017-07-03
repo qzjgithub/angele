@@ -13,7 +13,11 @@ let project: Project = {
   path: "/project1/test1/",
   port: 8080,
   status: "stop",
-  limit: "忘了"
+  limit: "忘了",
+  config: [
+    {name: 'right1',type:'right',content:'adfafds'},
+    {name: 'right2',type:'right',content:'asadfasdfafds'}
+  ]
 }
 export const projects: Project[] = [
   project

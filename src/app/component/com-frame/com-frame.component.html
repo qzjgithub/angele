@@ -1,6 +1,6 @@
 <section>
   <header><h1>{{data.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || data[tip.key]}}</span></header>
-  <article>
+  <article class="horizontal">
     <p *ngIf="brefIsDisplay">{{data.comment}}</p>
     <ng-content *ngIf="!brefIsDisplay"></ng-content>
   </article>

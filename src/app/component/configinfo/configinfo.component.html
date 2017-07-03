@@ -1,0 +1,47 @@
+<form [formGroup]="form" class="form-content">
+  <h2 class="form-title">配置信息</h2>
+  <ul>
+    <li>
+      <label>模板名称</label>
+      <com-select (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-select>
+    </li>
+    <li>
+      <label>模板类型</label>
+      <com-select (backControl)="getControl($event,param['type']['name'])" [param]="param['type']"></com-select>
+    </li>
+    <li>
+      <label>模板样本</label>
+      <com-textarea (backControl)="getControl($event,param['content']['name'])" [param]="param['content']"></com-textarea>
+    </li>
+  </ul>
+  <footer *ngIf="!disabled" class="form-footer">
+    <button (click)="save()"
+            *ngIf="form.dirty && form.touched && !form.invalid"
+            class="plain border">
+      保存
+    </button><button (click)="reset()"
+                     class="plain border"
+                     *ngIf="form.touched || pattern!=='display'">
+    重置
+  </button>
+  </footer>
+  <aside class="form-aside">
+    <div (click)="showAside($event)"><i class="big-arrow"></i></div>
+    <ul>
+      <li>
+        <button  class="plain"
+                 (click)="togglePattern('edit')"
+                 *ngIf="!disabled">编辑</button>
+      </li>
+      <li>
+        <button
+          class="plain"
+          (click)="toggleDisabled()"
+          *ngIf="pattern=='display'"
+        >
+          {{disabled ? '解锁': '锁定'}}
+        </button>
+      </li>
+    </ul>
+  </aside>
+</form>

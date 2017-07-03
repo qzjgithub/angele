@@ -161,7 +161,7 @@ export function setParamOneValue(valueKey,value,param){
  * @param key
  * @param data
  */
-export function setParamByKey(key, data,param){
+export function setParamByKey(key, data, param){
   param[key] = deepAssign(param[key],data);
 }
 

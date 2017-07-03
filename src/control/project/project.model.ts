@@ -13,4 +13,5 @@ export interface Project {
   port: number;
   status?: string;
   limit?: string;
+  config: Array<any>;
 }

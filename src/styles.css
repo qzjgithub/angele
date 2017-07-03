@@ -135,9 +135,10 @@ button.border:hover{
 .form-content label{
   display: inline-block;
   width: 100px;
-  text-align: right;
+  text-align: left;
   vertical-align: top;
   margin-top: 2px;
+  margin-left: 16px;
 }
 .input-frame{
   display: inline-block;
@@ -166,7 +167,7 @@ button.border:hover{
   border: 1px solid #999999;
 }
 .input-frame.display .input-item{
-  border:0;
+  border: 1px solid rgba(0,0,0,0);
 }
 .input-item[disabled],
 .input-item.disabled{
@@ -201,11 +202,11 @@ button.border:hover{
 }
 .input-frame.display .input-item[disabled]:hover,
 .input-frame.display .input-item.disabled:hover{
-  border: 0;
+  border: 1px solid rgba(0,0,0,0);
 }
 .input-frame.display .input-item[disabled]:focus,
 .input-frame.display .input-item.disabled:focus{
-  border: 0;
+  border: 1px solid rgba(0,0,0,0);
 }
 .error-msg{
   color: #ff0000;
@@ -326,10 +327,10 @@ form-aside start
  */
 .form-aside{
   position: absolute;
-  right:0;
-  top:0;
+  right:16px;
+  top:2px;
   width:55px;
-  border:1px solid #999999;
+  /*border:1px solid #999999;*/
   color: #666666;
   opacity: 0.4;
 }
@@ -346,18 +347,17 @@ form-aside start
   transition: height linear 500ms;
 }
 .form-aside>ul>li{
-  border-top:1px solid #999999;
+  /*border-top:1px solid #999999;*/
 }
 .big-arrow{
   display: block;
   margin: auto;
-  height: 16px;
-  width: 36px;
+  width: 20px;
 }
 .big-arrow:before{
   content: '';
   border-bottom: 1px solid #999999;
-  width: 18px;
+  width: 10px;
   transform: rotate(30deg);
   display: inline-block;
   transform-origin: right bottom;
@@ -365,7 +365,7 @@ form-aside start
 .big-arrow:after{
   content: '';
   border-bottom: 1px solid #999999;
-  width: 18px;
+  width: 10px;
   transform: rotate(-30deg);
   display: inline-block;
   transform-origin: left bottom;
@@ -377,7 +377,7 @@ form-aside end
 form-footer start
  */
 .form-footer{
-  padding-left: 106px;
+  padding-left: 121px;
 }
 .form-footer>button{
   margin-right: 8px;
