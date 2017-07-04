@@ -1,3 +1,12 @@
 p{
   margin-left: 8px;
 }
+.right-arrow{
+  display: inline-block;
+  height: 6px;
+  width: 6px;
+  border-bottom: 1px solid #999999;
+  border-right: 1px solid #999999;
+  transform: rotate(-45deg);
+  margin-right: 6px;
+}

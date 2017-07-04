@@ -330,25 +330,23 @@ form-aside start
   position: absolute;
   right:16px;
   top:2px;
-  width:55px;
-  /*border:1px solid #999999;*/
+}
+.button-aside{
   color: #666666;
   opacity: 0.4;
+  width:55px;
 }
-.form-aside:hover{
+.button-aside:hover{
   opacity: 1;
 }
-.form-aside>div{
+.button-aside>div{
   box-sizing: border-box;
   cursor: pointer;
 }
-.form-aside>ul{
+.button-aside>ul{
   height: 0;
   overflow: hidden;
   transition: height linear 500ms;
-}
-.form-aside>ul>li{
-  /*border-top:1px solid #999999;*/
 }
 .big-arrow{
   display: block;
@@ -387,3 +385,21 @@ form-footer start
 form-footer end
  */
 /*********************form end*************************/
+/*********************frame start*************************/
+.small-arrow{
+  display: block;
+  height: 8px;
+  width: 8px;
+  border-right:1px solid #666666;
+  border-bottom:1px solid #666666;
+  cursor: pointer;
+}
+.small-arrow:before{
+  content: '';
+  display: block;
+  width: 8px;
+  transform: rotate(42deg);
+  transform-origin: left bottom;
+  border: 1px solid #999999;
+}
+/*********************frame end*************************/

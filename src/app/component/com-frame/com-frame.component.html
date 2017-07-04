@@ -5,6 +5,17 @@
     <ng-content *ngIf="!brefIsDisplay"></ng-content>
   </article>
   <aside>
-    <button (click)="toggleBref()" class="plain">{{brefIsDisplay?'展开↓':'收起↑'}}</button>
+    <div><i class="small-arrow" (click)="toggleBref()" [class.toggle]="!brefIsDisplay"></i></div>
+    <ul [class.show]="!brefIsDisplay">
+      <li>
+        <button class="plain">启动</button>
+      </li>
+      <li>
+        <button class="plain">删除</button>
+      </li>
+      <li>
+        <button class="plain">接口</button>
+      </li>
+    </ul>
   </aside>
 </section>

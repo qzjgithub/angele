@@ -37,22 +37,22 @@
       重置
     </button>
   </footer>
-  <aside class="form-aside">
-    <div (click)="showAside($event)"><i class="big-arrow"></i></div>
+  <aside class="form-aside button-aside">
+    <div><i class="big-arrow"></i></div>
     <ul>
+      <li>
+        <button class="plain"
+                (click)="toggleDisabled()"
+                *ngIf="pattern=='display'"
+        >
+          {{disabled ? '解锁': '锁定'}}
+        </button>
+      </li>
       <li>
         <button class="plain"
                 (click)="togglePattern('edit')"
                 *ngIf="!disabled"
         >编辑</button>
-      </li>
-      <li>
-        <button class="plain"
-          (click)="toggleDisabled()"
-          *ngIf="pattern=='display'"
-        >
-          {{disabled ? '解锁': '锁定'}}
-        </button>
       </li>
     </ul>
   </aside>

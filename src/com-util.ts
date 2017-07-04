@@ -2,6 +2,7 @@
  * Created by admin on 2017/6/5.
  */
 import {Validators} from "@angular/forms";
+import {SimpleDateFormat} from "./DateFormat";
 /**
  * 深度拷贝对象
  * @param objects 对象数组
@@ -173,4 +174,13 @@ export function setValue(data,param){
   keys.forEach((v, i) => {
     setParamByKey(v,{['value']:data[v]},param);
   })
+}
+/**
+ * 转换时间格式
+ */
+export function setDateFormat(date, format = "yyyy-MM-dd HH:mm:ss"){
+  // var str = format ? format : "yyyy?MM?dd? HH:mm:ss";
+  var df = new SimpleDateFormat();
+  df.applyPattern(format);
+  return df.format(date);
 }

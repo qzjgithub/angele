@@ -2,7 +2,6 @@ import {Component, OnInit, Output, EventEmitter, Input, Inject} from '@angular/c
 import {AbstractControl, FormControl} from "@angular/forms";
 import * as select from './select.model';
 import * as util from '../../../com-util';
-import {MapType} from "@angular/compiler/src/output/output_ast";
 import {AppState} from "../../../control/app.reducer";
 import {Store} from "redux";
 import {AppStore} from "../../../control/app.store";
@@ -108,13 +107,11 @@ export class SelectComponent implements OnInit {
    *
    */
   hideList(){
-    console.log('on click');
     const state = this.store.getState();
     let click = getClickEntity(state);
     if(click.status){
       this.status = false;
     }
-    console.log('on click end');
   }
   /**
    * 设置可选项的键值对
@@ -178,13 +175,11 @@ export class SelectComponent implements OnInit {
    * 下拉列表切换事件
    */
   toggleList(event){
-    console.log('list click');
     if(this.param['disabled'] || !this.valueKeys.length){
       return;
     }
     this.status = !this.status;
     this.control.markAsTouched();
-    console.log('list click end');
     event.stopPropagation();
   }
 

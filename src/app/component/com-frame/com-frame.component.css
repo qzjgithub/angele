@@ -22,9 +22,29 @@ header>span{
 
 aside{
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 1px;
+  bottom: 1px;
+  width: 10px;
+  overflow: hidden;
+  opacity: 0.6;
 }
-aside button.plain:hover{
-  text-decoration: underline;
+aside:hover{
+  opacity: 1;
+  width: 55px;
+}
+aside i.toggle{
+  transform: rotate(180deg);
+}
+aside>div{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+aside>ul{
+  margin-bottom: 8px;
+  margin-left: 55px;
+  transition: margin-left linear 500ms;
+}
+aside:hover>ul.show{
+  margin-left:0;
 }

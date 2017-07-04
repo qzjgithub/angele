@@ -107,7 +107,7 @@ export class BaseinfoComponent implements OnInit {
    */
   toggleDisabled(){
     this.disabled = !this.disabled;
-    util.setParamOneValue('disabled',!this.param['path']['disabled'],this.param);
+    util.setParamOneValue('disabled',this.disabled,this.param);
   }
 
   /**

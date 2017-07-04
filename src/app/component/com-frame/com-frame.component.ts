@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import * as util from '../../../com-util';
 
 @Component({
   selector: 'com-frame',
@@ -34,6 +35,7 @@ export class ComFrameComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.data['modify_time'] = util.setDateFormat(this.data['modify_time']);
   }
   toggleBref(){
     this.brefIsDisplay = !this.brefIsDisplay;
