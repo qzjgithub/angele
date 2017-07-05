@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, Input, Inject} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, Inject, OnChanges, SimpleChanges} from '@angular/core';
 import {AbstractControl, FormControl} from "@angular/forms";
 import * as select from './select.model';
 import * as util from '../../../com-util';
@@ -12,7 +12,7 @@ import {getClickEntity} from "../../../control/common/common.reducer";
   templateUrl: 'select.component.html',
   styleUrls: ['select.component.css']
 })
-export class SelectComponent implements OnInit {
+export class SelectComponent implements OnInit,OnChanges {
   /**
    * 在control生成以后就返回给form表单
    * @type {EventEmitter<number>}
@@ -67,30 +67,37 @@ export class SelectComponent implements OnInit {
    */
   valueKeys:Array<string>;
 
+  /**
+   * 被选中的值
+   */
+  selectValue: string;
+
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     //初始化错误消息
     this.validMsg = {};
     this.status = false;
     this.data = {};
     this.valueKeys = [];
+    this.selectValue = '';
     this.store.subscribe(()=> this.hideList());
   }
 
   ngOnInit() {
     //初始化param
     this.param = util.deepAssign(select.param,this.param);
-    //初始化control
-    this.control = new FormControl({value: this.param['value'],disabled: true});
-    //设置control的验证规则
-    // this.control.setValidators(this.setValidator());
     //设置可选数据键值对
     this.setData();
     //设置value值数组
     this.valueKeys = Object.keys(this.data);
+    this.selectValue = this.param['value'];
+    //初始化control
+    this.control = new FormControl({value: this.param['value'],disabled: this.param['disabled']});
+    //设置control的验证规则
+    this.control.setValidators(this.setValidator());
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
-      console.log(this.control.errors);
       let errors = {};
+      console.log(errors);
       //更新错误消息的key
       if(errors = this.control.errors || this.control.validator ? this.control.validator(this.control):''){
         var keys = Object.keys(errors);
@@ -103,8 +110,47 @@ export class SelectComponent implements OnInit {
     this.backControl.emit(this.control);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    if(this.control){
+      let cp = changes['param'] && changes['param']['currentValue'];
+      let pp = changes['param'] && changes['param']['previousValue'];
+
+      //设置输入项的disable和enable状态
+      cp.disabled !== pp.disabled && (cp.disabled ? this.control.disable() : this.control.enable());
+      //设置被选择项是否改变
+      if(cp.value !== pp.value) this.selectValue = cp.value;
+    }
+  }
   /**
-   *
+   * 设置表单验证
+   */
+  setValidator(){
+    let validator = [];
+    validator = [...util.setRequiredValidator(this.param,this.validMsg),
+      ...util.setLengthValidator(this.param,this.validMsg),
+      ...util.setDataTypeValidator(this.param,this.validMsg),
+      ...util.setRegValidator(this.param,this.validMsg)];
+    if(this.param['norepeat']){
+      validator.push(this.setNoRepeatValidator());
+    }
+    return validator;
+  }
+
+  /**
+   * 生成不可重复的验证
+   * @returns {(control:FormControl)=>{[p: string]: boolean}}
+   */
+  setNoRepeatValidator(){
+    this.validMsg['norepeat'] = '该值已存在';
+    return (control: FormControl): { [s: string]: boolean } => {
+      if (this.selectValue!==control.value && this.valueKeys.indexOf(control.value) >= 0) {
+        return { norepeat: true };
+      }
+    }
+  }
+  /**
+   * 隐藏下拉列表
    */
   hideList(){
     const state = this.store.getState();
@@ -164,6 +210,7 @@ export class SelectComponent implements OnInit {
       oldItem: this.data[ov]
     };
     this.status = !this.status;
+    this.selectValue = v;
     this.selected.emit(param);
     if(ov!==v){
       this.control.markAsDirty();

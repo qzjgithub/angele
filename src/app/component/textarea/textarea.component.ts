@@ -62,7 +62,6 @@ export class TextareaComponent implements OnInit ,
     this.control.setValidators(this.setValidator());
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
-      console.log(this.control.errors);
       let errors = {};
       //更新错误消息的key
       if(errors = this.control.errors || this.control.validator(this.control)){

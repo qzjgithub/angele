@@ -1,48 +1,11 @@
 section>input{
   opacity: 0;
 }
-/**
-article style start
- */
-/*article{
-  position: absolute;
-  width: 100%;
-  background: #ffffff;
-  top: 0;
-  z-index: 100;
-  cursor: pointer;
+section.editable>input{
+  opacity: 1;
 }
-article>p.active{
-  border:1px solid #999999;
+section.editable>article{
+  opacity: 0;
+  z-index: -1;
+  top: 25px;
 }
-article>p>i{
-  float: right;
-  display: inline-block;
-  height: 5px;
-  width: 5px;
-  border-right: 1px solid #999999;
-  border-bottom: 1px solid #999999;
-  transform: rotate(45deg);
-  margin-top: 7px;
-  margin-right: 6px;
-}
-article>ul{
-  border: 1px solid #999999;
-  border-top: 0;
-}
-article>ul>li{
-  border-bottom: 1px solid #999999;
-  padding: 0 8px;
-  height: 25px;
-  line-height: 25px;
-}
-article>ul>li:last-child{
-  border-bottom: 0;
-}
-article>ul>li:hover{
-  cursor: pointer;
-  background-color:#f0f8ff;
-}*/
-/**
-article style end
- */

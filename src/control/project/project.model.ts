@@ -1,3 +1,4 @@
+import {Config} from "../config/config.model";
 /**
  * Created by admin on 2017/6/15.
  */
@@ -13,5 +14,5 @@ export interface Project {
   port: number;
   status?: string;
   limit?: string;
-  config: Array<any>;
+  config: Array<Config>;
 }

@@ -1,7 +1,20 @@
 import {Project} from "./project.model";
+import {Config} from "../config/config.model";
 /**
  * Created by admin on 2017/6/15.
  */
+let config1: Config = {
+  id:'1',
+  name: 'right1',
+  type:'right',
+  content:'adfafds'
+}
+let config2: Config = {
+  id:'2',
+  name: 'error1',
+  type:'error',
+  content:'fdgdswefd'
+}
 let project: Project = {
   id: "1",
   name: "project1",
@@ -15,8 +28,8 @@ let project: Project = {
   status: "stop",
   limit: "忘了",
   config: [
-    {name: 'right1',type:'right',content:'adfafds'},
-    {name: 'right2',type:'right',content:'asadfasdfafds'}
+    config1,
+    config2
   ]
 }
 export const projects: Project[] = [

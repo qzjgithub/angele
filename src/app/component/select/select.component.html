@@ -1,6 +1,8 @@
 <section
   class="input-frame {{param.class||''}}"
   [class.display]="param['pattern']==='display'"
+  [class.editable]="param['editable']"
+  [class.required]="param['required']"
 >
   <input
     class="input-item"

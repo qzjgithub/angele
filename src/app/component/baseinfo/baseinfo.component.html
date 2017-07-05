@@ -51,7 +51,7 @@
       <li>
         <button class="plain"
                 (click)="togglePattern('edit')"
-                *ngIf="!disabled"
+                *ngIf="pattern==='display' && !disabled"
         >编辑</button>
       </li>
     </ul>

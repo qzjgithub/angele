@@ -80,25 +80,32 @@ export class BaseinfoComponent implements OnInit {
     this.param = {};
     this.param['path'] = {
       name:'path',
-      dataType: 'path'
+      dataType: 'path',
+      type: 'input'
     }
     this.param['port'] = {
       name:'port',
-      dataType: 'number'
+      dataType: 'number',
+      type: 'input'
     }
     this.param['limit'] = {
       name:'limit',
+      type: 'input'
     }
     this.param['create_user'] = {
       name:'create_user',
-      data: [{text:'user1',value:'1'},{text:'user2',value:'2'}]
+      data: [{text:'user1',value:'1'},{text:'user2',value:'2'}],
+      type: 'select'
     }
     this.param['principal'] = {
       name:'principal',
-      data : [{text:'user1',value:'1'},{text:'user2',value:'2'}]
+      data : [{text:'user1',value:'1'},{text:'user2',value:'2'}],
+      type: 'select'
     }
     this.param['comment'] = {
       name:'comment',
+      required: false,
+      type: 'textarea'
     }
   }
 
@@ -135,8 +142,9 @@ export class BaseinfoComponent implements OnInit {
 
   /**
    * 旁边按钮的隐藏和展示
+   * 已废弃，改用css实现
    */
-  showAside(event){
+  /*showAside(event){
     console.log(event);
     let el = event.target;
     el = el.tagName === 'I' ? el.parentElement : el ;
@@ -144,5 +152,5 @@ export class BaseinfoComponent implements OnInit {
     let len = uldom.children.length;
     let status = parseInt(uldom.style.height);
     uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
-  }
+  }*/
 }

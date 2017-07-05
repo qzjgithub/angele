@@ -1,6 +1,7 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {FormGroup, AbstractControl} from "@angular/forms";
 import * as util from "../../../com-util";
+import {Config} from "../../../control/config/config.model";
 
 @Component({
   selector: 'com-configinfo',
@@ -22,12 +23,12 @@ export class ConfiginfoComponent implements OnInit {
    * 当前项目配置列表
    */
   @Input()
-  config: Array<any>;
+  config: Array<Config>;
 
   /**
    * 编辑和展示的内容
    */
-  editConfig: Array<any>;
+  editConfig: Config;
 
   /**
    * 表单要传入的参数
@@ -87,7 +88,9 @@ export class ConfiginfoComponent implements OnInit {
     this.param = {};
     this.param['name'] = {
       name:'name',
-      dataType: 'TEXT'
+      dataType: 'TEXT',
+      norepeat: true,
+      type: 'select'
     }
     this.param['type'] = {
       name:'type',
@@ -95,10 +98,13 @@ export class ConfiginfoComponent implements OnInit {
         {value: 'error',text:'error'},
         {value: 'right',text:'right'},
         {value: 'request',text:'request'},
-      ]
+      ],
+      placeholder: '请选择配置类型',
+      type: 'select'
     }
     this.param['content'] = {
-      name:'content'
+      name:'content',
+      type: 'textarea'
     }
   }
 
@@ -111,6 +117,10 @@ export class ConfiginfoComponent implements OnInit {
     });
   }
 
+  /**
+   * 设置配置项的名称选项
+   * @returns {Array}
+   */
   getNameSelectData(){
     let arr = [];
     this.config.forEach((e,i) => {
@@ -125,6 +135,7 @@ export class ConfiginfoComponent implements OnInit {
   toggleDisabled(){
     this.disabled = !this.disabled;
     util.setParamOneValue('disabled',this.disabled,this.param);
+    util.setParamByKey('name',{disabled: false},this.param);
   }
 
   /**
@@ -134,15 +145,18 @@ export class ConfiginfoComponent implements OnInit {
   togglePattern(pattern){
     this.pattern = pattern;
     util.setParamOneValue('pattern',pattern,this.param);
+    this.pattern==='edit' && util.setParamByKey('name',{ editable: true },this.param);
   }
 
   /**
    * 重置表单
    */
   reset(){
-    this.form.reset(this.config[0]);
+    // this.editConfig = this.data[this.editConfig.name];
+    this.form.reset(this.editConfig);
     this.pattern = 'display';
-    this.togglePattern('display');
+    this.togglePattern(this.pattern);
+    this.param['name']['editable'] && util.setParamByKey('name',{ editable: false },this.param);
   }
 
   /**
@@ -151,9 +165,38 @@ export class ConfiginfoComponent implements OnInit {
   save(){}
 
   /**
-   * 旁边按钮的隐藏和展示
+   * 添加配置项
    */
-  showAside(event){
+  add(){
+    this.pattern = 'add';
+    this.form.reset({id:'',name:'',type:'',content:''});
+    util.setParamByKey('name',{ editable: true ,pattern:'edit'},this.param);
+    util.setParamByKey('type',{ pattern:'edit'},this.param);
+    util.setParamByKey('content',{ pattern:'edit'},this.param);
+  }
+
+  /**
+   * 取消添加
+   */
+  clear(){
+    this.form.reset({id:'',name:'',type:'',content:''});
+  }
+
+  /**
+   * 选中某条配置项就展示那一条的数据
+   * @param event
+   */
+  setDataByName(event){
+    console.log(event);
+    this.editConfig = this.data[event.value];
+    util.setValue(this.editConfig,this.param);
+  }
+
+  /**
+   * 旁边按钮的隐藏和展示
+   * 已废弃，改用css实现
+   */
+  /*showAside(event){
     console.log(event);
     let el = event.target;
     el = el.tagName === 'I' ? el.parentElement : el ;
@@ -161,6 +204,6 @@ export class ConfiginfoComponent implements OnInit {
     let len = uldom.children.length;
     let status = parseInt(uldom.style.height);
     uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
-  }
+  }*/
 
 }

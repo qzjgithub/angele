@@ -70,5 +70,15 @@ export const param = {
    * 如果是方法，获取该方法执行后的返回值,方法内传入某条数据value,此条索引index,整个数组arr
    * 默认value
    */
-  realValue:'value'
+  realValue:'value',
+  /**
+   * 当前是否可编辑
+   * 默认不可编辑
+   * 可编辑状态和输入框一样
+   */
+  editable:false,
+  /**
+   * 设置不能重复的验证，下拉框独有
+   */
+  norepeat:false
 };

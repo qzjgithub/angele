@@ -1,6 +1,7 @@
 <section
   class="input-frame {{param.class||''}}"
   [class.display]="param['pattern']==='display'"
+  [class.required]="param['required']"
   >
   <input
     [type]="param.password ? 'password':'text'"
