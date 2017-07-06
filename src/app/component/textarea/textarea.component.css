@@ -1,8 +1,7 @@
 textarea{
   resize: vertical;
   overflow: hidden;
-  width: 300px;
-  min-height: 50px;
+  min-height: 80px;
   max-height: 330px;
   text-indent: 0;
   padding: 0 8px;

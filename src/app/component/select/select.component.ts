@@ -84,7 +84,7 @@ export class SelectComponent implements OnInit,OnChanges {
 
   ngOnInit() {
     //初始化param
-    this.param = util.deepAssign(select.param,this.param);
+    // this.param = util.deepAssign(select.param,this.param);
     //设置可选数据键值对
     this.setData();
     //设置value值数组
@@ -200,7 +200,7 @@ export class SelectComponent implements OnInit,OnChanges {
    * 下拉列表被点中事件
    * @param v
    */
-  select(v){
+  select(event,v){
     let ov = this.param['value'];
     this.param['value'] = v;
     let param = {
@@ -216,6 +216,7 @@ export class SelectComponent implements OnInit,OnChanges {
       this.control.markAsDirty();
       this.changed.emit(param);
     }
+    event.stopPropagation();
   }
 
   /**

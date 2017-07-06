@@ -8,8 +8,7 @@ import {Config} from "../../../control/config/config.model";
   templateUrl: 'configinfo.component.html',
   styleUrls: ['configinfo.component.css'],
   host: {
-    class: 'flex',
-    style: 'display:block'
+    style: 'display:block;width:50%;'
   }
 })
 export class ConfiginfoComponent implements OnInit {
@@ -106,6 +105,7 @@ export class ConfiginfoComponent implements OnInit {
       name:'content',
       type: 'textarea'
     }
+    util.setParam(this.param);
   }
 
   /**
@@ -132,54 +132,61 @@ export class ConfiginfoComponent implements OnInit {
   /**
    * 切换输入项禁用状态
    */
-  toggleDisabled(){
+  toggleDisabled(event){
     this.disabled = !this.disabled;
     util.setParamOneValue('disabled',this.disabled,this.param);
     util.setParamByKey('name',{disabled: false},this.param);
+    event.stopPropagation();
   }
 
   /**
    * 切换输入项转换模式
    * @param pattern
    */
-  togglePattern(pattern){
+  togglePattern(event,pattern){
     this.pattern = pattern;
     util.setParamOneValue('pattern',pattern,this.param);
     this.pattern==='edit' && util.setParamByKey('name',{ editable: true },this.param);
+    event && event.stopPropagation();
   }
 
   /**
    * 重置表单
    */
-  reset(){
+  reset(event){
     // this.editConfig = this.data[this.editConfig.name];
     this.form.reset(this.editConfig);
     this.pattern = 'display';
-    this.togglePattern(this.pattern);
+    this.togglePattern(null,this.pattern);
     this.param['name']['editable'] && util.setParamByKey('name',{ editable: false },this.param);
+    event.stopPropagation();
   }
 
   /**
    * 保存表单
    */
-  save(){}
+  save(event){
+    event.stopPropagation();
+  }
 
   /**
    * 添加配置项
    */
-  add(){
+  add(event){
     this.pattern = 'add';
     this.form.reset({id:'',name:'',type:'',content:''});
     util.setParamByKey('name',{ editable: true ,pattern:'edit'},this.param);
     util.setParamByKey('type',{ pattern:'edit'},this.param);
     util.setParamByKey('content',{ pattern:'edit'},this.param);
+    event.stopPropagation();
   }
 
   /**
-   * 取消添加
+   * 清空数据
    */
-  clear(){
+  clear(event){
     this.form.reset({id:'',name:'',type:'',content:''});
+    event.stopPropagation();
   }
 
   /**
@@ -187,7 +194,6 @@ export class ConfiginfoComponent implements OnInit {
    * @param event
    */
   setDataByName(event){
-    console.log(event);
     this.editConfig = this.data[event.value];
     util.setValue(this.editConfig,this.param);
   }

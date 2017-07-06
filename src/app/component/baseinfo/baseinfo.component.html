@@ -27,13 +27,17 @@
     </li>
   </ul>
   <footer *ngIf="!disabled" class="form-footer">
-    <button (click)="save()"
+    <button (click)="save($event)"
             *ngIf="form.dirty && form.touched && !form.invalid"
             class="plain border">
       保存
-    </button><button (click)="reset()"
+    </button><button (click)="clear($event)" *ngIf="pattern==='add'">
+      清空
+    </button><button (click)="cancel($event)" *ngIf="pattern==='add'">
+      取消
+    </button><button (click)="reset($event)"
                      class="plain border"
-                     *ngIf="form.touched || pattern!=='display'">
+                     *ngIf="pattern=='edit'">
       重置
     </button>
   </footer>
@@ -42,7 +46,7 @@
     <ul>
       <li>
         <button class="plain"
-                (click)="toggleDisabled()"
+                (click)="toggleDisabled($event)"
                 *ngIf="pattern=='display'"
         >
           {{disabled ? '解锁': '锁定'}}
@@ -50,7 +54,7 @@
       </li>
       <li>
         <button class="plain"
-                (click)="togglePattern('edit')"
+                (click)="togglePattern($event,'edit')"
                 *ngIf="pattern==='display' && !disabled"
         >编辑</button>
       </li>

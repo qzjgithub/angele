@@ -1,4 +1,4 @@
 <com-frame [data]="project">
     <com-baseinfo [project]="project"></com-baseinfo>
-    <com-configinfo [config]="project.config"></com-configinfo>
+    <com-configinfo [config]="project.config" *ngIf="project.config"></com-configinfo>
 </com-frame>

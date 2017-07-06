@@ -28,10 +28,10 @@ let project: Project = {
   status: "stop",
   limit: "忘了",
   config: [
-    config1,
-    config2
+    // config1,
+    // config2
   ]
 }
 export const projects: Project[] = [
-  project
+  // project
 ]

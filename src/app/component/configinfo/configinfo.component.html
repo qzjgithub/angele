@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="form-content">
   <h2 class="form-title">配置信息</h2>
-  <ul>
+  <ul *ngIf="config.length || pattern==='add'">
     <li>
       <label>模板名称</label>
       <com-select
@@ -18,39 +18,39 @@
       <com-textarea (backControl)="getControl($event,param['content']['name'])" [param]="param['content']"></com-textarea>
     </li>
   </ul>
-  <footer *ngIf="!disabled" class="form-footer">
-    <button (click)="save()"
+  <footer *ngIf="(config.length || pattern==='add') && !disabled" class="form-footer">
+    <button (click)="save($event)"
             *ngIf="((form.controls['name'].dirty && this.param['name']['editable']) || form.controls['type'].dirty||form.controls['content'].dirty) && form.touched && !form.invalid"
             class="plain border">
       保存
     </button><button *ngIf="pattern==='add' && form.dirty"
-                     (click)="clear()"
+                     (click)="clear($event)"
                      class="plain border">
       清空
-    </button><button (click)="reset()"
+    </button><button (click)="reset($event)"
                      class="plain border"
-                     *ngIf="form.controls['type'].touched||form.controls['content'].touched || pattern!=='display'">
+                     *ngIf="config.length && pattern!=='display'">
     {{pattern==='add'?'取消':'重置'}}
   </button>
   </footer>
-  <aside class="form-aside button-aside">
+  <aside *ngIf="config.length || pattern==='add'" class="form-aside button-aside">
     <div><i class="big-arrow"></i></div>
     <ul>
       <li>
         <button
           class="plain"
-          (click)="toggleDisabled()"
+          (click)="toggleDisabled($event)"
           *ngIf="pattern==='display'"
         >
           {{disabled ? '解锁': '锁定'}}
         </button>
       </li>
       <li>
-        <button class="plain" (click)="add()" *ngIf="!disabled && pattern!=='add'">添加</button>
+        <button class="plain" (click)="add($event)" *ngIf="!disabled && pattern!=='add'">添加</button>
       </li>
       <li>
         <button  class="plain"
-                 (click)="togglePattern('edit')"
+                 (click)="togglePattern($event,'edit')"
                  *ngIf="pattern==='display' && !disabled">编辑</button>
       </li>
       <li>
@@ -58,4 +58,7 @@
       </li>
     </ul>
   </aside>
+  <button class="empty-button plain border" *ngIf="pattern!=='add' && !config.length" (click)="add($event)">
+    <i></i>添加配置
+  </button>
 </form>

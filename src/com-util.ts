@@ -3,6 +3,9 @@
  */
 import {Validators} from "@angular/forms";
 import {SimpleDateFormat} from "./DateFormat";
+import * as input from 'app/component/input/input.model';
+import * as select from 'app/component/select/select.model';
+import * as textarea from 'app/component/textarea/textarea.model';
 /**
  * 深度拷贝对象
  * @param objects 对象数组
@@ -30,6 +33,8 @@ function merge(a, b){
   // if(!keys.length) a = b;
   keys.forEach(e => {
     if(b[e] instanceof Function){
+      a[e] = b[e];
+    }else if(b[e] instanceof Array){
       a[e] = b[e];
     }else if(b[e] instanceof Object){
       a[e] = deepAssign(a[e] instanceof Object ? a[e] : {},b[e]);
@@ -180,7 +185,27 @@ export function setValue(data,param){
  */
 export function setDateFormat(date, format = "yyyy-MM-dd HH:mm:ss"){
   // var str = format ? format : "yyyy?MM?dd? HH:mm:ss";
-  var df = new SimpleDateFormat();
+  let df = new SimpleDateFormat();
   df.applyPattern(format);
   return df.format(date);
+}
+
+/**
+ * 统一设置参数格式
+ */
+export function setParam(param){
+  let keys = Object.keys(param);
+  keys.forEach(key => {
+    switch(param[key]['type']){
+      case 'input':
+        param[key] = deepAssign(input.param,param[key]);
+        break;
+      case 'select':
+        param[key] = deepAssign(select.param,param[key]);
+        break;
+      case 'textarea':
+        param[key] = deepAssign(textarea.param,param[key]);
+        break;
+    }
+  });
 }

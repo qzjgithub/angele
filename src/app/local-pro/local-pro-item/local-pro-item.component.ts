@@ -1,7 +1,6 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {FormGroup, AbstractControl} from "@angular/forms";
+import {Component, OnInit, Input, Inject} from '@angular/core';
 import {Project} from "../../../control/project/project.model";
-import {deepAssign} from "../../../com-util";
+
 
 @Component({
   selector: 'app-local-pro-item',

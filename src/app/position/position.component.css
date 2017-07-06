@@ -1,5 +1,7 @@
 p{
   margin-left: 8px;
+  line-height: 19px;
+  height: 19px;
 }
 .right-arrow{
   display: inline-block;

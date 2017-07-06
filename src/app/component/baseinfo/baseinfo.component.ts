@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {FormGroup, AbstractControl} from "@angular/forms";
 import {Project} from "../../../control/project/project.model";
 import * as util from "../../../com-util";
@@ -8,8 +8,7 @@ import * as util from "../../../com-util";
   templateUrl: 'baseinfo.component.html',
   styleUrls: ['baseinfo.component.css'],
   host: {
-    class: 'flex',
-    style: 'display:block'
+    style: 'display:block;width:50%;'
   }
 })
 export class BaseinfoComponent implements OnInit {
@@ -24,6 +23,12 @@ export class BaseinfoComponent implements OnInit {
    */
   @Input()
   project: Project;
+
+  /**
+   * 取消添加传送给父元素
+   * @type {EventEmitter<any>}
+   */
+  @Output() cancelAdd: EventEmitter<any> = new EventEmitter<any>();
 
   /**
    * 编辑和展示的内容
@@ -57,6 +62,10 @@ export class BaseinfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    //如果没有id，表明是添加模式
+    if(!this.project.id){
+      this.pattern = 'add';
+    }
     //生成新的一份project数据，可用于编辑
     this.editData = Object.assign({},this.project);
     util.setValue(this.editData, this.param);
@@ -107,38 +116,73 @@ export class BaseinfoComponent implements OnInit {
       required: false,
       type: 'textarea'
     }
+    util.setParam(this.param);
   }
 
   /**
    * 切换输入项禁用状态
    */
-  toggleDisabled(){
+  toggleDisabled(event){
     this.disabled = !this.disabled;
     util.setParamOneValue('disabled',this.disabled,this.param);
+    event.stopPropagation();
   }
 
   /**
    * 切换输入项转换模式
    * @param pattern
    */
-  togglePattern(pattern){
+  togglePattern(event,pattern){
     this.pattern = pattern;
     util.setParamOneValue('pattern',pattern,this.param);
+    event && event.stopPropagation();
   }
 
   /**
    * 重置表单
    */
-  reset(){
+  reset(event){
     this.form.reset(this.project);
     this.pattern = 'display';
-    this.togglePattern(this.pattern);
+    this.togglePattern(null,this.pattern);
+    event.stopPropagation();
   }
 
   /**
    * 保存表单
    */
-  save(){}
+  save(event){
+    event.stopPropagation();
+  }
+
+  /**
+   * 清空表单
+   * @param event
+   */
+  clear(event){
+    this.form.reset({
+      id: "",
+      name: "",
+      principal: "",
+      create_user: "",
+      create_time: new Date(),
+      modify_time: new Date(),
+      comment: "",
+      path: "",
+      port: undefined,
+      status: "",
+      limit: "",
+    });
+    event.stopPropagation();
+  }
+
+  /**
+   * 取消本次添加
+   */
+  cancel(event){
+    this.cancelAdd.emit();
+    this.clear(event);
+  }
 
   /**
    * 旁边按钮的隐藏和展示

@@ -12,7 +12,6 @@ import * as CommonActions from '../control/common/common.action';
 export class AppComponent {
   tabs : Array<any>;
   curTab : Object;
-  position : Array<String>;
 
   constructor(@Inject(AppStore) private store: Store<AppState>){
     this.tabs = [
@@ -20,7 +19,6 @@ export class AppComponent {
       {router:'user',name:'用户管理'}
     ]
     this.curTab = this.tabs[0];
-    this.position = [ 'project1', 'module1', 'interface1'];
   }
 
   onClick(){

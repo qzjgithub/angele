@@ -1,3 +1,6 @@
 .button-aside:hover>ul{
   height: 104px;
 }
+.empty-button{
+  transform: scale(0.6);
+}

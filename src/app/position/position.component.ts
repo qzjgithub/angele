@@ -1,4 +1,8 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, OnInit, Input, Inject} from '@angular/core';
+import {AppState} from "../../control/app.reducer";
+import {Store} from "redux";
+import {AppStore} from "../../control/app.store";
+import {getPosition} from "../../control/common/common.reducer";
 
 @Component({
   selector: 'app-position',
@@ -7,12 +11,17 @@ import {Component, OnInit, Input} from '@angular/core';
 })
 export class PositionComponent implements OnInit {
 
-  @Input()
   position: Array<String>
 
-  constructor() { }
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
+    store.subscribe(() => this.updateState());
+  }
 
   ngOnInit() {
+  }
+  updateState(){
+    const state = this.store.getState();
+    this.position = getPosition(state);
   }
 
 }

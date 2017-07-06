@@ -162,7 +162,7 @@ button.border:hover{
 .input-item{
   height: 32px;
   line-height: 29px;
-  width: 150px;
+  width: 200px;
   margin: 0;
   padding: 0;
   border: 1px solid #999999;
@@ -349,6 +349,7 @@ form-aside start
   color: #666666;
   opacity: 0.4;
   width:55px;
+  z-index: 200;
 }
 .button-aside:hover{
   opacity: 1;
@@ -417,3 +418,38 @@ form-footer end
   border: 1px solid #999999;
 }
 /*********************frame end*************************/
+/*********************empty button start*************************/
+.empty-button{
+  margin: auto;
+  display: block;
+  margin-top: 80px;
+  height: 50px;
+  font-size: 26px;
+  padding: 0 16px;
+  opacity:0.4;
+  padding-bottom: 2px;
+}
+.empty-button:hover{
+  opacity: 0.8;
+}
+.empty-button>i{
+  display: inline-block;
+  margin-left: 8px;
+}
+.empty-button>i:before{
+  content: '';
+  height: 16px;
+  display: inline-block;
+  border-right: 2px solid #666666;
+}
+.empty-button>i:after{
+  content: '';
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  border-bottom: 2px solid #666666;
+  position: relative;
+  bottom: 7px;
+  right: 9px;
+}
+/*********************empty button end*************************/
