@@ -2,6 +2,10 @@
   <h2 class="form-title">基本信息</h2>
   <ul>
     <li>
+      <label>名称</label>
+      <com-input (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-input>
+    </li>
+    <li>
       <label>路径</label>
       <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
     </li>
@@ -31,9 +35,13 @@
             *ngIf="form.dirty && form.touched && !form.invalid"
             class="plain border">
       保存
-    </button><button (click)="clear($event)" *ngIf="pattern==='add'">
+    </button><button (click)="clear($event)"
+                     class="plain border"
+                     *ngIf="pattern==='add'">
       清空
-    </button><button (click)="cancel($event)" *ngIf="pattern==='add'">
+    </button><button (click)="cancel($event)"
+                     class="plain border"
+                     *ngIf="pattern==='add'">
       取消
     </button><button (click)="reset($event)"
                      class="plain border"

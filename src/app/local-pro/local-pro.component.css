@@ -1,5 +1,6 @@
 .add-frame{
   padding:16px;
-  border:1px solid #666666;
+  border:1px solid #999999;
   box-sizing: border-box;
+  margin: 8px;
 }

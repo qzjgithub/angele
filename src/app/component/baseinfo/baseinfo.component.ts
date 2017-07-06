@@ -87,6 +87,10 @@ export class BaseinfoComponent implements OnInit {
    */
   setParam(){
     this.param = {};
+    this.param['name'] = {
+      name:'name',
+      type: 'input'
+    }
     this.param['path'] = {
       name:'path',
       dataType: 'path',
