@@ -14,12 +14,14 @@ export interface ProjectsState {
   ids: string[];
   entities: ProjectsEntities;
   currentProjectId?: string;
+  disabled: boolean
 };
 
 const initialState: ProjectsState = {
   ids: [],
   currentProjectId: null,
-  entities: {}
+  entities: {},
+  disabled: false
 };
 
 /**
@@ -39,7 +41,26 @@ export const ProjectsReducer =
         return {
           ids: [ ...state.ids, ...ids ],
           currentProjectId: state.currentProjectId,
-          entities: Object.assign({}, state.entities, entities)
+          entities: Object.assign({}, state.entities, entities),
+          disabled: state.disabled
+        };
+      }
+      case ProjectActions.SET_CURRENT_PROJECT: {
+        const id = (<ProjectActions.SetCurrentProjectAction>action).id;
+        return {
+          ids: [ ...state.ids ],
+          currentProjectId: id,
+          entities: state.entities,
+          disabled: state.disabled
+        };
+      }
+      case ProjectActions.SET_DISABLED: {
+        const disabled = (<ProjectActions.SetDisabledAction>action).disabled;
+        return {
+          ids: [ ...state.ids ],
+          currentProjectId: state.currentProjectId,
+          entities: state.entities,
+          disabled: disabled
         };
       }
       default:
@@ -57,3 +78,11 @@ export const getAllProjects = createSelector(
   getProjectsEntities,
   ( entities: ProjectsEntities ) => Object.keys(entities)
     .map((projectId) => entities[projectId]));
+
+export const getCurrentId = createSelector(
+  getProjectsState,
+  ( state: ProjectsState ) => state.currentProjectId);
+
+export const getCurrentProject = createSelector(
+  getProjectsState,
+  ( state: ProjectsState ) => state.entities[state.currentProjectId]);

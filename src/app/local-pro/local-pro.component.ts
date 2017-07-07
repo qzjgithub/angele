@@ -24,10 +24,16 @@ export class LocalProComponent implements OnInit {
    * 被选中的项目
    */
   selectProject: Project;
+
   /**
-   * 是否处于添加中
+   * 当前模式
    */
-  addStatus: boolean;
+  pattern: string;
+
+  /**
+   * 被选中要管理的project
+   */
+  manageIds: Array<string>;
 
   constructor(@Inject(AppStore) private store: Store<AppState>
   ,private projectService: ProjectService) {
@@ -35,7 +41,8 @@ export class LocalProComponent implements OnInit {
     store.dispatch(ProjectActions.setProjects(projectService.getProjects()));
     this.updateState();
     this.selectProject = null;
-    this.addStatus = false;
+    this.pattern = 'display';
+    this.manageIds = [];
   }
 
   /**
@@ -55,11 +62,24 @@ export class LocalProComponent implements OnInit {
    * @param project
    */
   clickProject(event, project){
-    if(!this.selectProject || project.name!==this.selectProject.name){
-      this.selectProject = project;
-      this.store.dispatch(CommonActions.resetPosition([this.selectProject.name]));
-      event.stopPropagation();
+    switch(this.pattern){
+      case 'manage':
+        let index = this.manageIds.indexOf(project.id);
+        if(index > -1){
+          this.manageIds.splice(index,1);
+        }else{
+          this.manageIds.push(project.id);
+        }
+        break;
+      case 'add':
+      case 'display':
+        if(!this.selectProject || project.name!==this.selectProject.name){
+          this.selectProject = project;
+          this.store.dispatch(ProjectActions.setCurrentProject(this.selectProject['id']));
+          event.stopPropagation();
+        }
     }
+
   }
 
   /**
@@ -67,7 +87,8 @@ export class LocalProComponent implements OnInit {
    * @param event
    */
   add(event){
-    this.addStatus = true;
+    this.pattern = 'add';
+    this.store.dispatch(ProjectActions.setCurrentProject(null));
     this.selectProject = {
       id: "",
       name: "",
@@ -87,7 +108,24 @@ export class LocalProComponent implements OnInit {
    * 取消添加事件
    */
   cancel(){
-    this.addStatus = false;
+    this.pattern = 'display';
+  }
+
+  /**
+   * 管理项目
+   */
+  manage(event){
+    if(this.pattern!=='manage'){
+      this.pattern = 'manage';
+      this.selectProject = null;
+      this.store.dispatch(ProjectActions.setCurrentProject(null));
+      // this.store.dispatch(ProjectActions.setDisabled(true));
+    }else{
+      this.pattern = 'display';
+      this.manageIds = [];
+      // this.store.dispatch(ProjectActions.setDisabled(false));
+    }
+    event.stopPropagation();
   }
 
 }

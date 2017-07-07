@@ -478,3 +478,15 @@ form-footer end
   bottom: 4px;
 }
 /*********************list header end*************************/
+/*********************project start*************************/
+.list-project.manage .form-content{
+  pointer-events: none;
+  cursor: default;
+}
+.project-item.manage section.com-frame{
+  border-color: #4c96f3;
+}
+.project-item.selected section.com-frame{
+  box-shadow: 0 0 10px rgba(150, 148, 148, 0.7);
+}
+/*********************project end*************************/

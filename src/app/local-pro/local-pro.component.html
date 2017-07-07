@@ -1,13 +1,13 @@
-<section>
+<section class="list-project" [class.manage]="pattern==='manage'">
   <header class="list-header">
     <button class="empty-button plain border"
-    (click)="add($event)"
-    *ngIf="projects.length">
+            (click)="add($event)"
+            *ngIf="projects.length">
       <i></i>添加项目
     </button>
-    <button class="plain">管理</button>
+    <button class="plain" (click)="manage($event)">{{pattern==='manage'?'取消管理':'管理'}}</button>
   </header>
-  <div *ngIf="addStatus" class="horizontal add-frame">
+  <div *ngIf="pattern==='add'" class="horizontal add-frame" [class.active]="!selectProject.id">
     <com-baseinfo
       (cancelAdd)="cancel()"
       [project]="selectProject"
@@ -16,11 +16,14 @@
   <app-local-pro-item
     *ngFor="let project of projects"
     (click)="clickProject($event,project)"
+    class="project-item"
+    [class.manage]="manageIds.indexOf(project['id']) > -1"
+    [class.selected]="selectProject && selectProject.id===project.id"
     [project]="project"></app-local-pro-item>
   <button
     class="empty-button plain border"
     (click)="add($event)"
-    *ngIf="!addStatus && !projects.length">
+    *ngIf="pattern!=='add' && !projects.length">
     <i></i>添加项目
   </button>
 </section>

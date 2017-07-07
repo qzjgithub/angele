@@ -3,6 +3,7 @@ import {AppState} from "../../control/app.reducer";
 import {Store} from "redux";
 import {AppStore} from "../../control/app.store";
 import {getPosition} from "../../control/common/common.reducer";
+import {getCurrentProject} from "../../control/project/project.reducer";
 
 @Component({
   selector: 'app-position',
@@ -21,7 +22,8 @@ export class PositionComponent implements OnInit {
   }
   updateState(){
     const state = this.store.getState();
-    this.position = getPosition(state);
+    let project = getCurrentProject(state);
+    this.position = [project ? project.name : ''];
   }
 
 }

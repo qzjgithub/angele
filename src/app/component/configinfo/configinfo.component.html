@@ -34,7 +34,7 @@
     {{pattern==='add'?'取消':'重置'}}
   </button>
   </footer>
-  <aside *ngIf="config.length || pattern==='add'" class="form-aside button-aside">
+  <aside *ngIf="config.length && pattern!=='add'" class="form-aside button-aside">
     <div><i class="big-arrow"></i></div>
     <ul>
       <li>
