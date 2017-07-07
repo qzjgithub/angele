@@ -138,6 +138,9 @@ button.border:hover{
 .form-content{
   position: relative;
 }
+.form-content>ul{
+  padding-left: 64px;
+}
 .form-content label{
   display: inline-block;
   width: 100px;
@@ -158,11 +161,13 @@ button.border:hover{
 .input-frame{
   display: inline-block;
   position: relative;
+  width: 50%;
 }
 .input-item{
   height: 32px;
   line-height: 29px;
-  width: 200px;
+  min-width: 200px;
+  width: 100%;
   margin: 0;
   padding: 0;
   border: 1px solid #999999;
@@ -334,7 +339,7 @@ select style start
 select style end
  */
 .form-title{
-  font-size: 16px;
+  font-size: 20px;
   margin: 16px;
 }
 /**
@@ -343,7 +348,7 @@ form-aside start
 .form-aside{
   position: absolute;
   right:16px;
-  top:2px;
+  top:4px;
 }
 .button-aside{
   color: #666666;
@@ -391,7 +396,7 @@ form-aside end
 form-footer start
  */
 .form-footer{
-  padding-left: 121px;
+  padding-left: 185px;
 }
 .form-footer>button{
   margin-right: 8px;
@@ -453,3 +458,23 @@ form-footer end
   right: 9px;
 }
 /*********************empty button end*************************/
+/*********************list header start*************************/
+.list-header{
+  margin:0 8px;
+}
+.list-header .empty-button{
+  transform: scale(0.6);
+  margin: 0 0 -9px -33px;
+  display: inline-block;
+  opacity: 1;
+  bottom: 0;
+}
+.list-header .empty-button:hover{
+  opacity:1;
+}
+.list-header button{
+  margin-left: -33px;
+  position:relative;
+  bottom: 4px;
+}
+/*********************list header end*************************/

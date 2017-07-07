@@ -1,14 +1,22 @@
 <section>
-  <app-local-pro-item
-    *ngFor="let project of projects"
-    (click)="clickProject($event,project)"
-    [project]="project"></app-local-pro-item>
+  <header class="list-header">
+    <button class="empty-button plain border"
+    (click)="add($event)"
+    *ngIf="projects.length">
+      <i></i>添加项目
+    </button>
+    <button class="plain">管理</button>
+  </header>
   <div *ngIf="addStatus" class="horizontal add-frame">
     <com-baseinfo
       (cancelAdd)="cancel()"
       [project]="selectProject"
       class="flex"></com-baseinfo>
   </div>
+  <app-local-pro-item
+    *ngFor="let project of projects"
+    (click)="clickProject($event,project)"
+    [project]="project"></app-local-pro-item>
   <button
     class="empty-button plain border"
     (click)="add($event)"

@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="form-content">
   <h2 class="form-title">配置信息</h2>
-  <ul *ngIf="config.length || pattern==='add'">
+  <ul [class.active]="config.length || pattern==='add'">
     <li>
       <label>模板名称</label>
       <com-select
@@ -20,7 +20,7 @@
   </ul>
   <footer *ngIf="(config.length || pattern==='add') && !disabled" class="form-footer">
     <button (click)="save($event)"
-            *ngIf="((form.controls['name'].dirty && this.param['name']['editable']) || form.controls['type'].dirty||form.controls['content'].dirty) && form.touched && !form.invalid"
+            *ngIf="((param['name']['editable'] && form.controls['name'].dirty ) || form.controls['type'].dirty||form.controls['content'].dirty) && form.touched && !form.invalid"
             class="plain border">
       保存
     </button><button *ngIf="pattern==='add' && form.dirty"
@@ -29,7 +29,8 @@
       清空
     </button><button (click)="reset($event)"
                      class="plain border"
-                     *ngIf="config.length && pattern!=='display'">
+                     *ngIf="pattern!=='display' || (pattern==='display' &&
+                     ((param['name']['editable'] && form.controls['name'].dirty ) || form.controls['type'].dirty||form.controls['content'].dirty))">
     {{pattern==='add'?'取消':'重置'}}
   </button>
   </footer>

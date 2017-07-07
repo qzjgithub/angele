@@ -37,7 +37,7 @@
       保存
     </button><button (click)="clear($event)"
                      class="plain border"
-                     *ngIf="pattern==='add'">
+                     *ngIf="pattern==='add' && form.dirty">
       清空
     </button><button (click)="cancel($event)"
                      class="plain border"
@@ -45,7 +45,7 @@
       取消
     </button><button (click)="reset($event)"
                      class="plain border"
-                     *ngIf="pattern=='edit'">
+                     *ngIf="pattern=='edit' || (pattern==='display' && form.dirty)">
       重置
     </button>
   </footer>

@@ -64,7 +64,7 @@ export class ConfiginfoComponent implements OnInit {
   ngOnInit() {
     this.setData();
     //生成新的一份project数据，可用于编辑
-    this.editConfig = Object.assign({},this.config[0]);
+    this.editConfig = this.config.length ? Object.assign({}, this.config[0]):{id:'',name:'',type:'',content:''};
     util.setParamByKey('name',{data: this.getNameSelectData()},this.param);
     util.setValue(this.editConfig, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
@@ -154,11 +154,11 @@ export class ConfiginfoComponent implements OnInit {
    * 重置表单
    */
   reset(event){
+    this.togglePattern(null,this.pattern);
     // this.editConfig = this.data[this.editConfig.name];
     this.form.reset(this.editConfig);
-    this.pattern = 'display';
-    this.togglePattern(null,this.pattern);
     this.param['name']['editable'] && util.setParamByKey('name',{ editable: false },this.param);
+    this.pattern = 'display';
     event.stopPropagation();
   }
 
@@ -174,10 +174,10 @@ export class ConfiginfoComponent implements OnInit {
    */
   add(event){
     this.pattern = 'add';
-    this.form.reset({id:'',name:'',type:'',content:''});
     util.setParamByKey('name',{ editable: true ,pattern:'edit'},this.param);
     util.setParamByKey('type',{ pattern:'edit'},this.param);
     util.setParamByKey('content',{ pattern:'edit'},this.param);
+    this.form.reset({id:'',name:'',type:'',content:''});
     event.stopPropagation();
   }
 

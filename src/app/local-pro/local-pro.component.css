@@ -1,6 +1,9 @@
 .add-frame{
   padding:16px;
-  border:1px solid #999999;
+  border:1px solid #cccccc;
   box-sizing: border-box;
   margin: 8px;
+}
+section{
+  min-width: 948px;
 }

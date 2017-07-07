@@ -33,5 +33,5 @@ let project: Project = {
   ]
 }
 export const projects: Project[] = [
-  // project
+  project
 ]

@@ -4,3 +4,12 @@
 .empty-button{
   transform: scale(0.6);
 }
+textarea{
+  height: 272px;
+}
+.form-content>ul{
+  display: none;
+}
+.form-content>ul.active{
+  display: block;
+}
