@@ -3,7 +3,7 @@
     <span class="arrow"
       *ngIf="node.children && node.children.length"
       (click)="troggleFold(node)">
-      <i [class.active]="node.unfold"></i>
+      <i [class.active]="node.unfold" class="middle-arrow"></i>
     </span>
     <span class="name">{{node.name}}</span>
   </div>
