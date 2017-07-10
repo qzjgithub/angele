@@ -20,6 +20,7 @@ import { SelectComponent } from './component/select/select.component';
 import { TextareaComponent } from './component/textarea/textarea.component';
 import { BaseinfoComponent } from './component/baseinfo/baseinfo.component';
 import { ConfiginfoComponent } from './component/configinfo/configinfo.component';
+import { PopComponent } from './component/pop/pop.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -41,7 +42,8 @@ const routes: Routes = [
     SelectComponent,
     TextareaComponent,
     BaseinfoComponent,
-    ConfiginfoComponent
+    ConfiginfoComponent,
+    PopComponent
   ],
   imports: [
     BrowserModule,

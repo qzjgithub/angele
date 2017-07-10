@@ -116,6 +116,12 @@ button.plain{
 button.plain:hover{
   color: #222222;
 }
+button.hover-border:hover{
+  border:1px solid rgba(0,0,0,0);
+}
+button.hover-border:hover{
+  border:1px solid #999999;
+}
 button.border{
   border: 1px solid #999999;
 }
@@ -514,3 +520,59 @@ form-footer end
   background: rgba(0,0,0,0.4);
 }
 /*********************scroll end*************************/
+/*********************pop start*************************/
+.normal-close{
+  display: inline-block;
+  transform: rotate(45deg);
+  transition: transform linear 500ms;
+  transform-origin: left center;
+  cursor: pointer;
+}
+.normal-close:hover{
+  transform: rotate(405deg);
+}
+.normal-close:before{
+  content: '';
+  height: 15px;
+  display: inline-block;
+  border-right: 1px solid #666666;
+}
+.normal-close:after{
+  content: '';
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  border-bottom: 1px solid #666666;
+  position: relative;
+  bottom: 7px;
+  right: 8px;
+}
+
+.pop-frame{
+  position: absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+}
+.pop-body{
+  background-color: #ffffff;
+  min-width: 300px;
+  text-align: center;
+  border: 1px solid #cccccc;
+  padding: 8px 0;
+}
+.pop-body>header{
+  text-align: left;
+  padding: 0 9px;
+  position: relative;
+}
+.pop-body>header>i.normal-close{
+  position: absolute;
+  right: 0;
+}
+.pop-body>article{
+  min-height: 50px;
+  padding: 8px;
+}
+/*********************pop end*************************/

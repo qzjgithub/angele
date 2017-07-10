@@ -35,6 +35,8 @@ export class LocalProComponent implements OnInit {
    */
   manageIds: Array<string>;
 
+  popData: Object;
+
   constructor(@Inject(AppStore) private store: Store<AppState>
   ,private projectService: ProjectService) {
     store.subscribe(() => this.updateState());
@@ -43,6 +45,14 @@ export class LocalProComponent implements OnInit {
     this.selectProject = null;
     this.pattern = 'display';
     this.manageIds = [];
+    this.popData = {
+      title: '提示',
+      content: '确认删除吗？',
+      button:[
+        {key:'cancel',text:'取消'},
+        {key:'confirm',text:'确认'}
+      ]
+    }
   }
 
   /**

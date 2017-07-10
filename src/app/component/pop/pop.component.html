@@ -1,0 +1,9 @@
+<div class="pop-frame box_center">
+  <section class="pop-body">
+    <header><span>{{param.title}}</span><i class="normal-close"></i></header>
+    <article class="box_center">{{param.content}}</article>
+    <footer>
+      <button *ngFor="let btn of param.button" class="plain hover-border">{{btn.text}}</button>
+    </footer>
+  </section>
+</div>
