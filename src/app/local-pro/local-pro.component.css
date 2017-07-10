@@ -5,7 +5,7 @@
   margin: 8px;
 }
 .add-frame.active{
-  box-shadow: 0 0 10px rgba(150, 148, 148, 0.7);
+  box-shadow: 0 0 1px rgba(150, 148, 148, 0.7);
 }
 section{
   min-width: 948px;

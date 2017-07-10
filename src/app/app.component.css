@@ -9,7 +9,7 @@
 }
 .navLinks a{
   height: 25px;
-  border-right: 1px solid #cccccc;
+  /*border-right: 1px solid #cccccc;*/
   display: inline-block;
   line-height: 25px;
   margin-top: 7px;

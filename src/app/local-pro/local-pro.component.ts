@@ -114,9 +114,8 @@ export class LocalProComponent implements OnInit {
   /**
    * 取消添加事件
    */
-  cancel(event){
+  cancel(){
     this.pattern = 'display';
-    event.stopPropagation();
   }
 
   /**

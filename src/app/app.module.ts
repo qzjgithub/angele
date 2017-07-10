@@ -21,10 +21,12 @@ import { TextareaComponent } from './component/textarea/textarea.component';
 import { BaseinfoComponent } from './component/baseinfo/baseinfo.component';
 import { ConfiginfoComponent } from './component/configinfo/configinfo.component';
 import { PopComponent } from './component/pop/pop.component';
+import { UserComponent } from './user/user.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
-  {path: 'localPro',component: LocalProComponent}
+  {path: 'localPro',component: LocalProComponent},
+  {path: 'user', component: UserComponent}
 ]
 
 
@@ -43,7 +45,8 @@ const routes: Routes = [
     TextareaComponent,
     BaseinfoComponent,
     ConfiginfoComponent,
-    PopComponent
+    PopComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

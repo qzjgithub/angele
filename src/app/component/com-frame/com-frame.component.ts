@@ -45,7 +45,7 @@ export class ComFrameComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.data['modify_time'] = util.setDateFormat(this.data['modify_time']);
+    if(this.data['modify_time'] instanceof Date) this.data['modify_time'] = util.setDateFormat(this.data['modify_time']);
   }
 
   /**
