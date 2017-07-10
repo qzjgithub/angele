@@ -473,15 +473,20 @@ form-footer end
   opacity:1;
 }
 .list-header button{
-  margin-left: -33px;
   position:relative;
   bottom: 4px;
+}
+.list-header button:nth-child(2){
+  margin-left: -25px;
 }
 /*********************list header end*************************/
 /*********************project start*************************/
 .list-project.manage .form-content{
   pointer-events: none;
   cursor: default;
+}
+.list-project.manage .com-frame>aside:hover>ul.show{
+  margin-left:55px;
 }
 .project-item.manage section.com-frame{
   border-color: #4c96f3;
@@ -490,3 +495,22 @@ form-footer end
   box-shadow: 0 0 10px rgba(150, 148, 148, 0.7);
 }
 /*********************project end*************************/
+/*********************scroll start*************************/
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background: rgba(0,0,0,0.1);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: rgba(0,0,0,0.2);
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); */
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0,0,0,0.4);
+}
+/*********************scroll end*************************/
