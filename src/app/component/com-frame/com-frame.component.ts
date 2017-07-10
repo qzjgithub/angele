@@ -3,6 +3,7 @@ import * as util from '../../../com-util';
 import {AppState} from "../../../control/app.reducer";
 import {Store} from "redux";
 import {AppStore} from "../../../control/app.store";
+import * as pop from "../pop/pop.model";
 
 @Component({
   selector: 'com-frame',
@@ -25,6 +26,11 @@ export class ComFrameComponent implements OnInit {
    */
   brefIsDisplay: boolean;
 
+  /**
+   * 弹框数组
+   */
+  popData: Array<Object>;
+
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     //传进来的要展示的数据
     // this.data = {name:'project1',modify_time:'20170602',url:'project1',comment:'asdfasdfasdf as;dfj;asd ;awejf[saidjf fj ;dfj adj'}
@@ -35,6 +41,7 @@ export class ComFrameComponent implements OnInit {
     ];
     //默认展示简介
     this.brefIsDisplay = true;
+    this.popData = [];
   }
 
   ngOnInit() {
@@ -48,6 +55,27 @@ export class ComFrameComponent implements OnInit {
   toggleBref(event){
     this.brefIsDisplay = !this.brefIsDisplay;
     event.stopPropagation();
+  }
+
+  /**
+   * 删除项目
+   */
+  delete(event){
+    this.popData.push(util.deepAssign(pop.param,{content:"确认删除项目"+this.data['name']+"吗？"}));
+    event.stopPropagation();
+  }
+
+  /**
+   * 弹框的事件
+   */
+  popevent(event){
+    switch(event.key){
+      case 'confirm':
+      case 'cancel':
+      case 'close':
+      default:
+        this.popData.pop();
+    }
   }
 
 }

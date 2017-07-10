@@ -6,7 +6,8 @@ import {Project} from "../../control/project/project.model";
 import {getAllProjects} from "../../control/project/project.reducer";
 import {ProjectService} from "../../control/project/project.service";
 import * as ProjectActions from '../../control/project/project.action';
-import * as CommonActions from '../../control/common/common.action';
+import * as pop from '../component/pop/pop.model';
+import {deepAssign} from "../../com-util";
 
 @Component({
   selector: 'app-local-pro',
@@ -35,7 +36,10 @@ export class LocalProComponent implements OnInit {
    */
   manageIds: Array<string>;
 
-  popData: Object;
+  /**
+   * 弹框数组
+   */
+  popData: Array<Object>;
 
   constructor(@Inject(AppStore) private store: Store<AppState>
   ,private projectService: ProjectService) {
@@ -45,14 +49,7 @@ export class LocalProComponent implements OnInit {
     this.selectProject = null;
     this.pattern = 'display';
     this.manageIds = [];
-    this.popData = {
-      title: '提示',
-      content: '确认删除吗？',
-      button:[
-        {key:'cancel',text:'取消'},
-        {key:'confirm',text:'确认'}
-      ]
-    }
+    this.popData = [];
   }
 
   /**
@@ -117,8 +114,9 @@ export class LocalProComponent implements OnInit {
   /**
    * 取消添加事件
    */
-  cancel(){
+  cancel(event){
     this.pattern = 'display';
+    event.stopPropagation();
   }
 
   /**
@@ -136,6 +134,27 @@ export class LocalProComponent implements OnInit {
       // this.store.dispatch(ProjectActions.setDisabled(false));
     }
     event.stopPropagation();
+  }
+
+  /**
+   * 删除项目
+   */
+  delete(event){
+    this.popData.push(deepAssign(pop.param,{content:"确认删除选中的项目吗？"}));
+    event.stopPropagation();
+  }
+
+  /**
+   * 弹框的事件
+   */
+  popevent(event){
+    switch(event.key){
+      case 'confirm':
+      case 'cancel':
+      case 'close':
+      default:
+        this.popData.pop();
+    }
   }
 
 }

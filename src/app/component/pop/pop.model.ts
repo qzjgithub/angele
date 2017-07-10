@@ -7,5 +7,6 @@ export const param = {
   button:[
     {key:'cancel',text:'取消'},
     {key:'confirm',text:'确认'}
-    ]
+    ],
+  active: true
 }

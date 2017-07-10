@@ -11,7 +11,7 @@
         <button class="plain">启动</button>
       </li>
       <li>
-        <button class="plain">删除</button>
+        <button class="plain" (click)="delete($event)">删除</button>
       </li>
       <li>
         <button class="plain">接口</button>
@@ -19,3 +19,4 @@
     </ul>
   </aside>
 </section>
+<pop *ngFor="let pop of popData" [param]="pop" (btnclick)="popevent($event)"></pop>
