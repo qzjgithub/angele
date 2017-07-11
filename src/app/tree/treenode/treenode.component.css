@@ -8,34 +8,28 @@ section{
 }
 .node-child{
   margin-left: 8px;
+  height:0;
+  transition: height ease 500ms;
+  overflow: hidden;
 }
 
 .arrow{
   display: inline-block;
   cursor: pointer;
-  /*width: 12px;
-  height: 30px;*/
 }
 .arrow>i{
   transform: rotate(-90deg);
   transition: transform ease 500ms;
-  /*display: inline-block;
-  border-width: 1px 5px 1px 5px;
-  border-style: solid;
-  border-color: #d5d5d5;
-  margin-left: 1px;
-  margin-bottom: 4px;*/
 }
 .arrow>i.active{
   transform: rotate(0);
-  /*margin-left: 0;
-  margin-bottom: 0;
-  border-color: transparent;
-  border-width: 6px 6px 0 6px;
-  border-top-color: #d5d5d5;
-  border-style: solid dashed dashed dashed;*/
 }
 
 .name{
   margin-left: 8px;
+  cursor: pointer;
+}
+
+section.leaf .name{
+  margin-left:27px;
 }

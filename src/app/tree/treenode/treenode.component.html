@@ -1,13 +1,13 @@
-<section>
+<section [class.leaf]="!node.children || !node.children.length">
   <div class="node-name" (dblclick)="troggleFold(node)">
     <span class="arrow"
       *ngIf="node.children && node.children.length"
-      (click)="troggleFold(node)">
-      <i [class.active]="node.unfold" class="middle-arrow"></i>
+      (click)="troggleFold($event,node)">
+      <i [class.active]="arrowActive" class="middle-arrow"></i>
     </span>
     <span class="name">{{node.name}}</span>
   </div>
-  <ul *ngIf="node.children && node.children.length && node.unfold" class="node-child">
+  <ul *ngIf="node.children && node.children.length && node.unfold" class="node-child" #children>
     <li *ngFor="let cnode of node.children"><treenode [node]="cnode"></treenode></li>
   </ul>
 </section>
