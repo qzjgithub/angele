@@ -1,0 +1,98 @@
+.form-content
+  position: relative
+
+.form-content>ul
+  padding-left: 64px
+
+.form-content label
+  display: inline-block
+  width: 100px
+  text-align: left
+  vertical-align: top
+  margin-top: 2px
+  margin-left: bl2 px
+
+.input-frame.required:before
+  content: '*'
+  color: er_cl
+  position: absolute
+  left: - bl2 px
+
+.input-frame.display.required:before
+  display: none
+
+.input-frame
+  display: inline-block
+  position: relative
+  width: 50%
+
+.input-item
+  height: 32px
+  line-height: 29px
+  min-width: 200px
+  width: 100%
+  margin: 0
+  padding: 0
+  border: fm_bd
+  text-indent: bl px
+  color: fm_cl
+  box-sizing: border-box
+  background-color: transparent
+
+.input-item.error
+  border-color: er_cl
+
+.input-item:focus
+  outline: none
+  border: fm_bd
+
+.input-item:hover
+  border: fm_bd
+
+.input-frame.display .input-item
+  border: fm_dp_bd
+
+.input-item[disabled],
+.input-item.disabled
+  background-color: fm_db_bg_cl
+
+.input-item.error[disabled]:hover,
+.input-item.error.disabled:hover
+  border: fm_er_bd
+
+.input-item.error[disabled]:focus,
+.input-item.error.disabled:focus
+  border: fm_er_bd
+
+.input-frame.display .input-item[disabled],
+.input-frame.display .input-item.disabled
+  background-color: transparent
+
+.input-frame.display .input-item:hover
+  border: fm_bd
+
+.input-frame.display .input-item:focus
+  border: fm_bd
+
+.input-frame.display .input-item.error
+  border: fm_er_bd
+
+.input-frame.display .input-item.error:hover
+  border: fm_bd
+
+.input-frame.display .input-item.error:focus
+  border: fm_bd
+
+.input-frame.display .input-item[disabled]:hover,
+.input-frame.display .input-item.disabled:hover
+  border: fm_dp_bd
+
+.input-frame.display .input-item[disabled]:focus,
+.input-frame.display .input-item.disabled:focus
+  border: fm_dp_bd
+
+.error-msg
+  color: er_cl
+
+.input-footer
+  padding: (bl)px 0

@@ -1,0 +1,38 @@
+/**
+  ar = arrow
+  li = line
+  cl = color
+ */
+//箭头线颜色
+ar_li_cl = #999999
+
+//箭头线
+ar_li = 1px solid ar_li_cl
+
+//生成默认向下的箭头
+arrow(w,d)
+  display: block
+  margin: auto
+  width: w px
+  &:before
+    content: ''
+    border-bottom: ar_li
+    width: (w/2)px
+    transform: rotate(d deg)
+    display: inline-block
+    transform-origin: right bottom
+  &:after
+    content: ''
+    border-bottom: ar_li
+    width: (w/2)px
+    transform: rotate(- d deg)
+    display: inline-block
+    transform-origin: left bottom
+
+//大箭头
+.big-arrow
+  arrow(20,30)
+
+//中等箭头
+.middle-arrow
+  arrow(16,45)

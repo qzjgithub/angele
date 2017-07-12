@@ -1,0 +1,49 @@
+/**
+  bt = button
+
+  cl = color
+  ht = height
+  wd = width
+
+  hv = hover
+ */
+//一般按钮高度
+bt_ht = 25
+
+//一般按钮最小宽度
+bt_min_wd = 55
+
+//按钮文字颜色
+bt_cl = #666666
+
+//按钮hover文字颜色
+bt_hv_cl = #222222
+
+button
+  height: bt_ht px
+  width: auto
+  min-width: bt_min_wd px
+  background-color: transparent
+  border: 0
+  cursor: pointer
+
+button:focus
+  outline: none
+
+button.plain
+  color: bt_cl
+
+button.plain:hover
+  color: bt_hv_cl
+
+button.hover-border:hover
+  border: 1px solid rgba(0,0,0,0)
+
+button.hover-border:hover
+  border: fm_bd
+
+button.border
+  border: fm_bd
+
+button.border:hover
+  border-color: fm_hv_bd_cl

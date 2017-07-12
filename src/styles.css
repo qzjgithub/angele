@@ -1,6 +1,45 @@
-/**************variables start**************/
-/**************variables end**************/
-/* You can add global styles to this file, and also import other style files */
+.big-arrow {
+  display: block;
+  margin: auto;
+  width: 20px;
+}
+.big-arrow:before {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 10px;
+  transform: rotate(30deg);
+  display: inline-block;
+  transform-origin: right bottom;
+}
+.big-arrow:after {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 10px;
+  transform: rotate(-30deg);
+  display: inline-block;
+  transform-origin: left bottom;
+}
+.middle-arrow {
+  display: block;
+  margin: auto;
+  width: 16px;
+}
+.middle-arrow:before {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 8px;
+  transform: rotate(45deg);
+  display: inline-block;
+  transform-origin: right bottom;
+}
+.middle-arrow:after {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 8px;
+  transform: rotate(-45deg);
+  display: inline-block;
+  transform-origin: left bottom;
+}
 html,
 body {
   height: 100%;
@@ -27,9 +66,7 @@ i {
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 12px;
   font-style: normal;
-  letter-spacing: 1px;
   font-weight: normal;
 }
 body,
@@ -61,7 +98,6 @@ button {
 input {
   padding-bottom: 2px;
 }
-/*********************box start*************************/
 .horizontal {
   display: -moz-box;
   display: -webkit-box;
@@ -69,7 +105,6 @@ input {
   -moz-box-orient: horizontal;
   -webkit-box-orient: horizontal;
   -ms-flex-direction: row;
-  -ms-flex-wrap: none;
 }
 .vertical {
   display: -moz-box;
@@ -78,7 +113,6 @@ input {
   -ms-flex-direction: column;
   -moz-box-orient: vertical;
   -webkit-box-orient: vertical;
-  -ms-flex-wrap: none;
 }
 .box_center {
   display: -webkit-box;
@@ -126,52 +160,34 @@ input {
   -webkit-box-flex: 1;
   -ms-flex: 1;
 }
-/*********************box end*************************/
-/*********************arrow start*************************/
-.big-arrow {
-  display: block;
-  margin: auto;
-  width: 20px;
+.content {
+  height: 100%;
+  overflow: auto;
 }
-.big-arrow:before {
-  content: '';
-  border-bottom: 1px solid #999;
-  width: 10px;
-  transform: rotate(30deg);
+.content-header {
+  width: 100%;
+  height: 40px;
+}
+.navLinks {
+  padding-left: 8px;
+}
+.navLinks a {
+  height: 25px;
   display: inline-block;
-  transform-origin: right bottom;
+  line-height: 25px;
+  margin-top: 7px;
+  padding: 0 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #222;
 }
-.big-arrow:after {
-  content: '';
-  border-bottom: 1px solid #999;
-  width: 10px;
-  transform: rotate(-30deg);
-  display: inline-block;
-  transform-origin: left bottom;
+.navLinks a.active {
+  border: 1px solid #ccc;
 }
-.middle-arrow {
-  display: block;
-  margin: auto;
-  width: 16px;
+.container {
+  min-width: 600px;
+  overflow: auto;
 }
-.middle-arrow:before {
-  content: '';
-  border-bottom: 1px solid #999;
-  width: 8px;
-  transform: rotate(45deg);
-  display: inline-block;
-  transform-origin: right bottom;
-}
-.middle-arrow:after {
-  content: '';
-  border-bottom: 1px solid #999;
-  width: 8px;
-  transform: rotate(-45deg);
-  display: inline-block;
-  transform-origin: left bottom;
-}
-/*********************arrow end*************************/
-/*********************button start*************************/
 button {
   height: 25px;
   width: auto;
@@ -201,19 +217,6 @@ button.border {
 button.border:hover {
   border-color: #666;
 }
-/*********************button end*************************/
-/*********************tree start*************************/
-.tree {
-  width: 200px;
-  display: block;
-  border: 1px solid #ccc;
-}
-.container {
-  min-width: 600px;
-  overflow: auto;
-}
-/*********************tree end*************************/
-/*********************form start*************************/
 .form-content {
   position: relative;
 }
@@ -313,6 +316,14 @@ button.border:hover {
 .input-footer {
   padding: 8px 0;
 }
+.tree {
+  display: block;
+  border: 1px solid #ccc;
+}
+.tree>div {
+  width: 200px;
+}
+/*********************form start*************************/
 /**
 select style start
  */

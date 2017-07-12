@@ -1,0 +1,168 @@
+html,
+body
+  height: 100%
+  width: 100%
+  overflow: hidden
+
+body
+  min-width: 800px
+  overflow: auto
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+li,
+ul,
+a,
+p,
+i
+  margin: 0
+  padding: 0
+  list-style: none
+  font-style: normal
+  font-weight: normal
+
+body,
+form,
+div,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+table,
+tr,
+th,
+td,
+p,
+input,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+input,
+textarea,
+button
+  font: 14px "微软雅黑"
+  letter-spacing: 0.5px
+
+input
+  padding-bottom: 2px
+
+/*********************box start*************************/
+//水平布局
+.horizontal
+  display: -moz-box
+  display: -webkit-box
+  display: -ms-flexbox
+  -moz-box-orient: horizontal
+  -webkit-box-orient: horizontal
+  -ms-flex-direction: row
+  //-ms-flex-wrap: none
+
+//垂直布局
+.vertical
+  display: -moz-box
+  display: -webkit-box
+  display: -ms-flexbox
+  -ms-flex-direction: column
+  -moz-box-orient: vertical
+  -webkit-box-orient: vertical
+  //-ms-flex-wrap: none
+
+//剧中，默认水平布局
+.box_center
+  display: -webkit-box
+  display: -moz-box
+  display: -ms-flexbox
+  -webkit-box-align: center
+  -moz-box-align: center
+  -ms-flex-align: center
+  -webkit-align-items: center
+  align-items: center
+  -webkit-box-pack: center
+  -moz-box-pack: center
+  -ms-flex-pack: center
+  -o-box-pack: center
+  -o-box-align: center
+  -webkit-justify-content: center
+  justify-content: center
+
+//在布局方向上开始位置
+.box_align_start
+  -webkit-box-align: start
+  -moz-box-align: start
+  -o-box-align: start
+  -ms-flex-align: start
+
+//在布局方向的结束位置
+.box_align_end
+  -webkit-box-align: end
+  -moz-box-align: end
+  -o-box-align: end
+  -ms-flex-align: end
+
+//在与布局方向垂直的方向的开始位置
+.box_pack_start
+  -webkit-box-pack: start
+  -moz-box-pack: start
+  -o-box-pack: start
+  -ms-flex-pack: start
+
+//在于布局方向垂直方向的结束位置
+.box_pack_end
+  -webkit-box-pack: end
+  -moz-box-pack: end
+  -o-box-pack: end
+  -ms-flex-pack: end
+
+//模块占一份比例
+.flex
+  -moz-box-flex: 1
+  -webkit-box-flex: 1
+  -ms-flex: 1
+
+/*********************box end*************************/
+//右边面板样式
+//右边面板框
+.content
+  height:100%
+  overflow: auto
+
+//右边面板框头部
+.content-header
+  width: 100%
+  height: 40px
+
+//导航样式
+.navLinks
+  padding-left: bl px
+
+.navLinks a
+  height: 25px
+  display: inline-block
+  line-height: 25px
+  margin-top: 7px
+  padding: 0 (bl2)px
+  text-decoration:none
+  font-size: 15px
+  color: pn_cl
+
+.navLinks a.active
+  border: pn_bd
+
+//导航切换的内容
+.container
+  min-width: 600px
+  overflow: auto
