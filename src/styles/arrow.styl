@@ -2,6 +2,8 @@
   ar = arrow
   li = line
   cl = color
+
+  rtag = right angle
  */
 //箭头线颜色
 ar_li_cl = #999999
@@ -10,6 +12,7 @@ ar_li_cl = #999999
 ar_li = 1px solid ar_li_cl
 
 //生成默认向下的箭头
+//w 总箭头宽度，d 一边箭头倾斜角度
 arrow(w,d)
   display: block
   margin: auto
@@ -36,3 +39,15 @@ arrow(w,d)
 //中等箭头
 .middle-arrow
   arrow(16,45)
+
+//生成边线构成的箭头,箭头构成角度一定是直角
+//w 箭头一边的宽度 d 整个箭头旋转角度
+rtagArrow(w,d)
+  height: w px
+  width: w px
+  border-right: fm_bd
+  border-bottom: fm_bd
+  transform: rotate(d deg)
+
+.rtag_arrow
+  rtagArrow(5,45)

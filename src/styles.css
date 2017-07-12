@@ -40,6 +40,13 @@
   display: inline-block;
   transform-origin: left bottom;
 }
+.rtag_arrow {
+  height: 5px;
+  width: 5px;
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  transform: rotate(45deg);
+}
 html,
 body {
   height: 100%;
@@ -231,6 +238,39 @@ button.border:hover {
   margin-top: 2px;
   margin-left: 16px;
 }
+.form-title {
+  font-size: 20px;
+  margin: 16px;
+}
+.form-aside {
+  position: absolute;
+  right: 16px;
+  top: 4px;
+}
+.button-aside {
+  color: #666;
+  opacity: 0.4;
+  width: 55px;
+  z-index: 200;
+}
+.button-aside:hover {
+  opacity: 1;
+}
+.button-aside>div {
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.button-aside>ul {
+  height: 0;
+  overflow: hidden;
+  transition: height linear 500ms;
+}
+.form-footer {
+  padding-left: 185px;
+}
+.form-footer>button {
+  margin-right: 8px;
+}
 .input-frame.required:before {
   content: '*';
   color: #f00;
@@ -316,17 +356,6 @@ button.border:hover {
 .input-footer {
   padding: 8px 0;
 }
-.tree {
-  display: block;
-  border: 1px solid #ccc;
-}
-.tree>div {
-  width: 200px;
-}
-/*********************form start*************************/
-/**
-select style start
- */
 .select-frame {
   position: absolute;
   width: 100%;
@@ -352,17 +381,9 @@ select style start
 .select-text>i {
   float: right;
   display: inline-block;
-  height: 5px;
-  width: 5px;
-  border-right: 1px solid #999;
-  border-bottom: 1px solid #999;
-  transform: rotate(45deg);
   margin-top: 10px;
   margin-right: 10px;
 }
-/**
-小三角的样式 start
- */
 .select-text>i:focus {
   opacity: 1;
 }
@@ -402,9 +423,6 @@ select style start
 .input-frame.display .select-text.disabled:focus>i {
   opacity: 0;
 }
-/**
-小三角的样式 end
- */
 .select-list {
   border: 1px solid #999;
   border-top: 0;
@@ -422,50 +440,12 @@ select style start
 .select-list>li:hover {
   background-color: #f0f8ff;
 }
-/**
-select style end
- */
-.form-title {
-  font-size: 20px;
-  margin: 16px;
+.tree {
+  display: block;
+  border: 1px solid #ccc;
 }
-/**
-form-aside start
- */
-.form-aside {
-  position: absolute;
-  right: 16px;
-  top: 4px;
-}
-.button-aside {
-  color: #666;
-  opacity: 0.4;
-  width: 55px;
-  z-index: 200;
-}
-.button-aside:hover {
-  opacity: 1;
-}
-.button-aside>div {
-  box-sizing: border-box;
-  cursor: pointer;
-}
-.button-aside>ul {
-  height: 0;
-  overflow: hidden;
-  transition: height linear 500ms;
-}
-/**
-form-aside end
- */
-/**
-form-footer start
- */
-.form-footer {
-  padding-left: 185px;
-}
-.form-footer>button {
-  margin-right: 8px;
+.tree>div {
+  width: 200px;
 }
 /**
 form-footer end
