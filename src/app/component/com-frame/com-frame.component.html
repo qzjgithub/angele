@@ -5,7 +5,7 @@
     <ng-content *ngIf="!brefIsDisplay"></ng-content>
   </article>
   <aside>
-    <div><i class="small-arrow" (click)="toggleBref($event)" [class.toggle]="!brefIsDisplay"></i></div>
+    <div><i class="tail-arrow" (click)="toggleBref($event)" [class.toggle]="!brefIsDisplay"></i></div>
     <ul [class.show]="!brefIsDisplay">
       <li>
         <button class="plain">启动</button>

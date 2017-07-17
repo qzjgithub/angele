@@ -19,7 +19,7 @@
        [class.disabled]="param['disabled'] || !valueKeys.length"
        [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
       >
-      <i class="rtag_arrow"></i>
+      <i class="rtag-arrow"></i>
       {{valueKeys.length ? (data[param.value] ? data[param.value]['text'] : param.placeholder) : '暂无数据'}}
     </p>
     <ul *ngIf="status" class="select-list">

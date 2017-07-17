@@ -43,11 +43,28 @@ arrow(w,d)
 //生成边线构成的箭头,箭头构成角度一定是直角
 //w 箭头一边的宽度 d 整个箭头旋转角度
 rtagArrow(w,d)
+  display: inline-block
   height: w px
   width: w px
   border-right: fm_bd
   border-bottom: fm_bd
   transform: rotate(d deg)
 
-.rtag_arrow
+//默认直角箭头样式
+.rtag-arrow
   rtagArrow(5,45)
+
+//带尾部的箭头
+tailArrow(w,d1,d2)
+  rtagArrow(w,d1)
+  &:before
+    content: ''
+    display: block
+    width: w px
+    transform: rotate(d2 deg)
+    transform-origin: left bottom
+    border: fm_bd
+
+//默认带尾箭头样式
+.tail-arrow
+  tailArrow(8,0,42)
