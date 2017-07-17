@@ -5,8 +5,45 @@
 //树状控件宽度
 tr_wd = 200
 
+//最外面的树节点 样式
 .tree
+  position: relative
   display: block
   border: pn_bd
   &>div
     width: tr_wd px
+    transition: margin-left linear (time)ms
+  &>div.hide
+    margin-left: - tr_wd px
+
+//树边上的控制按钮
+.tree-control
+  position: absolute
+  right: 4px
+  top: 0
+  &>span
+    opacity: op08
+    display: block
+    cursor: pointer
+    margin-top: 10px
+  &>span:hover
+    opacity: op1
+
+//关闭树节点
+.tree-off
+  &>i
+    transform: rotate(135deg)
+
+//全部收起树节点
+.tree-fold
+  position: relative
+  right: 2px
+
+//开启树节点
+.tree-on
+  position: absolute
+  top: 0
+  right: -12px
+  cursor: pointer
+  &>i
+    transform: rotate(-90deg)

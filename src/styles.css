@@ -40,12 +40,90 @@
   display: inline-block;
   transform-origin: left bottom;
 }
-.rtag_arrow {
+.fold-arrow>.fa-up {
+  display: block;
+  margin: auto;
+  width: 14px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1px;
+  height: 6px;
+}
+.fold-arrow>.fa-up:before {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 7px;
+  transform: rotate(30deg);
+  display: inline-block;
+  transform-origin: right bottom;
+}
+.fold-arrow>.fa-up:after {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 7px;
+  transform: rotate(-30deg);
+  display: inline-block;
+  transform-origin: left bottom;
+}
+.fold-arrow>.fa-up:before,
+.fold-arrow>.fa-up:after {
+  position: relative;
+  bottom: 9px;
+}
+.fold-arrow>.fa-down {
+  display: block;
+  margin: auto;
+  width: 14px;
+  border-bottom: 1px solid #ccc;
+  height: 6px;
+  transform: rotate(180deg);
+}
+.fold-arrow>.fa-down:before {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 7px;
+  transform: rotate(30deg);
+  display: inline-block;
+  transform-origin: right bottom;
+}
+.fold-arrow>.fa-down:after {
+  content: '';
+  border-bottom: 1px solid #999;
+  width: 7px;
+  transform: rotate(-30deg);
+  display: inline-block;
+  transform-origin: left bottom;
+}
+.fold-arrow>.fa-down:before,
+.fold-arrow>.fa-down:after {
+  position: relative;
+  bottom: 9px;
+}
+.rtag-arrow {
+  display: inline-block;
   height: 5px;
   width: 5px;
   border-right: 1px solid #999;
   border-bottom: 1px solid #999;
   transform: rotate(45deg);
+}
+.tail-arrow {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  border-right: 1px solid #999;
+  border-bottom: 1px solid #999;
+  transform: rotate(d1 deg);
+  display: block;
+}
+.tail-arrow:before {
+  content: '';
+  display: block;
+  width: 11px;
+  transform: rotate(45deg);
+  transform-origin: left bottom;
+  border-bottom: 1px solid #999;
+  position: relative;
+  bottom: 0.5px;
 }
 html,
 body {
@@ -380,7 +458,6 @@ button.border:hover {
 }
 .select-text>i {
   float: right;
-  display: inline-block;
   margin-top: 10px;
   margin-right: 10px;
 }
@@ -441,33 +518,67 @@ button.border:hover {
   background-color: #f0f8ff;
 }
 .tree {
+  position: relative;
   display: block;
   border: 1px solid #ccc;
 }
 .tree>div {
   width: 200px;
+  transition: margin-left linear 500ms;
+}
+.tree>div.hide {
+  margin-left: -200px;
+}
+.tree-control {
+  position: absolute;
+  right: 4px;
+  top: 0;
+}
+.tree-control>span {
+  opacity: 0.8;
+  display: block;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.tree-control>span:hover {
+  opacity: 1;
+}
+.tree-off>i {
+  transform: rotate(135deg);
+}
+.tree-fold {
+  position: relative;
+  right: 2px;
+}
+.tree-on {
+  position: absolute;
+  top: 0;
+  right: -12px;
+  cursor: pointer;
+}
+.tree-on>i {
+  transform: rotate(-90deg);
 }
 /**
 form-footer end
  */
 /*********************form end*************************/
 /*********************frame start*************************/
-.small-arrow {
-  display: block;
-  height: 8px;
-  width: 8px;
-  border-right: 1px solid #666;
-  border-bottom: 1px solid #666;
-  cursor: pointer;
-}
-.small-arrow:before {
-  content: '';
-  display: block;
-  width: 8px;
-  transform: rotate(42deg);
-  transform-origin: left bottom;
-  border: 1px solid #999;
-}
+/*.small-arrow
+  display: block
+  height: 8px
+  width: 8px
+  border-right: 1px solid #666666
+  border-bottom: 1px solid #666666
+  cursor: pointer
+
+.small-arrow:before
+  content: ''
+  display: block
+  width: 8px
+  transform: rotate(42deg)
+  transform-origin: left bottom
+  border: 1px solid #999999*/
 /*********************frame end*************************/
 /*********************empty button start*************************/
 .empty-button {
@@ -568,26 +679,41 @@ form-footer end
   transform-origin: center center;
   cursor: pointer;
 }
-.normal-close:hover {
-  transform: rotate(405deg);
-}
 .normal-close:before {
   content: '';
   height: 15px;
   display: inline-block;
-  border-right: 1px solid #666;
+  border-right: 1px solid #999;
   position: relative;
   left: 8px;
 }
 .normal-close:after {
   content: '';
   width: 15px;
-  height: 15px;
   display: inline-block;
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid #999;
   position: relative;
   bottom: 7px;
 }
+.normal-close:hover {
+  transform: rotate(405deg);
+}
+/*.normal-close:before
+  content: ''
+  height: 15px
+  display: inline-block
+  border-right: 1px solid #666666
+  position: relative
+  left: 8px
+
+.normal-close:after
+  content: ''
+  width: 15px
+  height: 15px
+  display: inline-block
+  border-bottom: 1px solid #666666
+  position: relative
+  bottom: 7px*/
 .pop-frame {
   position: fixed;
   top: 0;

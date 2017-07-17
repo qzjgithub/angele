@@ -1,5 +1,6 @@
 import {Project} from "./project.model";
 import {Config} from "../config/config.model";
+import {deepAssign} from "../../com-util";
 /**
  * Created by admin on 2017/6/15.
  */
@@ -33,5 +34,5 @@ let project: Project = {
   ]
 }
 export const projects: Project[] = [
-  project
+  project,deepAssign(project,{id:'2'}),deepAssign(project,{id:'3'})
 ]

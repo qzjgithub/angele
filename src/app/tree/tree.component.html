@@ -1,3 +1,18 @@
-<div>
+<div [class.hide]="close">
   <treenode *ngFor="let node of nodes" [node]="node"></treenode>
+  <aside class="tree-control">
+    <span class="tree-off"
+          (click)="toggleTree($event)">
+      <i class="tail-arrow"></i>
+    </span>
+    <span class="tree-fold fold-arrow" (click)="foldNode($event)">
+      <i class="fa-up"></i>
+      <i class="fa-down"></i>
+    </span>
+  </aside>
+  <span class="tree-on"
+        *ngIf="close"
+        (click)="toggleTree($event)">
+    <i class="big-arrow"></i>
+  </span>
 </div>

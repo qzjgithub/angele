@@ -11,8 +11,10 @@ ar_li_cl = #999999
 //箭头线
 ar_li = 1px solid ar_li_cl
 
-//生成默认向下的箭头
-//w 总箭头宽度，d 一边箭头倾斜角度
+/**
+  生成默认向下的箭头
+  w 总箭头宽度，d 一边箭头倾斜角度
+ */
 arrow(w,d)
   display: block
   margin: auto
@@ -32,6 +34,7 @@ arrow(w,d)
     display: inline-block
     transform-origin: left bottom
 
+
 //大箭头
 .big-arrow
   arrow(20,30)
@@ -40,8 +43,28 @@ arrow(w,d)
 .middle-arrow
   arrow(16,45)
 
-//生成边线构成的箭头,箭头构成角度一定是直角
-//w 箭头一边的宽度 d 整个箭头旋转角度
+//表示收缩折叠的图标
+.fold-arrow
+  &>.fa-up
+    arrow(14,30)
+    border-bottom: pn_bd
+    margin-bottom: 1px
+    height: 6px
+    &:before,&:after
+      position: relative
+      bottom:9px
+  &>.fa-down
+    arrow(14,30)
+    border-bottom: pn_bd
+    height: 6px
+    transform: rotate(180deg)
+    &:before,&:after
+      position: relative
+      bottom: 9px
+/**
+  生成边线构成的箭头,箭头构成角度一定是直角
+  w 箭头一边的宽度 d 整个箭头旋转角度
+ */
 rtagArrow(w,d)
   display: inline-block
   height: w px
@@ -54,17 +77,42 @@ rtagArrow(w,d)
 .rtag-arrow
   rtagArrow(5,45)
 
-//带尾部的箭头
-tailArrow(w,d1,d2)
+/**
+  带尾部的箭头
+ */
+tailArrow(w,d,tw,td)
   rtagArrow(w,d1)
+  display: block
   &:before
     content: ''
     display: block
-    width: w px
-    transform: rotate(d2 deg)
+    width: tw px
+    transform: rotate(td deg)
     transform-origin: left bottom
-    border: fm_bd
+    border-bottom: fm_bd
+    position: relative
+    bottom: 0.5px
 
 //默认带尾箭头样式
 .tail-arrow
-  tailArrow(8,0,42)
+  tailArrow(8,0,11,45)
+
+/**
+  生成十字
+ */
+cross(w)
+  display: inline-block
+  &:before
+    content: ''
+    height: w px
+    display: inline-block
+    border-right: fm_bd
+    position: relative
+    left: (w/2 + 0.5)px
+  &:after
+    content: ''
+    width: w px
+    display: inline-block
+    border-bottom: fm_bd
+    position: relative
+    bottom: (w/2 - 0.5)px
