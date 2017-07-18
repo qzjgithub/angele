@@ -22,6 +22,7 @@ import { BaseinfoComponent } from './component/baseinfo/baseinfo.component';
 import { ConfiginfoComponent } from './component/configinfo/configinfo.component';
 import { PopComponent } from './component/pop/pop.component';
 import { UserComponent } from './user/user.component';
+import { ModulComponent } from './modul/modul.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -46,7 +47,8 @@ const routes: Routes = [
     BaseinfoComponent,
     ConfiginfoComponent,
     PopComponent,
-    UserComponent
+    UserComponent,
+    ModulComponent
   ],
   imports: [
     BrowserModule,

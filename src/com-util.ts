@@ -36,6 +36,8 @@ function merge(a, b){
       a[e] = b[e];
     }else if(b[e] instanceof Array){
       a[e] = b[e];
+    }else if(b[e] instanceof Date){
+      a[e] = b[e];
     }else if(b[e] instanceof Object){
       a[e] = deepAssign(a[e] instanceof Object ? a[e] : {},b[e]);
     } else {
