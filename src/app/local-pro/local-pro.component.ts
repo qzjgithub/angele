@@ -44,7 +44,8 @@ export class LocalProComponent implements OnInit {
   constructor(@Inject(AppStore) private store: Store<AppState>
   ,private projectService: ProjectService) {
     store.subscribe(() => this.updateState());
-    store.dispatch(ProjectActions.setProjects(projectService.getProjects()));
+    projectService.getAllProjects();
+    // store.dispatch(ProjectActions.setProjects(projectService.getAllProjects()));
     this.updateState();
     this.selectProject = null;
     this.pattern = 'display';

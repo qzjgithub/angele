@@ -3,7 +3,6 @@ import {Config} from "../config/config.model";
  * Created by admin on 2017/7/18.
  */
 export interface Project {
-  project_id: string;
   id: string;
   name: string;
   principal: string;
