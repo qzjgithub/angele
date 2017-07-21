@@ -30,6 +30,8 @@ export class BaseinfoComponent implements OnInit {
    */
   @Output() cancelAdd: EventEmitter<any> = new EventEmitter<any>();
 
+  @Output() confirmAdd: EventEmitter<any> = new EventEmitter<any>();
+
   /**
    * 编辑和展示的内容
    */
@@ -156,6 +158,9 @@ export class BaseinfoComponent implements OnInit {
    * 保存表单
    */
   save(event){
+    if(this.form.valid){
+      this.confirmAdd.emit(this.form.value);
+    }
     event.stopPropagation();
   }
 
