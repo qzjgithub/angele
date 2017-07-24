@@ -9,15 +9,18 @@ import {
 } from 'redux';
 import {ProjectsState, ProjectsReducer} from "./project/project.reducer";
 import {CommonState, CommonReducer} from "./common/common.reducer";
+import {ModulsState, ModulsReducer} from "./modul/modul.reducer";
 export * from './project/project.reducer';
 
 export interface AppState {
   projects: ProjectsState;
-  common: CommonState
+  moduls: ModulsState;
+  common: CommonState;
 }
 
 const rootReducer: Reducer<AppState> = combineReducers<AppState>({
   projects: ProjectsReducer,
+  moduls: ModulsReducer,
   common: CommonReducer
 });
 

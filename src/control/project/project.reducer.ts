@@ -81,7 +81,7 @@ export const getAllProjects = createSelector(
   ( entities: ProjectsEntities ) => Object.keys(entities)
     .map((projectId) => entities[projectId]));
 
-export const getCurrentId = createSelector(
+export const getCurrentProId = createSelector(
   getProjectsState,
   ( state: ProjectsState ) => state.currentProjectId);
 

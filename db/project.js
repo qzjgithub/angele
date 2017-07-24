@@ -65,6 +65,8 @@ window.projectdb = {
           if(err){
             reject();
           }else{
+            console.log(row);
+            window['moduldb'].createDb(row.id);
             resolve(row);
           }
         });
