@@ -13,6 +13,6 @@ export interface Project {
   path: string;
   port: number;
   status?: string;
-  limit?: string;
+  jurisdiction?: string;
   config?: Array<Config>;
 }

@@ -4,6 +4,8 @@ import {AppState} from "../../../control/app.reducer";
 import {Store} from "redux";
 import {AppStore} from "../../../control/app.store";
 import * as pop from "../pop/pop.model";
+import {ProjectService} from "../../../control/project/project.service";
+import * as ProjectActions from '../../../control/project/project.action';
 
 @Component({
   selector: 'com-frame',
@@ -31,7 +33,8 @@ export class ComFrameComponent implements OnInit {
    */
   popData: Array<Object>;
 
-  constructor(@Inject(AppStore) private store: Store<AppState>) {
+  constructor(@Inject(AppStore) private store: Store<AppState>
+    ,private projectService: ProjectService) {
     //传进来的要展示的数据
     // this.data = {name:'project1',modify_time:'20170602',url:'project1',comment:'asdfasdfasdf as;dfj;asd ;awejf[saidjf fj ;dfj adj'}
     //在右上角要展示的内容
@@ -45,7 +48,7 @@ export class ComFrameComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.data['modify_time'] instanceof Date) this.data['modify_time'] = util.setDateFormat(this.data['modify_time']);
+    if(new RegExp(/^\d+$/).test(this.data['modify_time'])) this.data['modify_time'] = util.setDateFormat(new Date(this.data['modify_time']));
   }
 
   /**
@@ -61,7 +64,13 @@ export class ComFrameComponent implements OnInit {
    * 删除项目
    */
   delete(event){
-    this.popData.push(util.deepAssign(pop.param,{content:"确认删除项目"+this.data['name']+"吗？"}));
+    this.popData.push(util.deepAssign(pop.param,{
+      content:"确认删除项目"+this.data['name']+"吗？",
+      data: {
+        operate: 'delete',
+        param: [this.data['id']]
+      }
+    }));
     event.stopPropagation();
   }
 
@@ -71,6 +80,11 @@ export class ComFrameComponent implements OnInit {
   popevent(event){
     switch(event.key){
       case 'confirm':
+        this.projectService.delete(event.data.param,()=>{
+          this.projectService.getAllProjects((rows)=>{
+            this.store.dispatch(ProjectActions.setProjects(rows));
+          });
+        });
       case 'cancel':
       case 'close':
       default:

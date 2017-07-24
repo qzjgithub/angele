@@ -11,7 +11,7 @@
   <div *ngIf="pattern==='add'" class="horizontal add-frame" [class.active]="!selectProject.id">
     <com-baseinfo
       (cancelAdd)="cancel()"
-      (confirmAdd)="confirmAdd($event)"
+      (confirmSave)="confirmAdd($event)"
       [project]="selectProject"
       class="flex"></com-baseinfo>
   </div>

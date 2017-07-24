@@ -35,13 +35,15 @@ export const ProjectsReducer =
         const projects = (<ProjectActions.SetProjectsAction>action).projects;
         let ids = [],entities = {};
         projects.map((e) => {
+          e.config = e.config || [];
           ids.push(e.id);
           entities[e.id] = e;
         });
+
         return {
-          ids: [ ...state.ids, ...ids ],
-          currentProjectId: state.currentProjectId,
-          entities: Object.assign({}, state.entities, entities),
+          ids: ids,
+          currentProjectId: ids.indexOf(state.currentProjectId)>-1?state.currentProjectId:null,
+          entities: entities,
           disabled: state.disabled
         };
       }

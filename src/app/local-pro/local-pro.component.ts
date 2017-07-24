@@ -43,9 +43,10 @@ export class LocalProComponent implements OnInit {
 
   constructor(@Inject(AppStore) private store: Store<AppState>
   ,private projectService: ProjectService) {
+    this.projects = [];
     store.subscribe(() => this.updateState());
-    store.dispatch(ProjectActions.setProjects(projectService.getAllProjects()));
-    this.updateState();
+    this.refresh();
+    // this.updateState();
     this.selectProject = null;
     this.pattern = 'display';
     this.manageIds = [];
@@ -58,6 +59,15 @@ export class LocalProComponent implements OnInit {
   updateState() {
     const state = this.store.getState();
     this.projects = getAllProjects(state);
+  }
+
+  /**
+   * 从数据库获取项目刷新
+   */
+  refresh(){
+    this.projectService.getAllProjects((rows)=>{
+      this.store.dispatch(ProjectActions.setProjects(rows));
+    });
   }
 
   ngOnInit() {
@@ -107,12 +117,17 @@ export class LocalProComponent implements OnInit {
       path: "",
       port: undefined,
       status: "",
-      limit: "",
+      jurisdiction: "",
     }
   }
 
   confirmAdd(event){
-    this.projectService.add(event);
+    event['create_time'] = new Date();
+    event['modify_time'] = new Date();
+    this.projectService.add(event,(row)=>{
+      this.pattern = 'display';
+      this.refresh();
+    });
   }
   /**
    * 取消添加事件
@@ -142,7 +157,13 @@ export class LocalProComponent implements OnInit {
    * 删除项目
    */
   delete(event){
-    this.popData.push(deepAssign(pop.param,{content:"确认删除选中的项目吗？"}));
+    this.popData.push(deepAssign(pop.param,{
+      content:"确认删除选中的项目吗？",
+      data: {
+        operate: 'delete',
+        param: this.manageIds
+      }
+    }));
     event.stopPropagation();
   }
 
@@ -152,6 +173,11 @@ export class LocalProComponent implements OnInit {
   popevent(event){
     switch(event.key){
       case 'confirm':
+        this.projectService.delete(event.data.param,()=>{
+          this.projectService.getAllProjects((rows)=>{
+            this.store.dispatch(ProjectActions.setProjects(rows));
+          });
+        });
       case 'cancel':
       case 'close':
       default:

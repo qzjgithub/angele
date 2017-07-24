@@ -30,7 +30,11 @@ export class BaseinfoComponent implements OnInit {
    */
   @Output() cancelAdd: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() confirmAdd: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * 确认添加项目的事件
+   * @type {EventEmitter<any>}
+   */
+  @Output() confirmSave: EventEmitter<any> = new EventEmitter<any>();
 
   /**
    * 编辑和展示的内容
@@ -103,8 +107,8 @@ export class BaseinfoComponent implements OnInit {
       dataType: 'number',
       type: 'input'
     }
-    this.param['limit'] = {
-      name:'limit',
+    this.param['jurisdiction'] = {
+      name:'jurisdiction',
       type: 'input'
     }
     this.param['create_user'] = {
@@ -159,7 +163,7 @@ export class BaseinfoComponent implements OnInit {
    */
   save(event){
     if(this.form.valid){
-      this.confirmAdd.emit(this.form.value);
+      this.confirmSave.emit(this.form.value);
     }
     event.stopPropagation();
   }
@@ -180,7 +184,7 @@ export class BaseinfoComponent implements OnInit {
       path: "",
       port: undefined,
       status: "",
-      limit: "",
+      jurisdiction: "",
     });
     event.stopPropagation();
   }

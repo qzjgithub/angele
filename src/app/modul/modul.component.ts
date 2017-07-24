@@ -1,5 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {Project} from "../../control/project/project.model";
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-modul',
@@ -7,14 +6,6 @@ import {Project} from "../../control/project/project.model";
   styleUrls: ['./modul.component.css']
 })
 export class ModulComponent implements OnInit {
-
-  /**
-   * 所属项目
-   */
-  @Input()
-  project: Project;
-
-
 
   constructor() { }
 

@@ -8,5 +8,6 @@ export const param = {
     {key:'cancel',text:'取消'},
     {key:'confirm',text:'确认'}
     ],
-  active: true
+  active: true,
+  data: null
 }

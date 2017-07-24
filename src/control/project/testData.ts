@@ -27,7 +27,7 @@ let project: Project = {
   path: "/project1/test1/",
   port: 8080,
   status: "stop",
-  limit: "忘了",
+  jurisdiction: "忘了",
   config: [
     // config1,
     // config2

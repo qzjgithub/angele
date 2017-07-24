@@ -25,7 +25,7 @@ export class PopComponent implements OnInit {
       case 'cancel':
         this.param['active'] = false;
       default:
-        this.btnclick.emit({key:key});
+        this.btnclick.emit({key:key, data: this.param['data']});
     }
   }
 

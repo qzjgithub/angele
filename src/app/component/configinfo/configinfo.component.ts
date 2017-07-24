@@ -56,6 +56,8 @@ export class ConfiginfoComponent implements OnInit {
     //设置表单参数
     this.setParam();
 
+    this.config = [];
+    this.editConfig = {id:'',name:'',type:'',content:''};
     this.data = {};
     this.disabled = false;
     this.pattern = 'display';
