@@ -1,0 +1,19 @@
+1.下载electronv1.4.13版本,nodejs v6.11.1可用
+
+cd .\node_modules\sqlite3
+
+npm install nan --save
+
+npm run prepublish
+
+node-gyp configure --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64
+
+node-gyp rebuild --target=1.4.13 --arch=x64 --target_platform=win32 --dist-url=https://atom.io/download/electron/ --module_name=node_sqlite3 --module_path=../lib/binding/electron-v1.4-win32-x64
+
+2.下载node-pre-gyp
+
+3.angularjs中的webpace.configs文件夹内，common.js return内容中，加入target: 'electron-renderer'
+
+4.删掉带#的代码行
+
+5.node-gyp.js中加载的../package改为../package.json
