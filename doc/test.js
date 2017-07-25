@@ -26,10 +26,10 @@ db.serialize(function(){
     'port INT' +
     ');')
 
-  var stm = db.prepare('INSERT INTO info VALUES($id,$name,$time,$modify_time,$port)');
+  /*var stm = db.prepare('INSERT INTO info VALUES($id,$name,$time,$modify_time,$port)');
 
   stm.run({$id:"1",$name:'aaa',$time:new Date(),$modify_time:new Date(),$port:8080});
-  stm.finalize();
+  stm.finalize();*/
   db.each('SELECT * FROM info',function(err,row){
     console.log(row);
   });
