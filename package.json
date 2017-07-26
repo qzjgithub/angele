@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "electron-prebuilt": "^1.4.13",
     "electron-rebuild": "^1.5.11",
+    "node-gyp": "^3.6.2",
     "node-pre-gyp": "^0.6.36",
     "redux": "3.6.0",
     "reselect": "2.5.4",
