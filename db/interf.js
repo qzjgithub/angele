@@ -1,27 +1,28 @@
 /**
  * Created by admin on 2017/7/24.
  */
-window.moduldb = {
+window.interfdb = {
   createDb(name){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
-        var create_sql = "CREATE TABLE IF NOT EXISTS modul(" +
+        var create_sql = "CREATE TABLE IF NOT EXISTS interf(" +
           "id INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL," +
-          "name TEXT," +
           "principal TEXT," +
           "create_user TEXT," +
           "create_time DATE," +
           "modify_time DATE," +
+          "method TEXT," +
+          "full_path TEXT," +
           "path TEXT," +
-          "jurisdiction TEXT," +
           "comment TEXT," +
+          "jurisdiction TEXT," +
           "parent INTEGER" +
           ")";
         db.run(create_sql,function(err){
           if(err){
             reject(err);
           }else{
-            resolve();
+            resolve('interf create');
           }
         });
       });

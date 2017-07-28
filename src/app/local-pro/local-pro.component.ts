@@ -167,21 +167,50 @@ export class LocalProComponent implements OnInit {
     event.stopPropagation();
   }
 
+  update(event,id){
+    this.popData.push(deepAssign(pop.param,{
+      content:"确认修改的项目吗？",
+      data: {
+        operate: 'update',
+        param: {
+          project: event,
+          id: id
+        }
+      }
+    }));
+  }
+
   /**
    * 弹框的事件
    */
   popevent(event){
     switch(event.key){
       case 'confirm':
-        this.projectService.delete(event.data.param,()=>{
-          this.projectService.getAllProjects((rows)=>{
-            this.store.dispatch(ProjectActions.setProjects(rows));
-          });
-        });
+        this.popComfirm(event);
       case 'cancel':
       case 'close':
       default:
         this.popData.pop();
+    }
+  }
+
+  popComfirm(event){
+    switch(event.data.operate){
+      case 'delete':
+        this.projectService.delete(event.data.param,()=>{
+          this.refresh();
+          this.manageIds = [];
+          this.pattern = 'display';
+        });
+        break;
+      case 'update':
+        this.projectService.update(
+          event.data.param.id,
+          event.data.param.project,
+          ()=>{
+            this.refresh();
+          });
+        break;
     }
   }
 

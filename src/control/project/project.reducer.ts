@@ -88,3 +88,12 @@ export const getCurrentProId = createSelector(
 export const getCurrentProject = createSelector(
   getProjectsState,
   ( state: ProjectsState ) => state.entities[state.currentProjectId]);
+
+export const getProjectNameByIds = (state, ids) =>{
+  var entities = state.projects.entities;
+  var names = {};
+  ids.forEach((e)=>{
+    names[e] = entities[e]['name'];
+  })
+  return names;
+};

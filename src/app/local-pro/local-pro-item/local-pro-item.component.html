@@ -1,4 +1,4 @@
 <com-frame [data]="project">
-    <com-baseinfo [project]="project"></com-baseinfo>
+    <com-baseinfo [project]="project" (confirmSave)="updateProject($event)"></com-baseinfo>
     <com-configinfo [config]="project.config" *ngIf="project.config"></com-configinfo>
 </com-frame>

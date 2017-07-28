@@ -61,20 +61,19 @@ window.projectdb = {
           obj_data['$'+key] = data[key];
         }
         var stm = db.prepare(sql);
-        stm.run(obj_data,function(err,row){
+        stm.run(obj_data,function(err){
           if(err){
             reject();
           }else{
-            console.log(row);
-            window['moduldb'].createDb(row.id);
-            resolve(row);
+            window['dbutil'].initPro(data.name);
+            resolve();
           }
         });
         stm.finalize();
       });
     });
   },
-  delete: function(ids){
+  delete: function(ids,names){
     return new Promise((resolve,reject) => {
       window.dbutil.sql(window.dbutil.getRootDB(),function(db){
         var stm = db.prepare('DELETE FROM project WHERE id = ?');
@@ -83,9 +82,40 @@ window.projectdb = {
             if(err){
               reject();
             }else{
-              i === ids.length - 1 && resolve()
+              window.dbutil.removeDir(names[e]);
+              i === ids.length - 1 && resolve();
             }
           });
+        });
+        stm.finalize();
+      });
+    });
+  },
+  update: function(id,project){
+    return new Promise((resolve,reject) => {
+      window.dbutil.sql(window.dbutil.getRootDB(),function(db){
+        var sql = 'UPDATE project SET ' +
+          'name = $name, ' +
+          'modify_time = $modify_time, ' +
+          'comment = $comment, ' +
+          'path = $path, ' +
+          'port = $port ' +
+          'WHERE id = $id';
+        var stm = db.prepare(sql);
+        var param = {
+          $id: id,
+          $name: project.name,
+          $modify_time: new Date(),
+          $comment: project.comment,
+          $path: project.path,
+          $port: project.port
+        }
+        stm.run(param,(err,row)=>{
+          if(err){
+            reject(err);
+          }else{
+            resolve(err);
+          }
         });
         stm.finalize();
       });

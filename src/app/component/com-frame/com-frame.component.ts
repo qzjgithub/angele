@@ -6,6 +6,7 @@ import {AppStore} from "../../../control/app.store";
 import * as pop from "../pop/pop.model";
 import {ProjectService} from "../../../control/project/project.service";
 import * as ProjectActions from '../../../control/project/project.action';
+import {getCurrentProId} from "../../../control/project/project.reducer";
 
 @Component({
   selector: 'com-frame',
@@ -49,6 +50,9 @@ export class ComFrameComponent implements OnInit {
 
   ngOnInit() {
     if(new RegExp(/^\d+$/).test(this.data['modify_time'])) this.data['modify_time'] = util.setDateFormat(new Date(this.data['modify_time']));
+    if(getCurrentProId(this.store.getState())===this.data['id']){
+      this.brefIsDisplay = false;
+    }
   }
 
   /**

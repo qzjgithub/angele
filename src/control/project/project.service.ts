@@ -1,5 +1,9 @@
-import {Injectable} from "@angular/core";
+import {Injectable, Inject} from "@angular/core";
 import {Project} from "./project.model";
+import {Store} from "redux";
+import {AppStore} from "../app.store";
+import {AppState} from "../app.reducer";
+import {getProjectNameByIds} from "./project.reducer";
 // import {projects} from "./testData";
 // import * as projectdb from "../../../db/projects";
 // import * as fs from 'fs';
@@ -7,6 +11,7 @@ import {Project} from "./project.model";
 
 @Injectable()
 export class ProjectService{
+  constructor(@Inject(AppStore) private store: Store<AppState>){}
   /**
    * 得到所有的项目信息
    * @param reject
@@ -35,7 +40,21 @@ export class ProjectService{
    * @param reject
    */
   delete(ids,reject?){
-    window['projectdb'].delete(ids).then(()=>{
+    const state = this.store.getState();
+    let names = getProjectNameByIds(state,ids);
+    window['projectdb'].delete(ids,names).then(()=>{
+      reject && reject();
+    });
+  }
+
+  /**
+   * 更新项目
+   * @param id
+   * @param project
+   * @param reject
+   */
+  update(id,project,reject?){
+    window['projectdb'].update(id,project).then(()=>{
       reject && reject();
     });
   }
