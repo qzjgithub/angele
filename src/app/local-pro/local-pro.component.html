@@ -1,4 +1,4 @@
-<section class="list-project" [class.manage]="pattern==='manage'">
+<section class="list" [class.manage]="pattern==='manage'">
   <header class="list-header" *ngIf="projects.length">
     <button class="empty-button plain border"
             (click)="add($event)"
@@ -19,7 +19,7 @@
     *ngFor="let project of projects"
     (click)="clickProject($event,project)"
     (saveBase)="update($event,project.id)"
-    class="project-item"
+    class="list-item"
     [class.manage]="manageIds.indexOf(project['id']) > -1"
     [class.selected]="selectProject && selectProject.id===project.id"
     [project]="project"></app-local-pro-item>

@@ -1,11 +1,1 @@
-section>input{
-  opacity: 0;
-}
-section.editable>input{
-  opacity: 1;
-}
-section.editable>article{
-  opacity: 0;
-  z-index: -1;
-  top: 25px;
-}
+

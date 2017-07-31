@@ -134,6 +134,26 @@ input
   -ms-flex: 1
 
 /*********************box end*************************/
+/*********************scroll start*************************/
+::-webkit-scrollbar
+  width: 5px
+  height: 5px
+
+::-webkit-scrollbar-track
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */
+  background: rgba(0,0,0,0.1)
+  border-radius: 5px
+
+::-webkit-scrollbar-thumb
+  border-radius: 5px
+  background: rgba(0,0,0,0.2)
+/* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); */
+
+::-webkit-scrollbar-thumb:window-inactive
+  background: rgba(0,0,0,0.4)
+
+/*********************scroll end*************************/
+/*********************右边面板样式 start*************************/
 //右边面板样式
 //右边面板框
 .content
@@ -168,3 +188,59 @@ input
 .container
   min-width: 600px
   overflow: auto
+/*********************右边面板样式 end************************/
+/*********************位置信息样式 start************************/
+.position
+  margin-left: 8px
+  line-height: 19px
+  height: 19px
+
+.position .right-arrow
+  margin-right: 6px
+/*********************位置信息样式 end************************/
+/*********************列表样式 start************************/
+.list
+  //min-width: 948px
+
+.list.manage .form-content
+  pointer-events: none
+  cursor: default
+
+.list.manage .com-frame>aside:hover>ul.show
+  margin-left: 55px
+
+.list-header
+  margin: 0 8px
+
+.list-header .empty-button
+  transform: scale(0.6)
+  margin: 0 0 -9px -33px
+  display: inline-block
+  opacity: 1
+  bottom: 0
+
+.list-header .empty-button:hover
+  opacity: 1
+
+.list-header button
+  position: relative
+  bottom: 4px
+
+.list-header button:nth-child(2)
+  margin-left: -25px
+
+.list-item.manage section.com-frame
+  border-color: #4c96f3
+
+.list-item.selected section.com-frame
+  box-shadow: 0 0 1px rgba(150, 148, 148, 0.7)
+
+.add-frame
+  padding:16px
+  border:1px solid #cccccc
+  box-sizing: border-box
+  margin: 8px
+
+.add-frame.active
+  box-shadow: 0 0 1px rgba(150, 148, 148, 0.7)
+/*********************列表样式 end************************/

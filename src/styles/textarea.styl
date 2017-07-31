@@ -1,0 +1,24 @@
+.textarea-section
+  textarea
+    resize: vertical
+    overflow: hidden
+    min-height: 80px
+    max-height: 330px
+    text-indent: 0
+    padding: 0 8px
+
+  &.input-frame.display textarea
+    resize: none
+
+    &:hover
+      resize: vertical
+
+    &:focus
+      resize: vertical
+
+    &[disabled]:hover
+      resize: none
+
+    &[disabled]:focus
+      resize: none
+

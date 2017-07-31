@@ -1,4 +1,4 @@
-section{
+.tree-node{
   padding: 0 8px;
 }
 .node-name{
@@ -30,6 +30,6 @@ section{
   cursor: pointer;
 }
 
-section.leaf .name{
+.tree-node.leaf .name{
   margin-left:27px;
 }

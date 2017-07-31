@@ -1,4 +1,4 @@
-<section [class.leaf]="!node.children || !node.children.length">
+<section class="tree-node" [class.leaf]="!node.children || !node.children.length">
   <div class="node-name" (dblclick)="troggleFold(node)">
     <span class="arrow"
       *ngIf="node.children && node.children.length"

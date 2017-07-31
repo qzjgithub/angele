@@ -47,3 +47,36 @@ tr_wd = 200
   cursor: pointer
   &>i
     transform: rotate(-90deg)
+
+.tree-node
+  padding: 0 8px
+
+  .arrow
+    display: inline-block
+    cursor: pointer
+
+  .arrow>i
+    transform: rotate(-90deg)
+    transition: transform ease 500ms
+
+  .arrow>i.active
+    transform: rotate(0)
+
+  .name
+    margin-left: 8px
+    cursor: pointer
+
+.node-name
+  line-height: 30px
+  font-size: 14px
+  color: #666666
+
+.node-child
+  margin-left: 8px
+  height:0
+  transition: height ease 500ms
+  overflow: hidden
+
+.tree-node.leaf .name
+  margin-left:27px
+

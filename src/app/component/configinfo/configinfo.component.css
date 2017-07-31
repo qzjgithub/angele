@@ -7,9 +7,4 @@
 textarea{
   height: 272px;
 }
-.form-content>ul{
-  display: none;
-}
-.form-content>ul.active{
-  display: block;
-}
+
