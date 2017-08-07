@@ -11,6 +11,6 @@ export interface Modul {
   modify_time?: Date;
   comment?: string;
   path: string;
-  limit?: string;
+  jurisdiction?: string;
   config?: Array<Config>;
 }

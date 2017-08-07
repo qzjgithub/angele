@@ -1,3 +1,33 @@
-<p>
-  modul works!
-</p>
+<section class="list" [class.manage]="pattern==='manage'">
+  <header class="list-header" *ngIf="moduls.length">
+    <button class="empty-button plain border"
+            (click)="add($event)"
+    >
+      <i></i>添加模块
+    </button>
+    <button class="plain" (click)="manage($event)">{{pattern==='manage'?'取消管理':'管理'}}</button>
+    <button *ngIf="manageIds.length" class="plain" (click)="delete($event)">删除</button>
+  </header>
+  <div *ngIf="pattern==='add'" class="horizontal add-frame" [class.active]="!selectModul.id">
+    <com-baseinfo
+      (cancelAdd)="cancel()"
+      (confirmSave)="confirmAdd($event)"
+      [project]="selectProject"
+      class="flex"></com-baseinfo>
+  </div>
+  <app-modul-item
+    *ngFor="let modul of moduls"
+    (click)="clickModul($event,modul)"
+    (saveBase)="update($event,project.id)"
+    class="list-item"
+    [class.manage]="manageIds.indexOf(project['id']) > -1"
+    [class.selected]="selectProject && selectProject.id===project.id"
+    [project]="project"></app-modul-item>
+  <button
+    class="empty-button plain border"
+    (click)="add($event)"
+    *ngIf="pattern!=='add' && !moduls.length">
+    <i></i>添加模块
+  </button>
+</section>
+<pop *ngFor="let pop of popData" [param]="pop" (btnclick)="popevent($event)"></pop>

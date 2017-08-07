@@ -22,7 +22,7 @@ export class BaseinfoComponent implements OnInit {
    * 当前项目
    */
   @Input()
-  project: Project;
+  project: Object;
 
   /**
    * 取消添加传送给父元素
@@ -39,7 +39,7 @@ export class BaseinfoComponent implements OnInit {
   /**
    * 编辑和展示的内容
    */
-  editData: Project;
+  editData: Object;
 
   /**
    * 表单要传入的参数
@@ -69,7 +69,7 @@ export class BaseinfoComponent implements OnInit {
 
   ngOnInit() {
     //如果没有id，表明是添加模式
-    if(!this.project.id){
+    if(!this.project['id']){
       this.pattern = 'add';
     }
     //生成新的一份project数据，可用于编辑

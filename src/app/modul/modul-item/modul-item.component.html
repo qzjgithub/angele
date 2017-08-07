@@ -1,0 +1,19 @@
+<section class="com-frame">
+  <header><h1>{{modul.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || data[tip.key]}}</span></header>
+  <article class="horizontal">
+    <p *ngIf="brefIsDisplay">{{modul.comment}}</p>
+    <ng-content *ngIf="!brefIsDisplay"></ng-content>
+  </article>
+  <aside>
+    <div><i class="tail-arrow" (click)="toggleBref($event)" [class.toggle]="!brefIsDisplay"></i></div>
+    <ul [class.show]="!brefIsDisplay">
+      <li>
+        <button class="plain" (click)="delete($event)">删除</button>
+      </li>
+      <li>
+        <button class="plain">接口</button>
+      </li>
+    </ul>
+  </aside>
+</section>
+<pop *ngFor="let pop of popData" [param]="pop" (btnclick)="popevent($event)"></pop>

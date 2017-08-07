@@ -27,24 +27,37 @@ export const ModulsReducer =
     switch (action.type){
       case ModulActions.SET_MODULS:{
         const id = (<ModulActions.SetModulsAction>action).id;
+        const ptype = (<ModulActions.SetModulsAction>action).ptype;
         const moduls = (<ModulActions.SetModulsAction>action).moduls;
         let ids = [],entities = {},currentModulId = null;
+        let key = ptype + '_' + id;
         moduls.map((e) =>{
           e.config = e.config || [];
           ids.push(e.id);
           entities[e.id] = e;
         });
-        currentModulId = state[id] ?
-          ids.indexOf(state[id].currentModulId)>-1 ?
-            state[id].currentModulId : null : null;
+        currentModulId = state[key] ?
+          ids.indexOf(state[key].currentModulId)>-1 ?
+            state[key].currentModulId : null : null;
 
         return deepAssign(state,{
-          [id]:{
+          [key]:{
             ids:ids,
             currentModulId: currentModulId,
             entities: entities
           }
         });
+      }
+      case ModulActions.SET_CURRENT_MODUL:{
+        const pid = (<ModulActions.SetCurrentModulAction>action).pid;
+        const ptype = (<ModulActions.SetCurrentModulAction>action).ptype;
+        const id = (<ModulActions.SetCurrentModulAction>action).id;
+        let key = ptype + '_' + pid;
+        return state[key] ? deepAssign(state,{
+          [key]:{
+            currentModulId:id
+          }
+          }) : state;
       }
       default:
         return state;
