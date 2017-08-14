@@ -25,6 +25,7 @@ import { UserComponent } from './user/user.component';
 import { ModulComponent } from './modul/modul.component';
 import { ModulItemComponent } from './modul/modul-item/modul-item.component';
 import { ModulBaseinfoComponent } from './modul/modul-baseinfo/modul-baseinfo.component';
+import {MODUL_PROVIDERS} from "../control/modul/modul.service";
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -65,7 +66,8 @@ const routes: Routes = [
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     appStoreProviders,
-    PROJECT_PROVIDERS
+    PROJECT_PROVIDERS,
+    MODUL_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })

@@ -26,7 +26,7 @@ export const ModulsReducer =
   function(state: ModulsState = initialState, action: Action): ModulsState {
     switch (action.type){
       case ModulActions.SET_MODULS:{
-        const id = (<ModulActions.SetModulsAction>action).id;
+        const projectid = (<ModulActions.SetModulsAction>action).projectid;
         const moduls = (<ModulActions.SetModulsAction>action).moduls;
         let ids = [],entities = {},currentModulId = null;
         moduls.map((e) =>{
@@ -34,12 +34,12 @@ export const ModulsReducer =
           ids.push(e.id);
           entities[e.id] = e;
         });
-        currentModulId = state[id] ?
-          ids.indexOf(state[id].currentModulId)>-1 ?
-            state[id].currentModulId : null : null;
+        currentModulId = state[projectid] ?
+          ids.indexOf(state[projectid].currentModulId)>-1 ?
+            state[projectid].currentModulId : null : null;
 
         return deepAssign(state,{
-          [id]:{
+          [projectid]:{
             ids:ids,
             currentModulId: currentModulId,
             entities: entities
@@ -47,10 +47,10 @@ export const ModulsReducer =
         });
       }
       case ModulActions.SET_CURRENT_MODUL:{
-        const pid = (<ModulActions.SetCurrentModulAction>action).pid;
+        const projectid = (<ModulActions.SetCurrentModulAction>action).projectid;
         const id = (<ModulActions.SetCurrentModulAction>action).id;
-        return state[pid] ? deepAssign(state,{
-          [pid]:{
+        return state[projectid] ? deepAssign(state,{
+          [projectid]:{
             currentModulId:id
           }
           }) : state;
@@ -60,21 +60,37 @@ export const ModulsReducer =
     }
   }
 
+  //得到某一项目下的模块state
 export const getModulsState = (state, id): ModulsOnProEntities => state.moduls[id];
 
+//得到某一项目下的所有模块键值对象
 export const getModulsEntities = createSelector(
   getModulsState,
-  ( state: ModulsOnProEntities):ModulsEntities => state.entities );
+  ( state: ModulsOnProEntities):ModulsEntities => state ? state.entities : {});
 
 export const getAllModuls = createSelector(
   getModulsEntities,
-  ( entities: ModulsEntities ) => Object.keys(entities)
-    .map((modulId) => entities[modulId]));
+  ( entities: ModulsEntities ) => entities ? Object.keys(entities)
+    .map((modulId) => entities[modulId]) : []);
+
+
+//得到某一项目下某一模块下的模块
+export const getOneModulsEntities = (state,projectid,modulid) => {
+  if(null===projectid||undefined===projectid||''===projectid) return [];
+  let allModuls = getAllModuls(state,projectid);
+  let oneModuls = [];
+  //如果projectid不存在，就强制赋值''
+  if(null==modulid||undefined==modulid||''==modulid) modulid = '';
+  allModuls.forEach((modul)=>{
+    modul.parent === modulid && oneModuls.push(modul);
+  });
+  return oneModuls;
+}
 
 export const getCurrentModId = createSelector(
   getModulsState,
-  ( state: ModulsOnProEntities ) => state.currentModulId);
+  ( state: ModulsOnProEntities ) => state ? state.currentModulId : '');
 
 export const getCurrentModul = createSelector(
   getModulsState,
-  ( state: ModulsOnProEntities ) => state.entities[state.currentModulId]);
+  ( state: ModulsOnProEntities ) => state ? state.entities[state.currentModulId] : []);

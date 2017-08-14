@@ -123,6 +123,10 @@ export class LocalProComponent implements OnInit {
     }
   }
 
+  /**
+   * 确认添加项目
+   * @param event
+   */
   confirmAdd(event){
     event['create_time'] = new Date();
     event['modify_time'] = new Date();

@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="form-content">
   <h2 class="form-title">基本信息</h2>
-  <ul>
+  <ul class="active">
     <li>
       <label>名称</label>
       <com-input (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-input>

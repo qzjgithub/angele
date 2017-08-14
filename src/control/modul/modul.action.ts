@@ -5,25 +5,25 @@ import {Modul} from "./modul.model";
  */
 export const SET_MODULS = '[Modul] SET';
 export interface SetModulsAction extends Action {
-  id?: string;
+  projectid: string;
   moduls: Modul[];
 }
 
 export const setModuls: ActionCreator<SetModulsAction> =
-  (id = 'project',moduls) => ({
+  (projectid,moduls) => ({
     type: SET_MODULS,
-    id: id,
+    projectid: projectid,
     moduls: moduls
   });
 
 export const SET_CURRENT_MODUL = '[modul] SET CURRENT';
 export interface SetCurrentModulAction extends Action {
-  pid?: string,
+  projectid: string,
   id: string
 }
 export const setCurrentModul: ActionCreator<SetCurrentModulAction> =
-  (pid = 'project',id) => ({
+  (projectid,id) => ({
     type: SET_CURRENT_MODUL,
-    pid: pid,
+    projectid: projectid,
     id: id
   });

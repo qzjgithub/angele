@@ -27,9 +27,9 @@ window.moduldb = {
       });
     })
   },
-  getModulsByProId(){
+  getModulsByProId(name){
     return new Promise((resolve, reject) => {
-      window.dbutil.sql(window.dbutil.getProjectDB('pro'+id),function(db){
+      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
         db.all('SELECT * FROM modul',function(err,rows){
           if(err){
             reject();
@@ -39,5 +39,41 @@ window.moduldb = {
         });
       })
     });
-  }
+  },
+  /**
+   * 添加模块
+   * @param data
+   */
+  add:function (name,data) {
+    return new Promise((resolve,reject) => {
+      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+        var sql = "INSERT INTO modul VALUES( " +
+          "null ," +
+          "$name ," +
+          "$principal ," +
+          "$create_user ," +
+          "$create_time ," +
+          "$modify_time ," +
+          "$path ," +
+          "$comment ," +
+          "$jurisdiction ," +
+          "$parent" +
+          ")";
+        console.log(sql);
+        var obj_data = {};
+        for(var key in data){
+          obj_data['$'+key] = data[key];
+        }
+        var stm = db.prepare(sql);
+        stm.run(obj_data,function(err){
+          if(err){
+            reject();
+          }else{
+            resolve();
+          }
+        });
+        stm.finalize();
+      });
+    });
+  },
 }

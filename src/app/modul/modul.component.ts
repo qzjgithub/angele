@@ -6,6 +6,10 @@ import {AppStore} from "../../control/app.store";
 import * as ModulActions from '../../control/modul/modul.action';
 import {deepAssign} from "../../com-util";
 import * as pop from '../component/pop/pop.model';
+import {getOneModulsEntities, getCurrentModId} from "../../control/modul/modul.reducer";
+import {getCurrentProId, getCurrentProject} from "../../control/project/project.reducer";
+import {ModulService} from "../../control/modul/modul.service";
+import {Project} from "../../control/project/project.model";
 
 @Component({
   selector: 'app-modul',
@@ -15,16 +19,20 @@ import * as pop from '../component/pop/pop.model';
 export class ModulComponent implements OnInit {
 
   /**
-   * 父节点内容
+   * 所属项目id
    */
-  @Input()
-  parent:Object;
+  projectid:string;
 
   /**
-   * 父节点类型
+   * 所属项目
    */
-  @Input()
-  ptype:string;
+  project:Project;
+
+  /**
+   * 所属模块id
+   */
+  modulid:string;
+
   /**
    * 所有模块
    */
@@ -51,7 +59,10 @@ export class ModulComponent implements OnInit {
    */
   popData: Array<Object>;
 
-  constructor(@Inject(AppStore) private store: Store<AppState>) {
+  constructor(@Inject(AppStore) private store: Store<AppState>
+    ,private modulService: ModulService) {
+    this.projectid = '';
+    this.modulid = '';
     this.moduls = [];
     this.selectModul = {
       id: "",
@@ -67,9 +78,31 @@ export class ModulComponent implements OnInit {
     this.pattern = 'display';
     this.manageIds = [];
     this.popData = [];
+    this.getParentId();
+    this.updateModuls();
+    this.store.subscribe(()=>this.updateModuls);
   }
 
   ngOnInit() {
+
+  }
+
+  /**
+   * 得到当前父节点下的所有模块信息
+   */
+  updateModuls(){
+    const state = this.store.getState();
+    this.moduls = getOneModulsEntities(state,this.projectid,this.modulid);
+  }
+
+  /**
+   * 得到该模块所有附节点的id
+   */
+  getParentId(){
+    const state = this.store.getState();
+    this.projectid = getCurrentProId(state);
+    this.project = getCurrentProject(state);
+    this.modulid = getCurrentModId(state,this.projectid);
   }
 
   /**
@@ -77,7 +110,7 @@ export class ModulComponent implements OnInit {
    */
   add(event){
     this.pattern = "add";
-    this.store.dispatch(ModulActions.setCurrentModul(this.parent['id'],this.ptype,null));
+    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,));
     this.selectModul = {
       id: "",
       name: "",
@@ -92,13 +125,26 @@ export class ModulComponent implements OnInit {
   }
 
   /**
+   * 确认添加模块
+   * @param event
+   */
+  confirmAdd(event){
+    event['create_time'] = new Date();
+    event['modify_time'] = new Date();
+    this.modulService.add(this.project['name'],event,(row)=>{
+      this.pattern = 'display';
+      this.refresh();
+    });
+  }
+
+  /**
    * 管理模块
    */
   manage(event){
     if(this.pattern!=='manage'){
       this.pattern = 'manage';
       this.selectModul = null;
-      this.store.dispatch(ModulActions.setCurrentModul(this.parent['id'],this.ptype,null));
+      this.store.dispatch(ModulActions.setCurrentModul(this.projectid,null));
     }else{
       this.pattern = 'display';
       this.manageIds = [];
@@ -115,8 +161,7 @@ export class ModulComponent implements OnInit {
       data: {
         operate: 'delete',
         param: {
-          pid: this.parent['id'],
-          ptype: this.ptype,
+          pid: this.projectid,
           ids:this.manageIds
         }
       }
@@ -170,7 +215,7 @@ export class ModulComponent implements OnInit {
       case 'display':
         if(!this.selectModul || modul.name!==this.selectModul.name){
           this.selectModul = modul;
-          this.store.dispatch(ModulActions.setCurrentModul(this.parent['id'],this.ptype,modul.id));
+          this.store.dispatch(ModulActions.setCurrentModul(this.projectid,modul.id));
           event.stopPropagation();
         }
     }
@@ -182,6 +227,15 @@ export class ModulComponent implements OnInit {
    */
   updateModul(event){
 
+  }
+
+  /**
+   * 从数据库获取项目刷新
+   */
+  refresh(){
+    this.modulService.getAllModuls(this.project['name'],(rows)=>{
+      this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
+    });
   }
 
 }
