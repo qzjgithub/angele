@@ -89,12 +89,14 @@ export class LocalProComponent implements OnInit {
         }
         break;
       case 'add':
+        break;
       case 'display':
         if(!this.selectProject || project.name!==this.selectProject.name){
           this.selectProject = project;
           this.store.dispatch(ProjectActions.setCurrentProject(this.selectProject['id']));
           event.stopPropagation();
         }
+
     }
 
   }

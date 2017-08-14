@@ -3,14 +3,14 @@ import {FormGroup, AbstractControl} from "@angular/forms";
 import * as util from "../../../com-util";
 
 @Component({
-  selector: 'com-baseinfo',
-  templateUrl: 'baseinfo.component.html',
-  styleUrls: ['baseinfo.component.css'],
+  selector: 'modul-baseinfo',
+  templateUrl: 'modul-baseinfo.component.html',
+  styleUrls: ['modul-baseinfo.component.css'],
   host: {
     style: 'display:block;width:50%;'
   }
 })
-export class BaseinfoComponent implements OnInit {
+export class ModulBaseinfoComponent implements OnInit {
 
   /**
    * 表单
@@ -21,7 +21,7 @@ export class BaseinfoComponent implements OnInit {
    * 当前项目
    */
   @Input()
-  project: Object;
+  modul: Object;
 
   /**
    * 取消添加传送给父元素
@@ -55,7 +55,9 @@ export class BaseinfoComponent implements OnInit {
    */
   pattern: string;
 
-  constructor() {
+  constructor() { }
+
+  ngOnInit() {
     //实例化表单
     this.form = new FormGroup({});
 
@@ -64,18 +66,6 @@ export class BaseinfoComponent implements OnInit {
 
     this.disabled = false;
     this.pattern = 'display';
-  }
-
-  ngOnInit() {
-    //如果没有id，表明是添加模式
-    if(!this.project['id']){
-      this.pattern = 'add';
-    }
-    //生成新的一份project数据，可用于编辑
-    this.editData = Object.assign({},this.project);
-    util.setValue(this.editData, this.param);
-    util.setParamOneValue('pattern',this.pattern,this.param);
-    console.log('baseinfo oninit over');
   }
 
   /**
@@ -99,11 +89,6 @@ export class BaseinfoComponent implements OnInit {
     this.param['path'] = {
       name:'path',
       dataType: 'path',
-      type: 'input'
-    }
-    this.param['port'] = {
-      name:'port',
-      dataType: 'number',
       type: 'input'
     }
     this.param['jurisdiction'] = {
@@ -151,7 +136,7 @@ export class BaseinfoComponent implements OnInit {
    * 重置表单
    */
   reset(event){
-    this.form.reset(this.project);
+    this.form.reset(this.modul);
     this.pattern = 'display';
     this.togglePattern(null,this.pattern);
     event.stopPropagation();
@@ -181,8 +166,6 @@ export class BaseinfoComponent implements OnInit {
       modify_time: new Date(),
       comment: "",
       path: "",
-      port: undefined,
-      status: "",
       jurisdiction: "",
     });
     event.stopPropagation();
@@ -196,17 +179,4 @@ export class BaseinfoComponent implements OnInit {
     this.clear(event);
   }
 
-  /**
-   * 旁边按钮的隐藏和展示
-   * 已废弃，改用css实现
-   */
-  /*showAside(event){
-    console.log(event);
-    let el = event.target;
-    el = el.tagName === 'I' ? el.parentElement : el ;
-    let uldom = el.parentElement.lastElementChild;
-    let len = uldom.children.length;
-    let status = parseInt(uldom.style.height);
-    uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
-  }*/
 }

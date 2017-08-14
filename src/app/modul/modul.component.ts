@@ -53,7 +53,17 @@ export class ModulComponent implements OnInit {
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     this.moduls = [];
-    this.selectModul = null;
+    this.selectModul = {
+      id: "",
+      name: "",
+      principal:"",
+      create_user: "",
+      create_time: new Date(),
+      modify_time: new Date(),
+      comment: "",
+      path: "",
+      jurisdiction: ""
+    };
     this.pattern = 'display';
     this.manageIds = [];
     this.popData = [];
@@ -77,7 +87,7 @@ export class ModulComponent implements OnInit {
       modify_time: new Date(),
       comment: "",
       path: "",
-      jurisdiction: "",
+      jurisdiction: ""
     }
   }
 
@@ -164,6 +174,13 @@ export class ModulComponent implements OnInit {
           event.stopPropagation();
         }
     }
+
+  }
+
+  /**
+   * 更新模块基本信息
+   */
+  updateModul(event){
 
   }
 

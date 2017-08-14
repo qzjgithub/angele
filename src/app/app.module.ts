@@ -24,10 +24,12 @@ import { PopComponent } from './component/pop/pop.component';
 import { UserComponent } from './user/user.component';
 import { ModulComponent } from './modul/modul.component';
 import { ModulItemComponent } from './modul/modul-item/modul-item.component';
+import { ModulBaseinfoComponent } from './modul/modul-baseinfo/modul-baseinfo.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
   {path: 'localPro',component: LocalProComponent},
+  {path: 'modul',component: ModulComponent},
   {path: 'user', component: UserComponent}
 ]
 
@@ -50,7 +52,8 @@ const routes: Routes = [
     PopComponent,
     UserComponent,
     ModulComponent,
-    ModulItemComponent
+    ModulItemComponent,
+    ModulBaseinfoComponent
   ],
   imports: [
     BrowserModule,

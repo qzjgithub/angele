@@ -1,6 +1,6 @@
 <form [formGroup]="form" class="form-content">
   <h2 class="form-title">基本信息</h2>
-  <ul class="active">
+  <ul>
     <li>
       <label>名称</label>
       <com-input (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-input>
@@ -8,10 +8,6 @@
     <li>
       <label>路径</label>
       <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
-    </li>
-    <li>
-      <label>端口</label>
-      <com-input (backControl)="getControl($event,param['port']['name'])" [param]="param['port']"></com-input>
     </li>
     <li>
       <label>权限</label>
@@ -38,16 +34,16 @@
     </button><button (click)="clear($event)"
                      class="plain border"
                      *ngIf="pattern==='add' && form.dirty">
-      清空
-    </button><button (click)="cancel($event)"
-                     class="plain border"
-                     *ngIf="pattern==='add'">
-      取消
-    </button><button (click)="reset($event)"
-                     class="plain border"
-                     *ngIf="pattern=='edit' || (pattern==='display' && form.dirty)">
-      重置
-    </button>
+    清空
+  </button><button (click)="cancel($event)"
+                   class="plain border"
+                   *ngIf="pattern==='add'">
+    取消
+  </button><button (click)="reset($event)"
+                   class="plain border"
+                   *ngIf="pattern=='edit' || (pattern==='display' && form.dirty)">
+    重置
+  </button>
   </footer>
   <aside class="form-aside button-aside" *ngIf="pattern!=='add'">
     <div><i class="big-arrow"></i></div>

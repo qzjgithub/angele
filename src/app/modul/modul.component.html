@@ -9,20 +9,23 @@
     <button *ngIf="manageIds.length" class="plain" (click)="delete($event)">删除</button>
   </header>
   <div *ngIf="pattern==='add'" class="horizontal add-frame" [class.active]="!selectModul.id">
-    <com-baseinfo
+    <modul-baseinfo
       (cancelAdd)="cancel()"
       (confirmSave)="confirmAdd($event)"
-      [project]="selectProject"
-      class="flex"></com-baseinfo>
+      [modul]="selectModul"
+      class="flex"></modul-baseinfo>
   </div>
   <app-modul-item
     *ngFor="let modul of moduls"
     (click)="clickModul($event,modul)"
-    (saveBase)="update($event,project.id)"
+    (saveBase)="update($event,modul.id)"
     class="list-item"
-    [class.manage]="manageIds.indexOf(project['id']) > -1"
-    [class.selected]="selectProject && selectProject.id===project.id"
-    [project]="project"></app-modul-item>
+    [class.manage]="manageIds.indexOf(modul['id']) > -1"
+    [class.selected]="selectModul && selectModul.id===modul.id"
+    [modul]="modul">
+    <modul-baseinfo [modul]="modul" (confirmSave)="updateModul($event)"></modul-baseinfo>
+    <com-configinfo [config]="modul.config" *ngIf="modul.config"></com-configinfo>
+  </app-modul-item>
   <button
     class="empty-button plain border"
     (click)="add($event)"
