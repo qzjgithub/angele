@@ -27,7 +27,7 @@ window.moduldb = {
       });
     })
   },
-  getModulsByProId(name){
+  getModulsByProName(name){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
         db.all('SELECT * FROM modul',function(err,rows){

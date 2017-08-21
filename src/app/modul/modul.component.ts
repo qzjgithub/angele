@@ -79,12 +79,11 @@ export class ModulComponent implements OnInit {
     this.manageIds = [];
     this.popData = [];
     this.getParentId();
-    this.updateModuls();
     this.store.subscribe(()=>this.updateModuls);
   }
 
   ngOnInit() {
-
+    this.refresh();
   }
 
   /**
@@ -135,6 +134,13 @@ export class ModulComponent implements OnInit {
       this.pattern = 'display';
       this.refresh();
     });
+  }
+
+  /**
+   * 取消添加模块
+   */
+  cancel(){
+    this.pattern = 'display';
   }
 
   /**
@@ -233,7 +239,7 @@ export class ModulComponent implements OnInit {
    * 从数据库获取项目刷新
    */
   refresh(){
-    this.modulService.getAllModuls(this.project['name'],(rows)=>{
+    this.modulService.getModulsByProName(this.project['name'],(rows)=>{
       this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
     });
   }

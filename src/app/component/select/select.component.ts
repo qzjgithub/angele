@@ -97,7 +97,6 @@ export class SelectComponent implements OnInit,OnChanges {
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
       let errors = {};
-      console.log(errors);
       //更新错误消息的key
       if(errors = this.control.errors || this.control.validator ? this.control.validator(this.control):''){
         var keys = Object.keys(errors);
@@ -106,12 +105,10 @@ export class SelectComponent implements OnInit,OnChanges {
         this.errorKey = '';
       }
     });
-    console.log('input init');
     this.backControl.emit(this.control);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(this.control){
       let cp = changes['param'] && changes['param']['currentValue'];
       let pp = changes['param'] && changes['param']['previousValue'];

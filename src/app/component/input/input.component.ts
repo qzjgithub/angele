@@ -40,7 +40,6 @@ export class InputComponent implements OnInit ,OnChanges{
   errorKey:String;
 
   constructor() {
-    console.log('input constructor');
     //初始化消息
     this.validMsg = {};
     this.errorKey = '';
@@ -65,12 +64,10 @@ export class InputComponent implements OnInit ,OnChanges{
         this.errorKey = '';
       }
     });
-    console.log('input init');
     this.backControl.emit(this.control);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(this.control){
       let cp = changes['param'] && changes['param']['currentValue'];
       let pp = changes['param'] && changes['param']['previousValue'];

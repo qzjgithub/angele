@@ -15,8 +15,8 @@ export class ModulService{
    * 得到所有的项目信息
    * @param reject
    */
-  getAllModuls(name,reject?){
-    window['moduldb'].getModulsByProId(name).then((rows)=>{
+  getModulsByProName(name,reject?){
+    window['moduldb'].getModulsByProName(name).then((rows)=>{
       console.log(rows);
       reject && reject(rows);
     });
@@ -27,7 +27,7 @@ export class ModulService{
    * @param data
    */
   add(name,data,reject?){
-    window['projectdb'].add(name,data).then((row)=>{
+    window['moduldb'].add(name,data).then((row)=>{
       console.log(row);
       reject && reject(row);
     });
@@ -48,7 +48,7 @@ export class ModulService{
    * @param reject
    */
   update(id,project,reject?){
-    window['projectdb'].update(id,project).then(()=>{
+    window['moduldb'].update(id,project).then(()=>{
       reject && reject();
     });
   }

@@ -75,7 +75,6 @@ export class BaseinfoComponent implements OnInit {
     this.editData = Object.assign({},this.project);
     util.setValue(this.editData, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
-    console.log('baseinfo oninit over');
   }
 
   /**

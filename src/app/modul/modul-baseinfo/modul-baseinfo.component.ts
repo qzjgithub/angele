@@ -55,9 +55,7 @@ export class ModulBaseinfoComponent implements OnInit {
    */
   pattern: string;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
     //实例化表单
     this.form = new FormGroup({});
 
@@ -66,6 +64,17 @@ export class ModulBaseinfoComponent implements OnInit {
 
     this.disabled = false;
     this.pattern = 'display';
+  }
+
+  ngOnInit() {
+    //如果没有id，表明是添加模式
+    if(!this.modul['id']){
+      this.pattern = 'add';
+    }
+    //生成新的一份project数据，可用于编辑
+    this.editData = Object.assign({},this.modul);
+    util.setValue(this.editData, this.param);
+    util.setParamOneValue('pattern',this.pattern,this.param);
   }
 
   /**

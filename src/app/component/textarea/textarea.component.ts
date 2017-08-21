@@ -71,12 +71,10 @@ export class TextareaComponent implements OnInit ,
         this.errorKey = '';
       }
     });
-    console.log('textarea init');
     this.backControl.emit(this.control);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     if(this.control){
       let cp = changes['param'] && changes['param']['currentValue'];
       let pp = changes['param'] && changes['param']['previousValue'];
