@@ -1,5 +1,5 @@
 <section class="com-frame">
-  <header><h1>{{modul.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || data[tip.key]}}</span></header>
+  <header><h1>{{modul.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || modul[tip.key]}}</span></header>
   <article class="horizontal">
     <p *ngIf="brefIsDisplay">{{modul.comment}}</p>
     <ng-content *ngIf="!brefIsDisplay"></ng-content>

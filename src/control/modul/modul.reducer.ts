@@ -79,8 +79,8 @@ export const getOneModulsEntities = (state,projectid,modulid) => {
   if(null===projectid||undefined===projectid||''===projectid) return [];
   let allModuls = getAllModuls(state,projectid);
   let oneModuls = [];
-  //如果projectid不存在，就强制赋值''
-  if(null==modulid||undefined==modulid||''==modulid) modulid = '';
+  //如果projectid不存在，就强制赋值null
+  if(null==modulid||undefined==modulid||''==modulid) modulid = null;
   allModuls.forEach((modul)=>{
     modul.parent === modulid && oneModuls.push(modul);
   });

@@ -40,6 +40,7 @@ export const ProjectsReducer =
           entities[e.id] = e;
         });
 
+        console.log(ids.indexOf(state.currentProjectId)>-1);
         return {
           ids: ids,
           currentProjectId: ids.indexOf(state.currentProjectId)>-1?state.currentProjectId:null,
@@ -70,7 +71,15 @@ export const ProjectsReducer =
     }
   };
 
-export const getProjectsState = (state): ProjectsState => state.projects;
+export const getProjectsState = (state): ProjectsState => {
+  var projects = state.projects;
+  if(!projects.ids.length){
+    window['projectdb'].getAllProjects().then((rows)=>{
+      ProjectActions.setProjects(rows);
+    });
+  }
+  return projects;
+}
 
 export const getProjectsEntities = createSelector(
   getProjectsState,

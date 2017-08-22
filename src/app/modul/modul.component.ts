@@ -10,6 +10,10 @@ import {getOneModulsEntities, getCurrentModId} from "../../control/modul/modul.r
 import {getCurrentProId, getCurrentProject} from "../../control/project/project.reducer";
 import {ModulService} from "../../control/modul/modul.service";
 import {Project} from "../../control/project/project.model";
+import {ActivatedRoute, Params} from "@angular/router";
+import * as ProjectActions from '../../control/project/project.action';
+import 'rxjs/add/operator/switchMap';
+import {ProjectService} from "../../control/project/project.service";
 
 @Component({
   selector: 'app-modul',
@@ -46,7 +50,7 @@ export class ModulComponent implements OnInit {
   /**
    * 模式
    */
-  pattern:String;
+  pattern: string;
 
   /**
    * 被选中要管理的modul
@@ -60,8 +64,10 @@ export class ModulComponent implements OnInit {
   popData: Array<Object>;
 
   constructor(@Inject(AppStore) private store: Store<AppState>
-    ,private modulService: ModulService) {
-    this.projectid = '';
+    ,private modulService: ModulService,private router:ActivatedRoute,private projectService: ProjectService) {
+    console.log(this.router.params);
+    // this.router.params.switchMap((params: Params) => {console.log(params);return null;});
+    // console.log(this.projectid);
     this.modulid = '';
     this.moduls = [];
     this.selectModul = {
@@ -78,12 +84,13 @@ export class ModulComponent implements OnInit {
     this.pattern = 'display';
     this.manageIds = [];
     this.popData = [];
-    this.getParentId();
-    this.store.subscribe(()=>this.updateModuls);
+    this.getParent();
+    this.store.subscribe(()=>this.updateModuls());
+    // this.refresh();
   }
 
   ngOnInit() {
-    this.refresh();
+
   }
 
   /**
@@ -97,11 +104,27 @@ export class ModulComponent implements OnInit {
   /**
    * 得到该模块所有附节点的id
    */
-  getParentId(){
-    const state = this.store.getState();
-    this.projectid = getCurrentProId(state);
-    this.project = getCurrentProject(state);
-    this.modulid = getCurrentModId(state,this.projectid);
+  getParent(){
+    this.router.params.subscribe(params => {
+      console.log(params);
+      this.projectid = params.project;
+      this.store.dispatch(ProjectActions.setCurrentProject(this.projectid));
+      this.modulid = params.modul;
+      const state = this.store.getState();
+      this.project = getCurrentProject(state);
+      if(this.project){
+        this.refresh();
+      }else{
+        this.projectService.getAllProjects((rows)=>{
+          this.store.dispatch(ProjectActions.setProjects(rows));
+          this.refresh();
+        });
+      }
+    });
+    // const state = this.store.getState();
+    // this.projectid = getCurrentProId(state);
+    // this.project = getCurrentProject(state);
+    // this.modulid = getCurrentModId(state,this.projectid);
   }
 
   /**
@@ -239,6 +262,12 @@ export class ModulComponent implements OnInit {
    * 从数据库获取项目刷新
    */
   refresh(){
+    console.log(this.project);
+    if(!this.project){
+      const state = this.store.getState();
+      this.project = getCurrentProject(state);
+      console.log(state,this.project);
+    }
     this.modulService.getModulsByProName(this.project['name'],(rows)=>{
       this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
     });
