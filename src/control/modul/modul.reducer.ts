@@ -31,8 +31,8 @@ export const ModulsReducer =
         let ids = [],entities = {},currentModulId = null;
         moduls.map((e) =>{
           e.config = e.config || [];
-          ids.push(e.id);
-          entities[e.id] = e;
+          ids.push(e.id+'');
+          entities[e.id+''] = e;
         });
         currentModulId = state[projectid] ?
           ids.indexOf(state[projectid].currentModulId)>-1 ?

@@ -36,8 +36,8 @@ export const ProjectsReducer =
         let ids = [],entities = {};
         projects.map((e) => {
           e.config = e.config || [];
-          ids.push(e.id);
-          entities[e.id] = e;
+          ids.push(e.id+'');
+          entities[e.id+''] = e;
         });
 
         console.log(ids.indexOf(state.currentProjectId)>-1);

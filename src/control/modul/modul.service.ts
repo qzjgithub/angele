@@ -38,7 +38,11 @@ export class ModulService{
    * @param ids
    * @param reject
    */
-  delete(ids,reject?){
+  delete(name,ids,reject?){
+    const state = this.store.getState();
+    window['moduldb'].delete(name,ids).then(()=>{
+      reject && reject();
+    });
   }
 
   /**

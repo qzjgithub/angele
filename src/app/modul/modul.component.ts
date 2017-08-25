@@ -219,6 +219,11 @@ export class ModulComponent implements OnInit {
   popComfirm(event){
     switch(event.data.operate){
       case 'delete':
+        this.modulService.delete(this.project['name'],event.data.param,()=>{
+          this.refresh();
+          this.manageIds = [];
+          this.pattern = 'display';
+        });
         break;
       case 'update':
         break;
