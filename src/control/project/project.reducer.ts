@@ -34,7 +34,7 @@ export const ProjectsReducer =
       case ProjectActions.SET_PROJECTS: {
         const projects = (<ProjectActions.SetProjectsAction>action).projects;
         let ids = [],entities = {};
-        projects.map((e) => {
+        projects.forEach((e) => {
           e.config = e.config || [];
           ids.push(e.id+'');
           entities[e.id+''] = e;

@@ -29,7 +29,7 @@ export const ModulsReducer =
         const projectid = (<ModulActions.SetModulsAction>action).projectid;
         const moduls = (<ModulActions.SetModulsAction>action).moduls;
         let ids = [],entities = {},currentModulId = null;
-        moduls.map((e) =>{
+        moduls.forEach((e) =>{
           e.config = e.config || [];
           ids.push(e.id+'');
           entities[e.id+''] = e;
@@ -38,13 +38,17 @@ export const ModulsReducer =
           ids.indexOf(state[projectid].currentModulId)>-1 ?
             state[projectid].currentModulId : null : null;
 
-        return deepAssign(state,{
+        let result = Object.assign(state,{
           [projectid]:{
             ids:ids,
             currentModulId: currentModulId,
             entities: entities
           }
         });
+
+        console.log(result);
+
+        return result;
       }
       case ModulActions.SET_CURRENT_MODUL:{
         const projectid = (<ModulActions.SetCurrentModulAction>action).projectid;
@@ -61,7 +65,11 @@ export const ModulsReducer =
   }
 
   //得到某一项目下的模块state
-export const getModulsState = (state, id): ModulsOnProEntities => state.moduls[id];
+export const getModulsState = (state, id): ModulsOnProEntities => {
+  console.log(typeof id);
+  console.log(typeof Object.keys(state.moduls)[0]);
+  return state.moduls[id];
+}
 
 //得到某一项目下的所有模块键值对象
 export const getModulsEntities = createSelector(
@@ -76,14 +84,22 @@ export const getAllModuls = createSelector(
 
 //得到某一项目下某一模块下的模块
 export const getOneModulsEntities = (state,projectid,modulid) => {
+  console.log(projectid);
+  projectid = projectid+'';
   if(null===projectid||undefined===projectid||''===projectid) return [];
-  let allModuls = getAllModuls(state,projectid);
+  let modulObj = state['moduls'][projectid] || { ids : [] };
+  let allModuls = [];
+  modulObj.ids.length && modulObj.ids.forEach(function(e){
+    allModuls.push(modulObj.entities[e]);
+  });
   let oneModuls = [];
   //如果projectid不存在，就强制赋值null
   if(null==modulid||undefined==modulid||''==modulid) modulid = null;
+  console.log(allModuls);
   allModuls.forEach((modul)=>{
     modul.parent === modulid && oneModuls.push(modul);
   });
+  console.log(oneModuls);
   return oneModuls;
 }
 

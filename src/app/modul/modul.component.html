@@ -18,7 +18,7 @@
   <app-modul-item
     *ngFor="let modul of moduls"
     (click)="clickModul($event,modul)"
-    (saveBase)="update($event,modul.id)"
+    (modulEvent)="modulEvent($event)"
     class="list-item"
     [class.manage]="manageIds.indexOf(modul['id']) > -1"
     [class.selected]="selectModul && selectModul.id===modul.id"

@@ -81,16 +81,15 @@ window.moduldb = {
    * @param ids
    * @param names
    */
-  delete: function(ids,names){
+  delete: function(name,ids){
     return new Promise((resolve,reject) => {
-      window.dbutil.sql(window.dbutil.getRootDB(),function(db){
-        var stm = db.prepare('DELETE FROM project WHERE id = ?');
+      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+        var stm = db.prepare('DELETE FROM modul WHERE id = ?');
         ids.forEach((e,i)=>{
           stm.run(e, (err,row)=>{
             if(err){
               reject();
             }else{
-              window.dbutil.removeDir(names[e]);
               i === ids.length - 1 && resolve();
             }
           });

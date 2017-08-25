@@ -17,3 +17,5 @@ node-gyp rebuild --target=1.4.13 --arch=x64 --target_platform=win32 --dist-url=h
 4.删掉带#的代码行
 
 5.node-gyp.js中加载的../package改为../package.json
+
+6.编译styl文件:stylus -c src\styles.styl -o src\styles.css

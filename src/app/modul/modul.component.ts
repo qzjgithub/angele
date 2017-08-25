@@ -188,14 +188,10 @@ export class ModulComponent implements OnInit {
     this.popData.push(deepAssign(pop.param,{
       content:"确认删除选中的模块吗？",
       data: {
-        operate: 'delete',
-        param: {
-          pid: this.projectid,
-          ids:this.manageIds
-        }
+        operate: 'delete'
       }
     }));
-    event.stopPropagation();
+    event && event.stopPropagation();
   }
 
   /**
@@ -219,7 +215,7 @@ export class ModulComponent implements OnInit {
   popComfirm(event){
     switch(event.data.operate){
       case 'delete':
-        this.modulService.delete(this.project['name'],event.data.param,()=>{
+        this.modulService.delete(this.project['name'],this.manageIds,()=>{
           this.refresh();
           this.manageIds = [];
           this.pattern = 'display';
@@ -276,6 +272,18 @@ export class ModulComponent implements OnInit {
     this.modulService.getModulsByProName(this.project['name'],(rows)=>{
       this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
     });
+  }
+
+  /**
+   * 模块每条信息的处理事件
+   */
+  modulEvent($event){
+    switch($event.type){
+      case 'delete':
+        this.manageIds = $event.param;
+        this.delete(null);
+        break;
+    }
   }
 
 }
