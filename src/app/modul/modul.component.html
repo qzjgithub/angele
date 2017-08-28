@@ -7,6 +7,7 @@
     </button>
     <button class="plain" (click)="manage($event)">{{pattern==='manage'?'取消管理':'管理'}}</button>
     <button *ngIf="manageIds.length" class="plain" (click)="delete($event)">删除</button>
+    <button class="plain back">返回</button>
   </header>
   <div *ngIf="pattern==='add'" class="horizontal add-frame" [class.active]="!selectModul.id">
     <modul-baseinfo

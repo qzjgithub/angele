@@ -8,6 +8,8 @@ import {ProjectService} from "../../control/project/project.service";
 import * as ProjectActions from '../../control/project/project.action';
 import * as pop from '../component/pop/pop.model';
 import {deepAssign} from "../../com-util";
+import {getCurrentModId} from "../../control/modul/modul.reducer";
+import * as ModulActions from '../../control/modul/modul.action';
 
 @Component({
   selector: 'app-local-pro',
@@ -94,6 +96,10 @@ export class LocalProComponent implements OnInit {
         if(!this.selectProject || project.name!==this.selectProject.name){
           this.selectProject = project;
           this.store.dispatch(ProjectActions.setCurrentProject(this.selectProject['id']));
+          let selectModId = getCurrentModId(this.store.getState(),this.selectProject['id']);
+          if(selectModId){
+            this.store.dispatch(ModulActions.setCurrentModul(this.selectProject['id'],null));
+          }
           event.stopPropagation();
         }
 

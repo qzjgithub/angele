@@ -70,7 +70,6 @@ export class ConfiginfoComponent implements OnInit {
     util.setParamByKey('name',{data: this.getNameSelectData()},this.param);
     util.setValue(this.editConfig, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
-    console.log('configinfo oninit over');
   }
 
   /**

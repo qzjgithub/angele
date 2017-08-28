@@ -3,6 +3,7 @@ import {AppStore} from "../control/app.store";
 import {Store} from "redux";
 import {AppState} from "../control/app.reducer";
 import * as CommonActions from '../control/common/common.action';
+import * as ProjectActions from '../control/project/project.action';
 
 @Component({
   selector: 'app-root',
@@ -28,6 +29,7 @@ export class AppComponent {
 
   navClick(tab){
     this.curTab = tab;
+    this.store.dispatch(ProjectActions.setCurrentProject(null))
   }
 }
 

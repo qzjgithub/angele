@@ -55,7 +55,6 @@ window.projectdb = {
           "$status ," +
           "$jurisdiction" +
           ")";
-        console.log(sql);
         var obj_data = {};
         for(var key in data){
           obj_data['$'+key] = data[key];
