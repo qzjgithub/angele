@@ -6,8 +6,8 @@ import {AppStore} from "../../control/app.store";
 import * as ModulActions from '../../control/modul/modul.action';
 import {deepAssign} from "../../com-util";
 import * as pop from '../component/pop/pop.model';
-import {getOneModulsEntities, getCurrentModId} from "../../control/modul/modul.reducer";
-import {getCurrentProId, getCurrentProject} from "../../control/project/project.reducer";
+import {getOneModulsEntities} from "../../control/modul/modul.reducer";
+import {getCurrentProject} from "../../control/project/project.reducer";
 import {ModulService} from "../../control/modul/modul.service";
 import {Project} from "../../control/project/project.model";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -222,6 +222,9 @@ export class ModulComponent implements OnInit {
         });
         break;
       case 'update':
+        this.modulService.update(this.project['name'],this.selectModul.id,event.data.param,() => {
+          this.refresh();
+        });
         break;
     }
   }
@@ -256,7 +259,13 @@ export class ModulComponent implements OnInit {
    * 更新模块基本信息
    */
   updateModul(event){
-
+    this.popData.push(deepAssign(pop.param,{
+      content:"确认保存修改的模块基本信息吗？",
+      data: {
+        operate: 'update',
+        param: event
+      }
+    }));
   }
 
   /**

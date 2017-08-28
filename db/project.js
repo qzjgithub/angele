@@ -114,7 +114,7 @@ window.projectdb = {
           if(err){
             reject(err);
           }else{
-            resolve(err);
+            resolve(row);
           }
         });
         stm.finalize();

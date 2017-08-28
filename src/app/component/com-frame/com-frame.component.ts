@@ -61,6 +61,9 @@ export class ComFrameComponent implements OnInit {
    */
   toggleBref(event){
     this.brefIsDisplay = !this.brefIsDisplay;
+    if(!this.brefIsDisplay){
+      this.store.dispatch(ProjectActions.setCurrentProject(this.data['id']));
+    }
     event.stopPropagation();
   }
 

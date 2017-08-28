@@ -66,8 +66,6 @@ export const ModulsReducer =
 
   //得到某一项目下的模块state
 export const getModulsState = (state, id): ModulsOnProEntities => {
-  console.log(typeof id);
-  console.log(typeof Object.keys(state.moduls)[0]);
   return state.moduls[id];
 }
 
@@ -84,7 +82,6 @@ export const getAllModuls = createSelector(
 
 //得到某一项目下某一模块下的模块
 export const getOneModulsEntities = (state,projectid,modulid) => {
-  console.log(projectid);
   projectid = projectid+'';
   if(null===projectid||undefined===projectid||''===projectid) return [];
   let modulObj = state['moduls'][projectid] || { ids : [] };
@@ -95,11 +92,9 @@ export const getOneModulsEntities = (state,projectid,modulid) => {
   let oneModuls = [];
   //如果projectid不存在，就强制赋值null
   if(null==modulid||undefined==modulid||''==modulid) modulid = null;
-  console.log(allModuls);
   allModuls.forEach((modul)=>{
     modul.parent === modulid && oneModuls.push(modul);
   });
-  console.log(oneModuls);
   return oneModuls;
 }
 
@@ -109,4 +104,4 @@ export const getCurrentModId = createSelector(
 
 export const getCurrentModul = createSelector(
   getModulsState,
-  ( state: ModulsOnProEntities ) => state ? state.entities[state.currentModulId] : []);
+  ( state: ModulsOnProEntities ) => state ? state.entities[state.currentModulId] : null);

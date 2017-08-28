@@ -77,7 +77,7 @@ window.moduldb = {
     });
   },
   /**
-   *
+   * 删除模块
    * @param ids
    * @param names
    */
@@ -98,4 +98,37 @@ window.moduldb = {
       });
     });
   },
+  /**
+   * 更新模块
+   * @param id
+   * @param project
+   */
+  update: function(name,id,modul){
+    return new Promise((resolve,reject) => {
+      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+        var sql = 'UPDATE modul SET ' +
+          'name = $name, ' +
+          'modify_time = $modify_time, ' +
+          'comment = $comment, ' +
+          'path = $path ' +
+          'WHERE id = $id';
+        var stm = db.prepare(sql);
+        var param = {
+          $id: id,
+          $name: modul.name,
+          $modify_time: new Date(),
+          $comment: modul.comment,
+          $path: modul.path
+        }
+        stm.run(param,(err,row)=>{
+          if(err){
+            reject(err);
+          }else{
+            resolve(row);
+          }
+        });
+        stm.finalize();
+      });
+    });
+  }
 }

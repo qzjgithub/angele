@@ -1,5 +1,11 @@
-import {Component, OnInit, Input, EventEmitter, Output} from '@angular/core';
+import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
 import {Modul} from "../../../control/modul/modul.model";
+import {AppState} from "../../../control/app.reducer";
+import {Store} from "redux";
+import {AppStore} from "../../../control/app.store";
+import {getCurrentModId} from "../../../control/modul/modul.reducer";
+import {getCurrentProId} from "../../../control/project/project.reducer";
+import * as ModulActions from '../../../control/modul/modul.action';
 
 @Component({
   selector: 'app-modul-item',
@@ -27,7 +33,13 @@ export class ModulItemComponent implements OnInit {
    */
   brefIsDisplay: boolean;
 
-  constructor() {
+  /**
+   * 被选中的模块
+   * @param store
+   */
+  selectModulId: string;
+
+  constructor(@Inject(AppStore) private store: Store<AppState>) {
     //在右上角要展示的内容
     this.tips = [
       {key:'modify_time',name:'修改时间'},
@@ -35,9 +47,14 @@ export class ModulItemComponent implements OnInit {
     ];
     //默认展示简介
     this.brefIsDisplay = true;
+    //初始化被选模块
+    this.selectModulId = getCurrentModId(this.store.getState(),getCurrentProId(this.store.getState()))
   }
 
   ngOnInit() {
+    if(this.selectModulId === this.modul.id){
+      this.brefIsDisplay = false;
+    }
   }
 
   /**
@@ -46,6 +63,9 @@ export class ModulItemComponent implements OnInit {
    */
   toggleBref(event){
     this.brefIsDisplay = !this.brefIsDisplay;
+    if(!this.brefIsDisplay){
+      this.store.dispatch(ModulActions.setCurrentModul(this.modul.id))
+    }
     event.stopPropagation();
   }
 

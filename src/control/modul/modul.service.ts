@@ -51,8 +51,8 @@ export class ModulService{
    * @param project
    * @param reject
    */
-  update(id,project,reject?){
-    window['moduldb'].update(id,project).then(()=>{
+  update(name,id,modul,reject?){
+    window['moduldb'].update(name,id,modul).then(()=>{
       reject && reject();
     });
   }
