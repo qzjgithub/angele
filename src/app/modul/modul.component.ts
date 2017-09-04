@@ -6,11 +6,11 @@ import {AppStore} from "../../control/app.store";
 import * as ModulActions from '../../control/modul/modul.action';
 import {deepAssign} from "../../com-util";
 import * as pop from '../component/pop/pop.model';
-import {getOneModulsEntities} from "../../control/modul/modul.reducer";
+import {getOneModulsEntities, getModulById} from "../../control/modul/modul.reducer";
 import {getCurrentProject} from "../../control/project/project.reducer";
 import {ModulService} from "../../control/modul/modul.service";
 import {Project} from "../../control/project/project.model";
-import {ActivatedRoute, Params} from "@angular/router";
+import {ActivatedRoute, Params, Router} from "@angular/router";
 import * as ProjectActions from '../../control/project/project.action';
 import 'rxjs/add/operator/switchMap';
 import {ProjectService} from "../../control/project/project.service";
@@ -63,8 +63,11 @@ export class ModulComponent implements OnInit {
    */
   popData: Array<Object>;
 
-  constructor(@Inject(AppStore) private store: Store<AppState>
-    ,private modulService: ModulService,private router:ActivatedRoute,private projectService: ProjectService) {
+  constructor(@Inject(AppStore) private store: Store<AppState>,
+              private modulService: ModulService,
+              private router:ActivatedRoute,
+              private _router: Router,
+              private projectService: ProjectService) {
     console.log(this.router.params);
     // this.router.params.switchMap((params: Params) => {console.log(params);return null;});
     // console.log(this.projectid);
@@ -109,15 +112,26 @@ export class ModulComponent implements OnInit {
       console.log(params);
       this.projectid = params.project;
       this.store.dispatch(ProjectActions.setCurrentProject(this.projectid));
-      this.modulid = params.modul;
+      this.modulid = params.modul=='null' ? null : params.modul;
       const state = this.store.getState();
       this.project = getCurrentProject(state);
+      let moduls = [];
       if(this.project){
-        this.refresh();
+        moduls = getOneModulsEntities(state,this.projectid,this.modulid);
+        if(moduls.length){
+          this.moduls = moduls;
+        }else{
+          this.refresh();
+        }
       }else{
         this.projectService.getAllProjects((rows)=>{
           this.store.dispatch(ProjectActions.setProjects(rows));
-          this.refresh();
+          moduls = getOneModulsEntities(state,this.projectid,this.modulid);
+          if(moduls){
+            this.moduls = moduls;
+          }else{
+            this.refresh();
+          }
         });
       }
     });
@@ -153,6 +167,7 @@ export class ModulComponent implements OnInit {
   confirmAdd(event){
     event['create_time'] = new Date();
     event['modify_time'] = new Date();
+    event['parent'] = parseInt(this.modulid);
     this.modulService.add(this.project['name'],event,(row)=>{
       this.pattern = 'display';
       this.refresh();
@@ -292,6 +307,23 @@ export class ModulComponent implements OnInit {
         this.manageIds = $event.param;
         this.delete(null);
         break;
+      case 'gotoModul':
+        let modul = $event.param;
+        this._router.navigate(['modul',{project:this.projectid,modul: modul.id}]);
+    }
+  }
+
+  /**
+   * 返回上一级目录
+   */
+  back(event){
+    if(!this.modulid){
+      this._router.navigate(['localPro']);
+    }else{
+      console.log(this.modulid);
+      let parentMod = getModulById(this.store.getState(),this.projectid,this.modulid);
+      console.log(parentMod);
+      this._router.navigate(['modul',{project:this.projectid,modul:parentMod.parent}]);
     }
   }
 

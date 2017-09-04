@@ -91,17 +91,37 @@ export const getOneModulsEntities = (state,projectid,modulid) => {
   });
   let oneModuls = [];
   //如果projectid不存在，就强制赋值null
-  if(null==modulid||undefined==modulid||''==modulid) modulid = null;
+  if("null"==modulid||null==modulid||undefined==modulid||''==modulid) modulid = null;
+  modulid = typeof modulid === "string" ? parseInt(modulid) : modulid;
   allModuls.forEach((modul)=>{
     modul.parent === modulid && oneModuls.push(modul);
   });
   return oneModuls;
 }
 
+/**
+ * 得到被选中模块的id
+ * @type {OutputSelector<S, string, (res:ModulsOnProEntities)=>string>}
+ */
 export const getCurrentModId = createSelector(
   getModulsState,
   ( state: ModulsOnProEntities ) => state ? state.currentModulId : '');
 
+/**
+ * 得到被选中模块对象
+ * @type {OutputSelector<S, Modul, (res:ModulsOnProEntities)=>Modul>}
+ */
 export const getCurrentModul = createSelector(
   getModulsState,
   ( state: ModulsOnProEntities ) => state ? state.entities[state.currentModulId] : null);
+
+/**
+ * 根据模块id得到具体模块
+ * @param state
+ * @param projectid
+ * @param modulid
+ * @returns {any}
+ */
+export const getModulById = (state,projectid,modulid) => {
+  return state['moduls'][projectid]['entities'][modulid];
+}

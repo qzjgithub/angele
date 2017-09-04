@@ -77,4 +77,13 @@ export class ModulItemComponent implements OnInit {
     event.stopPropagation();
   }
 
+
+  /**
+   * 进入模块详情
+   */
+  gotoModul(event){
+    this.modulEvent.emit({type:'gotoModul',param: this.modul});
+    event.stopPropagation();
+  }
+
 }
