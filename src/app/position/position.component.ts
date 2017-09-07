@@ -30,7 +30,7 @@ export class PositionComponent implements OnInit {
       this.position.push(project.name);
       let modul = getCurrentModul(state,project.id);
       if(modul){
-        this.position.push(modul.name);
+        this.nestModul(project.id,modul);
       }
     }
   }
@@ -38,7 +38,9 @@ export class PositionComponent implements OnInit {
   nestModul(projectid, modul){
     if(modul.parent){
       let pm = getModulById(this.store.getState(),projectid,modul.parent);
+      this.nestModul(projectid,pm);
     }
+    this.position.push(modul.name);
   }
 
 }

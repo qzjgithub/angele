@@ -302,14 +302,20 @@ export class ModulComponent implements OnInit {
    * 模块每条信息的处理事件
    */
   modulEvent($event){
+    let modul = null;
     switch($event.type){
       case 'delete':
         this.manageIds = $event.param;
         this.delete(null);
         break;
       case 'gotoModul':
-        let modul = $event.param;
+        modul = $event.param;
         this._router.navigate(['modul',{project:this.projectid,modul: modul.id}]);
+        break;
+      case 'toggle':
+        modul = $event.param;
+        this.store.dispatch(ModulActions.setCurrentModul(this.projectid,modul.id));
+        break;
     }
   }
 
@@ -322,6 +328,7 @@ export class ModulComponent implements OnInit {
     }else{
       console.log(this.modulid);
       let parentMod = getModulById(this.store.getState(),this.projectid,this.modulid);
+      this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentMod.parent));
       console.log(parentMod);
       this._router.navigate(['modul',{project:this.projectid,modul:parentMod.parent}]);
     }
