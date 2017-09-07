@@ -35,6 +35,7 @@ const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
   {path: 'localPro',component: LocalProComponent},
   {path: 'modul',component: ModulComponent},
+  {path: 'interf',component: InterfComponent},
   {path: 'user', component: UserComponent}
 ]
 

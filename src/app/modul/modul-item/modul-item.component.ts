@@ -39,6 +39,11 @@ export class ModulItemComponent implements OnInit {
    */
   selectModulId: string;
 
+  /**
+   * 被选中的项目ID
+   */
+  selectProId: string;
+
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     //在右上角要展示的内容
     this.tips = [
@@ -47,8 +52,10 @@ export class ModulItemComponent implements OnInit {
     ];
     //默认展示简介
     this.brefIsDisplay = true;
+    //初始化选中项目
+    this.selectProId = getCurrentProId(this.store.getState());
     //初始化被选模块
-    this.selectModulId = getCurrentModId(this.store.getState(),getCurrentProId(this.store.getState()))
+    this.selectModulId = getCurrentModId(this.store.getState(),this.selectProId)
   }
 
   ngOnInit() {

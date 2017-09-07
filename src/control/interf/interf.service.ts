@@ -15,7 +15,7 @@ export class InterfService{
    * 得到所有的项目信息
    * @param reject
    */
-  getModulsByProName(name,reject?){
+  getInterfsByProName(name,reject?){
     window['interfdb'].getInterfsByProName(name).then((rows)=>{
       console.log(rows);
       reject && reject(rows);

@@ -14,7 +14,7 @@
         <button class="plain" (click)="gotoModul($event)">模块</button>
       </li>
       <li>
-        <button class="plain">接口</button>
+        <button class="plain" [routerLink]="['/interf',{project:selectProId,modul:modul.id}]">接口</button>
       </li>
     </ul>
   </aside>

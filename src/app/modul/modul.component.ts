@@ -146,7 +146,7 @@ export class ModulComponent implements OnInit {
    */
   add(event){
     this.pattern = "add";
-    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,));
+    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,''));
     this.selectModul = {
       id: "",
       name: "",

@@ -12,6 +12,7 @@ import {getOneInterfsEntities} from "../../control/interf/interf.reducer";
 import * as ProjectActions from '../../control/project/project.action';
 import {getCurrentProject} from "../../control/project/project.reducer";
 import * as ModulActions from '../../control/modul/modul.action';
+import * as InterfActions from '../../control/interf/interf.action';
 import * as pop from '../component/pop/pop.model';
 import {deepAssign} from "../../com-util";
 import {getModulById} from "../../control/modul/modul.reducer";
@@ -114,6 +115,7 @@ export class InterfComponent implements OnInit {
       this.projectid = params.project;
       this.store.dispatch(ProjectActions.setCurrentProject(this.projectid));
       this.modulid = params.modul=='null' ? null : params.modul;
+      this.store.dispatch(ProjectActions.setCurrentProject(this.projectid));
       const state = this.store.getState();
       this.project = getCurrentProject(state);
       let interfs = [];
@@ -136,10 +138,6 @@ export class InterfComponent implements OnInit {
         });
       }
     });
-    // const state = this.store.getState();
-    // this.projectid = getCurrentProId(state);
-    // this.project = getCurrentProject(state);
-    // this.modulid = getCurrentModId(state,this.projectid);
   }
 
   /**
@@ -147,7 +145,7 @@ export class InterfComponent implements OnInit {
    */
   add(event){
     this.pattern = "add";
-    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,));
+    this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,''));
     this.selectInterf = {
       id: "",
       method: "",
@@ -170,7 +168,7 @@ export class InterfComponent implements OnInit {
     event['create_time'] = new Date();
     event['modify_time'] = new Date();
     event['parent'] = parseInt(this.modulid);
-    this.modulService.add(this.project['name'],event,(row)=>{
+    this.interfService.add(this.project['name'],event,(row)=>{
       this.pattern = 'display';
       this.refresh();
     });
@@ -189,8 +187,8 @@ export class InterfComponent implements OnInit {
   manage(event){
     if(this.pattern!=='manage'){
       this.pattern = 'manage';
-      this.selectModul = null;
-      this.store.dispatch(ModulActions.setCurrentModul(this.projectid,null));
+      this.selectInterf = null;
+      this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,null));
     }else{
       this.pattern = 'display';
       this.manageIds = [];
@@ -203,7 +201,7 @@ export class InterfComponent implements OnInit {
    */
   delete(event){
     this.popData.push(deepAssign(pop.param,{
-      content:"确认删除选中的模块吗？",
+      content:"确认删除选中的接口吗？",
       data: {
         operate: 'delete'
       }
@@ -232,14 +230,14 @@ export class InterfComponent implements OnInit {
   popComfirm(event){
     switch(event.data.operate){
       case 'delete':
-        this.modulService.delete(this.project['name'],this.manageIds,()=>{
+        this.interfService.delete(this.project['name'],this.manageIds,()=>{
           this.refresh();
           this.manageIds = [];
           this.pattern = 'display';
         });
         break;
       case 'update':
-        this.modulService.update(this.project['name'],this.selectModul.id,event.data.param,() => {
+        this.interfService.update(this.project['name'],this.selectInterf.id,event.data.param,() => {
           this.refresh();
         });
         break;
@@ -251,21 +249,21 @@ export class InterfComponent implements OnInit {
    * @param event
    * @param project
    */
-  clickModul(event, modul){
+  clickModul(event, interf){
     switch(this.pattern){
       case 'manage':
-        let index = this.manageIds.indexOf(modul.id);
+        let index = this.manageIds.indexOf(interf.id);
         if(index > -1){
           this.manageIds.splice(index,1);
         }else{
-          this.manageIds.push(modul.id);
+          this.manageIds.push(interf.id);
         }
         break;
       case 'add':
       case 'display':
-        if(!this.selectModul || modul.name!==this.selectModul.name){
-          this.selectModul = modul;
-          this.store.dispatch(ModulActions.setCurrentModul(this.projectid,modul.id));
+        if(!this.selectInterf || interf.id!==this.selectInterf.id){
+          this.selectInterf = interf;
+          this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,interf.id));
           event.stopPropagation();
         }
     }
@@ -277,7 +275,7 @@ export class InterfComponent implements OnInit {
    */
   updateModul(event){
     this.popData.push(deepAssign(pop.param,{
-      content:"确认保存修改的模块基本信息吗？",
+      content:"确认保存修改的接口基本信息吗？",
       data: {
         operate: 'update',
         param: event
@@ -295,28 +293,24 @@ export class InterfComponent implements OnInit {
       this.project = getCurrentProject(state);
       console.log(state,this.project);
     }
-    this.modulService.getModulsByProName(this.project['name'],(rows)=>{
-      this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
+    this.interfService.getInterfsByProName(this.project['name'],(rows)=>{
+      this.store.dispatch(InterfActions.setInterfs(this.projectid,rows));
     });
   }
 
   /**
    * 模块每条信息的处理事件
    */
-  modulEvent($event){
-    let modul = null;
+  interfEvent($event){
+    let interf = null;
     switch($event.type){
       case 'delete':
         this.manageIds = $event.param;
         this.delete(null);
         break;
-      case 'gotoModul':
-        modul = $event.param;
-        this._router.navigate(['modul',{project:this.projectid,modul: modul.id}]);
-        break;
       case 'toggle':
-        modul = $event.param;
-        this.store.dispatch(ModulActions.setCurrentModul(this.projectid,modul.id));
+        interf = $event.param;
+        this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,interf.id));
         break;
     }
   }
