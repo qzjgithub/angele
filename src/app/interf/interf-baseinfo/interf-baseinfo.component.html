@@ -1,0 +1,75 @@
+<form [formGroup]="form" class="form-content">
+  <h2 class="form-title">基本信息</h2>
+  <ul class="active">
+    <!--<li>
+      <label>名称</label>
+      <com-input (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-input>
+    </li>-->
+    <li>
+      <label>请求类型</label>
+      <com-input (backControl)="getControl($event,param['method']['name'])" [param]="param['method']"></com-input>
+    </li>
+    <li>
+      <label>路径</label>
+      <com-input (backControl)="getControl($event,param['path']['name'])" [param]="param['path']"></com-input>
+    </li>
+    <li>
+      <label>全路劲</label>
+      <span>{{interf['full_path']}}</span>
+    </li>
+    <!--<li>
+      <label>权限</label>
+      <com-input (backControl)="getControl($event,param['jurisdiction']['name'])" [param]="param['jurisdiction']"></com-input>
+    </li>
+    <li>
+      <label>创建人</label>
+      <com-select (backControl)="getControl($event,param['create_user']['name'])" [param]="param['create_user']"></com-select>
+    </li>
+    <li>
+      <label>负责人</label>
+      <com-select (backControl)="getControl($event,param['principal']['name'])" [param]="param['principal']"></com-select>
+    </li>-->
+    <li>
+      <label>介绍</label>
+      <com-textarea (backControl)="getControl($event,param['comment']['name'])" [param]="param['comment']"></com-textarea>
+    </li>
+  </ul>
+  <footer *ngIf="!disabled" class="form-footer">
+    <button (click)="save($event)"
+            *ngIf="form.dirty && form.touched && !form.invalid"
+            class="plain border">
+      保存
+    </button><button (click)="clear($event)"
+                     class="plain border"
+                     *ngIf="pattern==='add' && form.dirty">
+    清空
+  </button><button (click)="cancel($event)"
+                   class="plain border"
+                   *ngIf="pattern==='add'">
+    取消
+  </button><button (click)="reset($event)"
+                   class="plain border"
+                   *ngIf="pattern=='edit' || (pattern==='display' && form.dirty)">
+    重置
+  </button>
+  </footer>
+  <aside class="form-aside button-aside" *ngIf="pattern!=='add'">
+    <div><i class="big-arrow"></i></div>
+    <ul>
+      <li>
+        <button class="plain"
+                (click)="toggleDisabled($event)"
+                *ngIf="pattern=='display'"
+        >
+          {{disabled ? '解锁': '锁定'}}
+        </button>
+      </li>
+      <li>
+        <button class="plain"
+                (click)="togglePattern($event,'edit')"
+                *ngIf="pattern==='display' && !disabled"
+        >编辑</button>
+      </li>
+    </ul>
+  </aside>
+</form>

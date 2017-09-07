@@ -64,7 +64,7 @@ export class ModulItemComponent implements OnInit {
   toggleBref(event){
     this.brefIsDisplay = !this.brefIsDisplay;
     if(!this.brefIsDisplay){
-      this.modulEvent.emit({type:'toggle',param:this.modul});''
+      this.modulEvent.emit({type:'toggle',param:this.modul});
     }
     event.stopPropagation();
   }

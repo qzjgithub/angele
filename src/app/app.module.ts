@@ -26,6 +26,10 @@ import { ModulComponent } from './modul/modul.component';
 import { ModulItemComponent } from './modul/modul-item/modul-item.component';
 import { ModulBaseinfoComponent } from './modul/modul-baseinfo/modul-baseinfo.component';
 import {MODUL_PROVIDERS} from "../control/modul/modul.service";
+import { InterfComponent } from './interf/interf.component';
+import { InterfItemComponent } from './interf/interf-item/interf-item.component';
+import { InterfBaseinfoComponent } from './interf/interf-baseinfo/interf-baseinfo.component';
+import {INTERF_PROVIDERS} from "../control/interf/interf.service";
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -54,7 +58,10 @@ const routes: Routes = [
     UserComponent,
     ModulComponent,
     ModulItemComponent,
-    ModulBaseinfoComponent
+    ModulBaseinfoComponent,
+    InterfComponent,
+    InterfItemComponent,
+    InterfBaseinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +74,8 @@ const routes: Routes = [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
     appStoreProviders,
     PROJECT_PROVIDERS,
-    MODUL_PROVIDERS
+    MODUL_PROVIDERS,
+    INTERF_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })
