@@ -46,8 +46,8 @@ export class InterfItemComponent implements OnInit {
     //默认展示简介
     this.brefIsDisplay = true;
     //初始化被选模块
-    // this.selectInterfId = getCurrentIntId(this.store.getState(),getCurrentProId(this.store.getState()))
-    this.selectInterfId = null;
+    this.selectInterfId = getCurrentIntId(this.store.getState(),getCurrentProId(this.store.getState()))
+    // this.selectInterfId = null;
   }
 
   ngOnInit() {
@@ -62,6 +62,7 @@ export class InterfItemComponent implements OnInit {
    */
   toggleBref(event){
     this.brefIsDisplay = !this.brefIsDisplay;
+    console.log(this.brefIsDisplay);
     if(!this.brefIsDisplay){
       this.interfEvent.emit({type:'toggle',param:this.interf});
     }

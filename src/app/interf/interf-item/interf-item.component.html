@@ -1,5 +1,5 @@
 <section class="com-frame">
-  <header><h1>{{interf.method}}</h1><p>{{interf.full_path}}</p><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || interf[tip.key]}}</span></header>
+  <header class="interf-header"><h1>{{interf.method}}</h1><p>{{interf.full_path}}</p><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || interf[tip.key]}}</span></header>
   <article class="horizontal">
     <!--<p *ngIf="brefIsDisplay">{{interf.comment}}</p>-->
     <ng-content *ngIf="!brefIsDisplay"></ng-content>

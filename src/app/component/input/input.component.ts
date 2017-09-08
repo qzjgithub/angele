@@ -153,7 +153,7 @@ export class InputComponent implements OnInit ,OnChanges{
         this.validMsg['pattern'] = msg || '正则验证不通过';
         break;
       case 'PATH':
-        reg = /^\/([\S]+\/)*$/;
+        reg = /^(\/[\S]*)+$/;
         validator.push(Validators.pattern(reg));
         this.validMsg['pattern'] = msg || '不符合路径规则';
         break;

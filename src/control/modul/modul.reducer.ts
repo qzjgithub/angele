@@ -123,5 +123,6 @@ export const getCurrentModul = createSelector(
  * @returns {any}
  */
 export const getModulById = (state,projectid,modulid) => {
-  return state['moduls'][projectid]['entities'][modulid];
+  let moduls = state['moduls'][projectid];
+  return moduls ? moduls['entities'][modulid]:null;
 }

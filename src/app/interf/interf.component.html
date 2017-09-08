@@ -4,7 +4,7 @@
             (click)="add($event)"
             *ngIf="interfs.length"
     >
-      <i></i>添加模块
+      <i></i>添加接口
     </button>
     <button class="plain" (click)="manage($event)" *ngIf="interfs.length">{{pattern==='manage'?'取消管理':'管理'}}</button>
     <button *ngIf="manageIds.length" class="plain" (click)="delete($event)">删除</button>
@@ -20,8 +20,8 @@
   </div>
   <app-interf-item
     *ngFor="let interf of interfs"
-    (click)="clickModul($event,interf)"
-    (modulEvent)="interfEvent($event)"
+    (click)="clickInterf($event,interf)"
+    (interfEvent)="interfEvent($event)"
     class="list-item"
     [class.manage]="manageIds.indexOf(interf['id']) > -1"
     [class.selected]="selectInterf && selectInterf.id===interf.id"
@@ -33,7 +33,7 @@
     class="empty-button plain border"
     (click)="add($event)"
     *ngIf="pattern!=='add' && !interfs.length">
-    <i></i>添加模块
+    <i></i>添加接口
   </button>
 </section>
 <pop *ngFor="let pop of popData" [param]="pop" (btnclick)="popevent($event)"></pop>

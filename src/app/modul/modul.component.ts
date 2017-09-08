@@ -127,7 +127,7 @@ export class ModulComponent implements OnInit {
         this.projectService.getAllProjects((rows)=>{
           this.store.dispatch(ProjectActions.setProjects(rows));
           moduls = getOneModulsEntities(state,this.projectid,this.modulid);
-          if(moduls){
+          if(moduls.length){
             this.moduls = moduls;
           }else{
             this.refresh();

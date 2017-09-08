@@ -112,6 +112,7 @@ window.interfdb = {
           'method = $method,' +
           'modify_time = $modify_time, ' +
           'comment = $comment, ' +
+          'full_path = $full_path, ' +
           'path = $path ' +
           'WHERE id = $id';
         var stm = db.prepare(sql);
@@ -120,6 +121,7 @@ window.interfdb = {
           $method: interf.method,
           $modify_time: new Date(),
           $comment: interf.comment,
+          $full_path: interf.full_path,
           $path: interf.path
         }
         stm.run(param,(err,row)=>{

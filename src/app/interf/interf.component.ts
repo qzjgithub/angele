@@ -65,6 +65,11 @@ export class InterfComponent implements OnInit {
    */
   popData: Array<Object>;
 
+  /**
+   * 父节点组成的路径
+   */
+  parentPath: Array<string>;
+
   constructor(@Inject(AppStore) private store: Store<AppState>,
               private modulService: ModulService,
               private interfService: InterfService,
@@ -91,6 +96,7 @@ export class InterfComponent implements OnInit {
     this.pattern = 'display';
     this.manageIds = [];
     this.popData = [];
+    this.parentPath = [];
     this.getParent();
     this.store.subscribe(()=>this.updateInterfs());
   }
@@ -120,6 +126,7 @@ export class InterfComponent implements OnInit {
       this.project = getCurrentProject(state);
       let interfs = [];
       if(this.project){
+        this.getParentPath();
         interfs = getOneInterfsEntities(state,this.projectid,this.modulid);
         if(interfs.length){
           this.interfs = interfs;
@@ -129,8 +136,10 @@ export class InterfComponent implements OnInit {
       }else{
         this.projectService.getAllProjects((rows)=>{
           this.store.dispatch(ProjectActions.setProjects(rows));
+          this.project = getCurrentProject(state);
+          this.getParentPath();
           interfs = getOneInterfsEntities(state,this.projectid,this.modulid);
-          if(interfs){
+          if(interfs.length){
             this.interfs = interfs;
           }else{
             this.refresh();
@@ -140,6 +149,23 @@ export class InterfComponent implements OnInit {
     });
   }
 
+  /**
+   * 得到父元素组成的路径
+   */
+  getParentPath(){
+    this.parentPath.push(this.project.path);
+    let modul = getModulById(this.store.getState(),this.projectid,this.modulid);
+    this.parentPath = [this.project.path];
+    if(!modul){
+      this.modulService.getModulsByProName(this.project.name,(rows) =>{
+        this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
+        modul = getModulById(this.store.getState(),this.projectid,this.modulid);
+        this.parentPath = [...this.parentPath,...this.getModulPath(this.projectid,modul)]
+      })
+    }else{
+      this.parentPath = [...this.parentPath,...this.getModulPath(this.projectid,modul)]
+    }
+  }
   /**
    * 添加模块
    */
@@ -154,10 +180,25 @@ export class InterfComponent implements OnInit {
       create_time: new Date(),
       modify_time: new Date(),
       comment: "",
-      path: "",
-      full_path:"",
+      path: "aaa",
+      full_path: this.parentPath.join(''),
       jurisdiction: ""
     }
+  }
+
+  /**
+   * 得到完整路径
+   */
+  getModulPath(projectid,modul){
+    let paths = [];
+    if(modul){
+      paths = [modul.path];
+    }
+    if(modul && modul.parent){
+      let mod = getModulById(this.store.getState(),projectid,modul.parent);
+      paths = [...this.getModulPath(projectid,mod),...paths]
+    }
+    return paths;
   }
 
   /**
@@ -168,6 +209,7 @@ export class InterfComponent implements OnInit {
     event['create_time'] = new Date();
     event['modify_time'] = new Date();
     event['parent'] = parseInt(this.modulid);
+    event['full_path'] = this.parentPath.join('') + event['path'];
     this.interfService.add(this.project['name'],event,(row)=>{
       this.pattern = 'display';
       this.refresh();
@@ -237,6 +279,8 @@ export class InterfComponent implements OnInit {
         });
         break;
       case 'update':
+        let interf = event.data.param;
+        interf['full_path'] = this.parentPath.join('') + interf['path'];
         this.interfService.update(this.project['name'],this.selectInterf.id,event.data.param,() => {
           this.refresh();
         });
@@ -249,7 +293,7 @@ export class InterfComponent implements OnInit {
    * @param event
    * @param project
    */
-  clickModul(event, interf){
+  clickInterf(event, interf){
     switch(this.pattern){
       case 'manage':
         let index = this.manageIds.indexOf(interf.id);
@@ -273,7 +317,7 @@ export class InterfComponent implements OnInit {
   /**
    * 更新模块基本信息
    */
-  updateModul(event){
+  updateInterf(event){
     this.popData.push(deepAssign(pop.param,{
       content:"确认保存修改的接口基本信息吗？",
       data: {
