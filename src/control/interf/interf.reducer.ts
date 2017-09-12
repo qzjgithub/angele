@@ -70,12 +70,12 @@ export const getInterfsState = (state, id): InterfsOnProEntities => {
 }
 
 //得到某一项目下的所有接口键值对象
-export const getModulsEntities = createSelector(
+export const getInterfsEntities = createSelector(
   getInterfsState,
   ( state: InterfsOnProEntities):InterfsEntities => state ? state.entities : {});
 
 export const getAllInterfs = createSelector(
-  getModulsEntities,
+  getInterfsEntities,
   ( entities: InterfsEntities ) => entities ? Object.keys(entities)
     .map((id) => entities[id]) : []);
 

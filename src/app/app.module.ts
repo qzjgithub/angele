@@ -30,12 +30,17 @@ import { InterfComponent } from './interf/interf.component';
 import { InterfItemComponent } from './interf/interf-item/interf-item.component';
 import { InterfBaseinfoComponent } from './interf/interf-baseinfo/interf-baseinfo.component';
 import {INTERF_PROVIDERS} from "../control/interf/interf.service";
+import { IntdataComponent } from './intdata/intdata.component';
+import { IntdataItemComponent } from './intdata/intdata-item/intdata-item.component';
+import { IntdataBaseinfoComponent } from './intdata/intdata-baseinfo/intdata-baseinfo.component';
+import {INTDATA_PROVIDERS} from "../control/intdata/intdata.service";
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
   {path: 'localPro',component: LocalProComponent},
   {path: 'modul',component: ModulComponent},
   {path: 'interf',component: InterfComponent},
+  {path: 'intdata',component: IntdataComponent},
   {path: 'user', component: UserComponent}
 ]
 
@@ -62,7 +67,10 @@ const routes: Routes = [
     ModulBaseinfoComponent,
     InterfComponent,
     InterfItemComponent,
-    InterfBaseinfoComponent
+    InterfBaseinfoComponent,
+    IntdataComponent,
+    IntdataItemComponent,
+    IntdataBaseinfoComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +84,8 @@ const routes: Routes = [
     appStoreProviders,
     PROJECT_PROVIDERS,
     MODUL_PROVIDERS,
-    INTERF_PROVIDERS
+    INTERF_PROVIDERS,
+    INTDATA_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })

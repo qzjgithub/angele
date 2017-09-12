@@ -49,5 +49,6 @@ window.dbutil = {
     }).then((row)=>{
       console.log(row)
     })
+    window.intdatadb.createDb(name);
   }
 }

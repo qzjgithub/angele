@@ -117,12 +117,13 @@ export function setDataTypeValidator(param,validMsg){
   let reg;
   switch(dataType){
     case 'TEXT':
-      reg = /^\S*$/;
+      reg = /^.*$/;
       validator.push(Validators.pattern(reg));
      validMsg['pattern'] = msg || '正则验证不通过';
       break;
     case 'PATH':
-      reg = /^\/([\S]+\/)*$/;
+      // reg = /^\/([\S]+\/)*$/;
+      /^(\/[\S]*)+$/;
       validator.push(Validators.pattern(reg));
       validMsg['pattern'] = msg || '不符合路径规则';
       break;

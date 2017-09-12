@@ -8,55 +8,55 @@ import {AppState} from "../app.reducer";
 // import * as path from 'path';
 
 @Injectable()
-export class InterfService{
+export class IntdataService{
   constructor(@Inject(AppStore) private store: Store<AppState>){}
   /**
-   * 得到所有的项目信息
+   * 得到所有的模拟数据信息
    * @param reject
    */
-  getInterfsByProName(name,reject?){
-    window['interfdb'].getInterfsByProName(name).then((rows)=>{
+  getIntdatasByProName(name,reject?){
+    window['intdatadb'].getIntdatasByProName(name).then((rows)=>{
       console.log(rows);
       reject && reject(rows);
     });
   }
 
   /**
-   * 添加项目
+   * 添加模拟数据
    * @param data
    */
   add(name,data,reject?){
-    window['interfdb'].add(name,data).then((row)=>{
+    window['intdatadb'].add(name,data).then((row)=>{
       console.log(row);
       reject && reject(row);
     });
   }
 
   /**
-   * 删除项目，批量删除
+   * 删除模拟数据，批量删除
    * @param ids
    * @param reject
    */
   delete(name,ids,reject?){
     const state = this.store.getState();
-    window['interfdb'].delete(name,ids).then(()=>{
+    window['intdatadb'].delete(name,ids).then(()=>{
       reject && reject();
     });
   }
 
   /**
-   * 更新项目
+   * 更新模拟数据
    * @param id
    * @param project
    * @param reject
    */
-  update(name,id,interf,reject?){
-    window['interfdb'].update(name,id,interf).then(()=>{
+  update(name,id,intdata,reject?){
+    window['intdatadb'].update(name,id,intdata).then(()=>{
       reject && reject();
     });
   }
 }
 
-export const INTERF_PROVIDERS: Array<any> = [
-  { provide: InterfService, useClass: InterfService }
+export const INTDATA_PROVIDERS: Array<any> = [
+  { provide: IntdataService, useClass: IntdataService }
 ];

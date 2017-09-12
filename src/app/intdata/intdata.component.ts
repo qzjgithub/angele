@@ -1,28 +1,28 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {Project} from "../../control/project/project.model";
-import {Interf} from "../../control/interf/interf.model";
+import {Intdata} from "../../control/intdata/intdata.model";
 import {AppStore} from "../../control/app.store";
 import {Store} from "redux";
 import {AppState} from "../../control/app.reducer";
-import {ModulService} from "../../control/modul/modul.service";
-import {InterfService} from "../../control/interf/interf.service";
+import {IntdataService} from "../../control/intdata/intdata.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ProjectService} from "../../control/project/project.service";
-import {getOneInterfsEntities} from "../../control/interf/interf.reducer";
+import {getOneIntdatasEntities} from "../../control/intdata/intdata.reducer";
 import * as ProjectActions from '../../control/project/project.action';
 import {getCurrentProject} from "../../control/project/project.reducer";
 import * as ModulActions from '../../control/modul/modul.action';
-import * as InterfActions from '../../control/interf/interf.action';
+import * as IntdataActions from '../../control/intdata/intdata.action';
 import * as pop from '../component/pop/pop.model';
 import {deepAssign} from "../../com-util";
-import {getModulById} from "../../control/modul/modul.reducer";
+import {InterfService} from "../../control/interf/interf.service";
+import {getInterfById} from "../../control/interf/interf.reducer";
 
 @Component({
-  selector: 'app-interf',
-  templateUrl: './interf.component.html',
-  styleUrls: ['./interf.component.css']
+  selector: 'app-intdata',
+  templateUrl: './intdata.component.html',
+  styleUrls: ['./intdata.component.css']
 })
-export class InterfComponent implements OnInit {
+export class IntdataComponent implements OnInit {
 
   /**
    * 所属项目id
@@ -35,19 +35,19 @@ export class InterfComponent implements OnInit {
   project:Project;
 
   /**
-   * 所属模块id
+   * 所属接口id
    */
-  modulid:string;
+  interfid:string;
 
   /**
    * 所有接口
    */
-  interfs: Interf[];
+  intdatas: Intdata[];
 
   /**
    * 被选中的接口
    */
-  selectInterf: Interf;
+  selectIntdata: Intdata;
 
   /**
    * 模式
@@ -68,37 +68,35 @@ export class InterfComponent implements OnInit {
   /**
    * 父节点组成的路径
    */
-  parentPath: Array<string>;
+  // parentPath: Array<string>;
 
   constructor(@Inject(AppStore) private store: Store<AppState>,
-              private modulService: ModulService,
-              private interfService: InterfService,
               private router: ActivatedRoute,
               private _router: Router,
+              private intdataService: IntdataService,
               private projectService: ProjectService) {
     console.log(this.router.params);
     // this.router.params.switchMap((params: Params) => {console.log(params);return null;});
     // console.log(this.projectid);
-    this.modulid = '';
-    this.interfs = [];
-    this.selectInterf= {
+    this.interfid = '';
+    this.intdatas = [];
+    this.selectIntdata= {
       id: "",
-      method: "",
-      principal:"",
-      create_user: "",
+      name: "",
       create_time: new Date(),
       modify_time: new Date(),
+      type:"",
+      content:"",
+      status:false,
       comment: "",
-      path: "",
-      full_path:"",
-      jurisdiction: ""
+      parent: this.interfid
     };
     this.pattern = 'display';
     this.manageIds = [];
     this.popData = [];
-    this.parentPath = [];
+    // this.parentPath = [];
     this.getParent();
-    this.store.subscribe(()=>this.updateInterfs());
+    this.store.subscribe(()=>this.updateIntdatas());
   }
 
   ngOnInit() {
@@ -107,9 +105,9 @@ export class InterfComponent implements OnInit {
   /**
    * 得到当前父节点下的所有模块信息
    */
-  updateInterfs(){
+  updateIntdatas(){
     const state = this.store.getState();
-    this.interfs = getOneInterfsEntities(state,this.projectid,this.modulid);
+    this.intdatas = getOneIntdatasEntities(state,this.projectid,this.interfid);
   }
 
   /**
@@ -119,15 +117,14 @@ export class InterfComponent implements OnInit {
     this.router.params.subscribe(params => {
       console.log(params);
       this.projectid = params.project;
-      this.modulid = params.modul=='null' ? null : params.modul;
+      this.interfid = params.interf=='null' ? null : params.interf;
       this.store.dispatch(ProjectActions.setCurrentProject(this.projectid));
       this.project = getCurrentProject(this.store.getState());
-      let interfs = [];
+      let intdatas = [];
       if(this.project){
-        this.getParentPath();
-        interfs = getOneInterfsEntities(this.store.getState(),this.projectid,this.modulid);
-        if(interfs.length){
-          this.interfs = interfs;
+        intdatas = getOneIntdatasEntities(this.store.getState(),this.projectid,this.interfid);
+        if(intdatas.length){
+          this.intdatas = intdatas;
         }else{
           this.refresh();
         }
@@ -135,10 +132,9 @@ export class InterfComponent implements OnInit {
         this.projectService.getAllProjects((rows)=>{
           this.store.dispatch(ProjectActions.setProjects(rows));
           this.project = getCurrentProject(this.store.getState());
-          this.getParentPath();
-          interfs = getOneInterfsEntities(this.store.getState(),this.projectid,this.modulid);
-          if(interfs.length){
-            this.interfs = interfs;
+          intdatas = getOneIntdatasEntities(this.store.getState(),this.projectid,this.interfid);
+          if(intdatas.length){
+            this.intdatas = intdatas;
           }else{
             this.refresh();
           }
@@ -148,55 +144,22 @@ export class InterfComponent implements OnInit {
   }
 
   /**
-   * 得到父元素组成的路径
-   */
-  getParentPath(){
-    this.parentPath = [this.project.path];
-    if(!this.modulid) return;
-    let modul = getModulById(this.store.getState(),this.projectid,this.modulid);
-    if(!modul){
-      this.modulService.getModulsByProName(this.project.name,(rows) =>{
-        this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
-        modul = getModulById(this.store.getState(),this.projectid,this.modulid);
-        this.parentPath = [...this.parentPath,...this.getModulPath(this.projectid,modul)]
-      })
-    }else{
-      this.parentPath = [...this.parentPath,...this.getModulPath(this.projectid,modul)]
-    }
-  }
-  /**
    * 添加模块
    */
   add(event){
     this.pattern = "add";
-    this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,''));
-    this.selectInterf = {
+    this.store.dispatch(IntdataActions.setCurrentIntdata(this.projectid,''));
+    this.selectIntdata = {
       id: "",
-      method: "",
-      principal:"",
-      create_user: "",
+      name: "",
       create_time: new Date(),
       modify_time: new Date(),
+      type:"",
+      content:"",
+      status:false,
       comment: "",
-      path: "",
-      full_path: this.parentPath.join(''),
-      jurisdiction: ""
+      parent: this.interfid
     }
-  }
-
-  /**
-   * 得到完整路径
-   */
-  getModulPath(projectid,modul){
-    let paths = [];
-    if(modul){
-      paths = [modul.path];
-    }
-    if(modul && modul.parent){
-      let mod = getModulById(this.store.getState(),projectid,modul.parent);
-      paths = [...this.getModulPath(projectid,mod),...paths]
-    }
-    return paths;
   }
 
   /**
@@ -206,9 +169,8 @@ export class InterfComponent implements OnInit {
   confirmAdd(event){
     event['create_time'] = new Date();
     event['modify_time'] = new Date();
-    event['parent'] = parseInt(this.modulid);
-    event['full_path'] = this.parentPath.join('') + event['path'];
-    this.interfService.add(this.project['name'],event,(row)=>{
+    event['parent'] = parseInt(this.interfid);
+    this.intdataService.add(this.project['name'],event,(row)=>{
       this.pattern = 'display';
       this.refresh();
     });
@@ -227,8 +189,8 @@ export class InterfComponent implements OnInit {
   manage(event){
     if(this.pattern!=='manage'){
       this.pattern = 'manage';
-      this.selectInterf = null;
-      this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,null));
+      this.selectIntdata = null;
+      this.store.dispatch(IntdataActions.setCurrentIntdata(this.projectid,null));
     }else{
       this.pattern = 'display';
       this.manageIds = [];
@@ -270,16 +232,16 @@ export class InterfComponent implements OnInit {
   popComfirm(event){
     switch(event.data.operate){
       case 'delete':
-        this.interfService.delete(this.project['name'],this.manageIds,()=>{
+        this.intdataService.delete(this.project['name'],this.manageIds,()=>{
           this.refresh();
           this.manageIds = [];
           this.pattern = 'display';
         });
         break;
       case 'update':
-        let interf = event.data.param;
-        interf['full_path'] = this.parentPath.join('') + interf['path'];
-        this.interfService.update(this.project['name'],this.selectInterf.id,event.data.param,() => {
+        let intdata = event.data.param;
+        intdata['parent'] = parseInt(this.interfid);
+        this.intdataService.update(this.project['name'],this.selectIntdata.id,event.data.param,() => {
           this.refresh();
         });
         break;
@@ -287,25 +249,25 @@ export class InterfComponent implements OnInit {
   }
 
   /**
-   * 选中某个模块的事件
+   * 选中某个模拟数据的事件
    * @param event
    * @param project
    */
-  clickInterf(event, interf){
+  clickIntdata(event, intdata){
     switch(this.pattern){
       case 'manage':
-        let index = this.manageIds.indexOf(interf.id);
+        let index = this.manageIds.indexOf(intdata.id);
         if(index > -1){
           this.manageIds.splice(index,1);
         }else{
-          this.manageIds.push(interf.id);
+          this.manageIds.push(intdata.id);
         }
         break;
       case 'add':
       case 'display':
-        if(!this.selectInterf || interf.id!==this.selectInterf.id){
-          this.selectInterf = interf;
-          this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,interf.id));
+        if(!this.selectIntdata || intdata.id!==this.selectIntdata.id){
+          this.selectIntdata = intdata;
+          this.store.dispatch(IntdataActions.setCurrentIntdata(this.projectid,intdata.id));
           event.stopPropagation();
         }
     }
@@ -315,7 +277,7 @@ export class InterfComponent implements OnInit {
   /**
    * 更新模块基本信息
    */
-  updateInterf(event){
+  updateIntdata(event){
     this.popData.push(deepAssign(pop.param,{
       content:"确认保存修改的接口基本信息吗？",
       data: {
@@ -335,24 +297,24 @@ export class InterfComponent implements OnInit {
       this.project = getCurrentProject(state);
       console.log(state,this.project);
     }
-    this.interfService.getInterfsByProName(this.project['name'],(rows)=>{
-      this.store.dispatch(InterfActions.setInterfs(this.projectid,rows));
+    this.intdataService.getIntdatasByProName(this.project['name'],(rows)=>{
+      this.store.dispatch(IntdataActions.setIntdatas(this.projectid,rows));
     });
   }
 
   /**
    * 模块每条信息的处理事件
    */
-  interfEvent($event){
-    let interf = null;
+  intdataEvent($event){
+    let intdata = null;
     switch($event.type){
       case 'delete':
         this.manageIds = $event.param;
         this.delete(null);
         break;
       case 'toggle':
-        interf = $event.param;
-        this.store.dispatch(InterfActions.setCurrentInterf(this.projectid,interf.id));
+        intdata = $event.param;
+        this.store.dispatch(IntdataActions.setCurrentIntdata(this.projectid,intdata.id));
         break;
     }
   }
@@ -361,15 +323,11 @@ export class InterfComponent implements OnInit {
    * 返回上一级目录
    */
   back(event){
-    if(!this.modulid){
-      this._router.navigate(['localPro']);
-    }else{
-      console.log(this.modulid);
-      let parentMod = getModulById(this.store.getState(),this.projectid,this.modulid);
-      this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentMod.parent));
-      console.log(parentMod);
-      this._router.navigate(['modul',{project:this.projectid,modul:parentMod.parent}]);
-    }
+    console.log(this.interfid);
+    let parentInt = getInterfById(this.store.getState(),this.projectid,this.interfid);
+    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentInt.parent));
+    console.log(parentInt);
+    this._router.navigate(['interf',{project:this.projectid,modul:parentInt.parent}]);
   }
 
 }

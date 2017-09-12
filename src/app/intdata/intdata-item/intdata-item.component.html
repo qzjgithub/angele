@@ -1,7 +1,7 @@
 <section class="com-frame">
-  <header class="interf-header"><h1>{{interf.method}}</h1><p>{{interf.full_path}}</p><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || interf[tip.key]}}</span></header>
+  <header><h1>{{intdata.name}}</h1><span *ngFor="let tip of tips">{{tip.name}}<i>：</i>{{tip.value || intdata[tip.key]}}</span></header>
   <article class="horizontal">
-    <!--<p *ngIf="brefIsDisplay">{{interf.comment}}</p>-->
+    <p *ngIf="brefIsDisplay">{{intdata.comment}}</p>
     <ng-content *ngIf="!brefIsDisplay"></ng-content>
   </article>
   <aside>
@@ -9,9 +9,6 @@
     <ul [class.show]="!brefIsDisplay">
       <li>
         <button class="plain" (click)="delete($event)">删除</button>
-      </li>
-      <li>
-        <button class="plain"  [routerLink]="['/intdata',{project:selectProId,interf:interf.id}]">数据</button>
       </li>
     </ul>
   </aside>

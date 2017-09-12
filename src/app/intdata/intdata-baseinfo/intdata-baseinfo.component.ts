@@ -3,14 +3,11 @@ import {FormGroup, AbstractControl} from "@angular/forms";
 import * as util from "../../../com-util";
 
 @Component({
-  selector: 'com-baseinfo',
-  templateUrl: 'baseinfo.component.html',
-  styleUrls: ['baseinfo.component.css'],
-  host: {
-    style: 'display:block;width:50%;'
-  }
+  selector: 'intdata-baseinfo',
+  templateUrl: 'intdata-baseinfo.component.html',
+  styleUrls: ['intdata-baseinfo.component.css']
 })
-export class BaseinfoComponent implements OnInit {
+export class IntdataBaseinfoComponent implements OnInit {
 
   /**
    * 表单
@@ -21,7 +18,7 @@ export class BaseinfoComponent implements OnInit {
    * 当前项目
    */
   @Input()
-  project: Object;
+  intdata: Object;
 
   /**
    * 取消添加传送给父元素
@@ -68,11 +65,11 @@ export class BaseinfoComponent implements OnInit {
 
   ngOnInit() {
     //如果没有id，表明是添加模式
-    if(!this.project['id']){
+    if(!this.intdata['id']){
       this.pattern = 'add';
     }
     //生成新的一份project数据，可用于编辑
-    this.editData = Object.assign({},this.project);
+    this.editData = Object.assign({},this.intdata);
     util.setValue(this.editData, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
   }
@@ -95,28 +92,19 @@ export class BaseinfoComponent implements OnInit {
       name:'name',
       type: 'input'
     }
-    this.param['path'] = {
-      name:'path',
-      dataType: 'PATH',
+    this.param['type'] = {
+      name:'type',
+      dataType: 'TEXT',
       type: 'input'
     }
-    this.param['port'] = {
-      name:'port',
-      dataType: 'number',
-      type: 'input'
+    this.param['content'] = {
+      name:'content',
+      dataType: 'TEXT',
+      type: 'textarea'
     }
-    this.param['jurisdiction'] = {
-      name:'jurisdiction',
-      type: 'input'
-    }
-    this.param['create_user'] = {
-      name:'create_user',
-      data: [{text:'user1',value:'1'},{text:'user2',value:'2'}],
-      type: 'select'
-    }
-    this.param['principal'] = {
-      name:'principal',
-      data : [{text:'user1',value:'1'},{text:'user2',value:'2'}],
+    this.param['status'] = {
+      name:'status',
+      data: [{text:'启用',value:true},{text:'禁用',value:false}],
       type: 'select'
     }
     this.param['comment'] = {
@@ -150,7 +138,7 @@ export class BaseinfoComponent implements OnInit {
    * 重置表单
    */
   reset(event){
-    this.form.reset(this.project);
+    this.form.reset(this.intdata);
     this.pattern = 'display';
     this.togglePattern(null,this.pattern);
     event.stopPropagation();
@@ -165,7 +153,6 @@ export class BaseinfoComponent implements OnInit {
     }
     event.stopPropagation();
   }
-
   /**
    * 清空表单
    * @param event
@@ -174,15 +161,13 @@ export class BaseinfoComponent implements OnInit {
     this.form.reset({
       id: "",
       name: "",
-      principal: "",
-      create_user: "",
       create_time: new Date(),
       modify_time: new Date(),
+      type:"",
+      content:"",
+      status:false,
       comment: "",
-      path: "",
-      port: undefined,
-      status: "",
-      jurisdiction: "",
+      parent:""
     });
     event.stopPropagation();
   }
@@ -195,17 +180,4 @@ export class BaseinfoComponent implements OnInit {
     this.clear(event);
   }
 
-  /**
-   * 旁边按钮的隐藏和展示
-   * 已废弃，改用css实现
-   */
-  /*showAside(event){
-    console.log(event);
-    let el = event.target;
-    el = el.tagName === 'I' ? el.parentElement : el ;
-    let uldom = el.parentElement.lastElementChild;
-    let len = uldom.children.length;
-    let status = parseInt(uldom.style.height);
-    uldom.style.height = ((isNaN(status) || status <=0) ? 26 * len : 0) + 'px';
-  }*/
 }

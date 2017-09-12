@@ -1,25 +1,26 @@
-import {Component, OnInit, Output, EventEmitter, Input, Inject} from '@angular/core';
-import {Interf} from "../../../control/interf/interf.model";
-import {Store} from "redux";
+import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
+import {Intdata} from "../../../control/intdata/intdata.model";
 import {AppStore} from "../../../control/app.store";
+import {Store} from "redux";
 import {AppState} from "../../../control/app.reducer";
-import {getCurrentIntId} from "../../../control/interf/interf.reducer";
 import {getCurrentProId} from "../../../control/project/project.reducer";
+import {getCurrentIntdataId} from "../../../control/intdata/intdata.reducer";
 
 @Component({
-  selector: 'app-interf-item',
-  templateUrl: 'interf-item.component.html',
-  styleUrls: ['interf-item.component.css']
+  selector: 'app-intdata-item',
+  templateUrl: 'intdata-item.component.html',
+  styleUrls: ['intdata-item.component.css']
 })
-export class InterfItemComponent implements OnInit {
+export class IntdataItemComponent implements OnInit {
+
   @Output()
-  interfEvent: EventEmitter<any> = new EventEmitter<any>();
+  intdataEvent: EventEmitter<any> = new EventEmitter<any>();
 
   /**
    * 当前模块
    */
   @Input()
-  interf:Interf;
+  intdata:Intdata;
 
   /**
    * 框架上要展示的数据
@@ -35,12 +36,7 @@ export class InterfItemComponent implements OnInit {
    * 被选中的jiekou
    * @param store
    */
-  selectInterfId: string;
-
-  /**
-   * 被选中的项目
-   */
-  selectProId: string;
+  selectIntdataId: string;
 
   constructor(@Inject(AppStore) private store: Store<AppState>) {
     //在右上角要展示的内容
@@ -50,15 +46,13 @@ export class InterfItemComponent implements OnInit {
     ];
     //默认展示简介
     this.brefIsDisplay = true;
-    //初始化项目ID
-    this.selectProId = getCurrentProId(this.store.getState());
     //初始化被选模块
-    this.selectInterfId = getCurrentIntId(this.store.getState(),getCurrentProId(this.store.getState()))
+    this.selectIntdataId = getCurrentIntdataId(this.store.getState(),getCurrentProId(this.store.getState()))
     // this.selectInterfId = null;
   }
 
   ngOnInit() {
-    if(this.selectInterfId === this.interf.id){
+    if(this.selectIntdataId === this.intdata.id){
       this.brefIsDisplay = false;
     }
   }
@@ -71,7 +65,7 @@ export class InterfItemComponent implements OnInit {
     this.brefIsDisplay = !this.brefIsDisplay;
     console.log(this.brefIsDisplay);
     if(!this.brefIsDisplay){
-      this.interfEvent.emit({type:'toggle',param:this.interf});
+      this.intdataEvent.emit({type:'toggle',param:this.intdata});
     }
     event.stopPropagation();
   }
@@ -80,7 +74,7 @@ export class InterfItemComponent implements OnInit {
    * 删除模块
    */
   delete(event){
-    this.interfEvent.emit({type:'delete',param:[this.interf.id]});
+    this.intdataEvent.emit({type:'delete',param:[this.intdata.id]});
     event.stopPropagation();
   }
 
