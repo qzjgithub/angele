@@ -136,7 +136,7 @@ export class InterfComponent implements OnInit {
       }else{
         this.projectService.getAllProjects((rows)=>{
           this.store.dispatch(ProjectActions.setProjects(rows));
-          this.project = getCurrentProject(state);
+          this.project = getCurrentProject(this.store.getState());
           this.getParentPath();
           interfs = getOneInterfsEntities(state,this.projectid,this.modulid);
           if(interfs.length){
@@ -153,9 +153,9 @@ export class InterfComponent implements OnInit {
    * 得到父元素组成的路径
    */
   getParentPath(){
-    this.parentPath.push(this.project.path);
-    let modul = getModulById(this.store.getState(),this.projectid,this.modulid);
     this.parentPath = [this.project.path];
+    if(!this.modulid) return;
+    let modul = getModulById(this.store.getState(),this.projectid,this.modulid);
     if(!modul){
       this.modulService.getModulsByProName(this.project.name,(rows) =>{
         this.store.dispatch(ModulActions.setModuls(this.projectid,rows));
@@ -180,7 +180,7 @@ export class InterfComponent implements OnInit {
       create_time: new Date(),
       modify_time: new Date(),
       comment: "",
-      path: "aaa",
+      path: "",
       full_path: this.parentPath.join(''),
       jurisdiction: ""
     }
