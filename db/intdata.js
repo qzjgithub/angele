@@ -11,6 +11,7 @@ window.intdatadb = {
           "create_time DATE," +
           "modify_time DATE," +
           "type TEXT," +
+          "code INT," +
           "content TEXT," +
           "status BOOLEAN," +
           "comment TEXT," +
@@ -26,6 +27,10 @@ window.intdatadb = {
       });
     })
   },
+  /**
+   * 得到某一项目的所有模拟数据
+   * @param name
+   */
   getIntdatasByProName(name){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
@@ -34,6 +39,26 @@ window.intdatadb = {
             reject();
           }else{
             resolve(rows);
+          }
+        });
+      })
+    });
+  },
+  /**
+   * 得到某接口下的激活的模拟数据
+   * @param name
+   * @param status
+   */
+  getActiveIntdataByParent: function(name,parent){
+    return new Promise((resolve, reject) => {
+      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+        db.get('SELECT * FROM intdata WHERE status = true and parent = '+ parent,function(err,rows){
+          if(err){
+            reject(err);
+          }else if(rows){
+            resolve(rows);
+          }else{
+            reject(err);
           }
         });
       })
@@ -52,6 +77,7 @@ window.intdatadb = {
           "$create_time ," +
           "$modify_time ," +
           "$type ," +
+          "$code ," +
           "$content ," +
           "$status ," +
           "$comment ," +
@@ -108,6 +134,7 @@ window.intdatadb = {
           'name = $name, ' +
           'modify_time = $modify_time, ' +
           'type = $type, ' +
+          'code = $code,' +
           'content = $content, ' +
           'status = $status, ' +
           'comment = $comment, ' +
@@ -119,6 +146,7 @@ window.intdatadb = {
           $name: intdata.name,
           $modify_time: new Date(),
           $type: intdata.type,
+          $code: intdata.code,
           $content: intdata.content,
           $status: intdata.status,
           $comment: intdata.comment,

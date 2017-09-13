@@ -1,11 +1,10 @@
 import {Component, OnInit, Input, EventEmitter, Output, Inject} from '@angular/core';
-import {Modul} from "../../../control/modul/modul.model";
 import {AppState} from "../../../control/app.reducer";
 import {Store} from "redux";
 import {AppStore} from "../../../control/app.store";
 import {getCurrentModId} from "../../../control/modul/modul.reducer";
 import {getCurrentProId} from "../../../control/project/project.reducer";
-import * as ModulActions from '../../../control/modul/modul.action';
+import * as util from '../../../com-util';
 
 @Component({
   selector: 'app-modul-item',
@@ -21,7 +20,7 @@ export class ModulItemComponent implements OnInit {
    * 当前模块
    */
   @Input()
-  modul:Modul;
+  modul:Object;
 
   /**
    * 框架上要展示的数据
@@ -59,7 +58,8 @@ export class ModulItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.selectModulId === this.modul.id){
+    if(new RegExp(/^\d+$/).test(this.modul['modify_time'])) this.modul['modify_time'] = util.setDateFormat(new Date(this.modul['modify_time']))
+    if(this.selectModulId === this.modul['id']){
       this.brefIsDisplay = false;
     }
   }
@@ -80,7 +80,7 @@ export class ModulItemComponent implements OnInit {
    * 删除模块
    */
   delete(event){
-    this.modulEvent.emit({type:'delete',param:[this.modul.id]});
+    this.modulEvent.emit({type:'delete',param:[this.modul['id']]});
     event.stopPropagation();
   }
 

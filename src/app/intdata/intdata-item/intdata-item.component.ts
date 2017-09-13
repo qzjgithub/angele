@@ -5,6 +5,7 @@ import {Store} from "redux";
 import {AppState} from "../../../control/app.reducer";
 import {getCurrentProId} from "../../../control/project/project.reducer";
 import {getCurrentIntdataId} from "../../../control/intdata/intdata.reducer";
+import * as util from '../../../com-util';
 
 @Component({
   selector: 'app-intdata-item',
@@ -20,7 +21,7 @@ export class IntdataItemComponent implements OnInit {
    * 当前模块
    */
   @Input()
-  intdata:Intdata;
+  intdata:Object;
 
   /**
    * 框架上要展示的数据
@@ -52,7 +53,8 @@ export class IntdataItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.selectIntdataId === this.intdata.id){
+    if(new RegExp(/^\d+$/).test(this.intdata['modify_time'])) this.intdata['modify_time'] = util.setDateFormat(new Date(this.intdata['modify_time']))
+    if(this.selectIntdataId === this.intdata['id']){
       this.brefIsDisplay = false;
     }
   }
@@ -74,7 +76,7 @@ export class IntdataItemComponent implements OnInit {
    * 删除模块
    */
   delete(event){
-    this.intdataEvent.emit({type:'delete',param:[this.intdata.id]});
+    this.intdataEvent.emit({type:'delete',param:[this.intdata['id']]});
     event.stopPropagation();
   }
 

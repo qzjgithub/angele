@@ -97,6 +97,11 @@ export class IntdataBaseinfoComponent implements OnInit {
       dataType: 'TEXT',
       type: 'input'
     }
+    this.param['code'] = {
+      name:'code',
+      dataType: 'TEXT',
+      type: 'input'
+    }
     this.param['content'] = {
       name:'content',
       dataType: 'TEXT',

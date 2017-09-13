@@ -5,6 +5,7 @@ import {AppStore} from "../../../control/app.store";
 import {AppState} from "../../../control/app.reducer";
 import {getCurrentIntId} from "../../../control/interf/interf.reducer";
 import {getCurrentProId} from "../../../control/project/project.reducer";
+import * as util from '../../../com-util';
 
 @Component({
   selector: 'app-interf-item',
@@ -19,7 +20,7 @@ export class InterfItemComponent implements OnInit {
    * 当前模块
    */
   @Input()
-  interf:Interf;
+  interf:Object;
 
   /**
    * 框架上要展示的数据
@@ -58,7 +59,8 @@ export class InterfItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.selectInterfId === this.interf.id){
+    if(new RegExp(/^\d+$/).test(this.interf['modify_time'])) this.interf['modify_time'] = util.setDateFormat(new Date(this.interf['modify_time']))
+    if(this.selectInterfId === this.interf['id']){
       this.brefIsDisplay = false;
     }
   }
@@ -80,7 +82,7 @@ export class InterfItemComponent implements OnInit {
    * 删除模块
    */
   delete(event){
-    this.interfEvent.emit({type:'delete',param:[this.interf.id]});
+    this.interfEvent.emit({type:'delete',param:[this.interf['id']]});
     event.stopPropagation();
   }
 

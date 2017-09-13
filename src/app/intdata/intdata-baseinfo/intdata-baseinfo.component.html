@@ -10,6 +10,10 @@
       <com-input (backControl)="getControl($event,param['type']['name'])" [param]="param['type']"></com-input>
     </li>
     <li>
+    <label>响应码</label>
+      <com-input (backControl)="getControl($event,param['code']['name'])" [param]="param['code']"></com-input>
+    </li>
+    <li>
       <label>数据内容</label>
       <com-textarea (backControl)="getControl($event,param['content']['name'])" [param]="param['content']"></com-textarea>
     </li>

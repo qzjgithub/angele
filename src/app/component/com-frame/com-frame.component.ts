@@ -85,18 +85,45 @@ export class ComFrameComponent implements OnInit {
    * 弹框的事件
    */
   popevent(event){
+    let operate = event.data['operate'];
+    let param = event.data['param'];
     switch(event.key){
       case 'confirm':
-        this.projectService.delete(event.data.param,()=>{
-          this.projectService.getAllProjects((rows)=>{
-            this.store.dispatch(ProjectActions.setProjects(rows));
-          });
-        });
+        switch(operate){
+          case 'delete':
+            this.projectService.delete(param,()=>{
+              this.projectService.getAllProjects((rows)=>{
+                this.store.dispatch(ProjectActions.setProjects(rows));
+              });
+            });
+            break;
+          case 'start':
+            window['controlService'].start(param);
+            break;
+          case 'stop':
+            window['controlService'].stop(param);
+            break;
+        }
+
       case 'cancel':
       case 'close':
       default:
         this.popData.pop();
     }
+  }
+
+  control(event){
+    let status = this.data['status'];
+    let text = status === 'start'?'停止':'启动';
+    let operate = status === 'start'?'stop':'start';
+    this.popData.push(util.deepAssign(pop.param,{
+      content:"确认"+text+"项目"+this.data['name']+"吗？",
+      data: {
+        operate: operate ,
+        param: this.data
+      }
+    }));
+    event.stopPropagation();
   }
 
 }

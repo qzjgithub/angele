@@ -8,6 +8,7 @@ export interface Intdata {
   create_time: Date;
   modify_time?: Date;
   type: string;
+  code: number;
   content: string,
   status?:boolean;
   comment?: string;

@@ -8,7 +8,7 @@
     <div><i class="tail-arrow" (click)="toggleBref($event)" [class.toggle]="!brefIsDisplay"></i></div>
     <ul [class.show]="!brefIsDisplay">
       <li>
-        <button class="plain">启动</button>
+        <button class="plain" (click)="control($event)">{{data['status']==='start'?'停止':'启动'}}</button>
       </li>
       <li>
         <button class="plain" (click)="delete($event)">删除</button>
