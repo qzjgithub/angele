@@ -35,7 +35,7 @@ window.interfdb = {
   getInterfsByProName:function(name){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
-        db.get('SELECT * FROM interf',function(err,rows){
+        db.all('SELECT * FROM interf',function(err,rows){
           if(err){
             reject(err);
           }else if(rows){
@@ -56,11 +56,13 @@ window.interfdb = {
   getInterfByfullPathAndMethod:function(name,full_path,method){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name), function (db) {
-        db.all('SELECT * FROM interf WHERE full_path = ' + full_path + ' and method = ' + method, function (err, rows) {
+        db.get('SELECT * FROM interf WHERE full_path = "' + full_path + '" and method = "' + method+'"', function (err, rows) {
           if (err) {
-            reject();
-          } else {
+            reject(err);
+          } else if(rows){
             resolve(rows);
+          }else{
+            reject(err);
           }
         });
       })

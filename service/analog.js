@@ -13,10 +13,10 @@ window['analog'] = {
         console.log(intdata.type);
         switch(intdata.type){
           case 'text':
-            text = {msg:intdata.text};
+            text = {msg:intdata.content};
             break;
           case 'file':
-            text = {msg:intdata.file};
+            text = {msg:intdata.content};
             break;
           case 'table':
             text = {msg:'待实现!'};

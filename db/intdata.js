@@ -52,7 +52,7 @@ window.intdatadb = {
   getActiveIntdataByParent: function(name,parent){
     return new Promise((resolve, reject) => {
       window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
-        db.get('SELECT * FROM intdata WHERE status = true and parent = '+ parent,function(err,rows){
+        db.get('SELECT * FROM intdata WHERE status = "true" and parent = "'+ parent +'"',function(err,rows){
           if(err){
             reject(err);
           }else if(rows){
