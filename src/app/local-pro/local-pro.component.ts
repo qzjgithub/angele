@@ -10,6 +10,7 @@ import * as pop from '../component/pop/pop.model';
 import {deepAssign} from "../../com-util";
 import {getCurrentModId} from "../../control/modul/modul.reducer";
 import * as ModulActions from '../../control/modul/modul.action';
+import {utils} from "protractor";
 
 @Component({
   selector: 'app-local-pro',
@@ -179,14 +180,14 @@ export class LocalProComponent implements OnInit {
     event.stopPropagation();
   }
 
-  update(event,id){
+  update(event,project){
     this.popData.push(deepAssign(pop.param,{
       content:"确认修改的项目吗？",
       data: {
         operate: 'update',
         param: {
           project: event,
-          id: id
+          orign: project
         }
       }
     }));
@@ -216,9 +217,12 @@ export class LocalProComponent implements OnInit {
         });
         break;
       case 'update':
+        let orign = event.data.param.orign;
+        let project = event.data.param.project;
+        project = deepAssign(orign,project);
         this.projectService.update(
-          event.data.param.id,
-          event.data.param.project,
+          orign.id,
+          project,
           ()=>{
             this.refresh();
           });

@@ -98,7 +98,8 @@ export class BaseinfoComponent implements OnInit {
     this.param['path'] = {
       name:'path',
       dataType: 'PATH',
-      type: 'input'
+      type: 'input',
+      required: false
     }
     this.param['port'] = {
       name:'port',

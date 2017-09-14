@@ -22,6 +22,7 @@ window['controlService'] ={
       console.log('server close');
     })
     service.listen(project.port);
+    // window['projectdb'].update(project.id,{status: 'start'});
     console.log("Server has started.");
   },
   stop: function(project){

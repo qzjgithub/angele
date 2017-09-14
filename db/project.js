@@ -98,6 +98,7 @@ window.projectdb = {
           'modify_time = $modify_time, ' +
           'comment = $comment, ' +
           'path = $path, ' +
+          'status = $status, ' +
           'port = $port ' +
           'WHERE id = $id';
         var stm = db.prepare(sql);
@@ -107,6 +108,7 @@ window.projectdb = {
           $modify_time: new Date(),
           $comment: project.comment,
           $path: project.path,
+          $status: project.status,
           $port: project.port
         }
         stm.run(param,(err,row)=>{

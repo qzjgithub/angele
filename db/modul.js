@@ -1,4 +1,4 @@
-/**
+ /**
  * Created by admin on 2017/7/24.
  */
 window.moduldb = {
@@ -12,9 +12,9 @@ window.moduldb = {
           "create_user TEXT," +
           "create_time DATE," +
           "modify_time DATE," +
+          "comment TEXT," +
           "path TEXT," +
           "jurisdiction TEXT," +
-          "comment TEXT," +
           "parent INTEGER" +
           ")";
         db.run(create_sql,function(err){
@@ -54,8 +54,8 @@ window.moduldb = {
           "$create_user ," +
           "$create_time ," +
           "$modify_time ," +
-          "$path ," +
           "$comment ," +
+          "$path ," +
           "$jurisdiction ," +
           "$parent" +
           ")";

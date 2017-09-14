@@ -18,7 +18,7 @@
   <app-local-pro-item
     *ngFor="let project of projects"
     (click)="clickProject($event,project)"
-    (saveBase)="update($event,project.id)"
+    (saveBase)="update($event,project)"
     class="list-item"
     [class.manage]="manageIds.indexOf(project['id']) > -1"
     [class.selected]="selectProject && selectProject.id===project.id"

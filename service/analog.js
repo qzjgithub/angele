@@ -13,10 +13,15 @@ window['analog'] = {
         console.log(intdata.type);
         switch(intdata.type){
           case 'text':
-            text = {msg:intdata.content};
+            try{
+              text = JSON.parse(intdata.content);
+            }catch(err){
+              console.log(err);
+              text = text;
+            }
             break;
           case 'file':
-            text = {msg:intdata.content};
+            text = JSON.parse(intdata.content);
             break;
           case 'table':
             text = {msg:'待实现!'};
@@ -42,7 +47,7 @@ window['analog'] = {
   back(text,code,res){
     console.log(code);
     res.writeHead(code, {"Content-Type": "application/json;charset=UTF-8"});
-    res.write(JSON.stringify(text),'utf8');
+    res.write(typeof text == 'object'?JSON.stringify(text):text,'utf8');
     res.end();
   }
 }
