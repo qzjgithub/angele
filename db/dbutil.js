@@ -4,7 +4,7 @@
 var window = {}
 window.dbutil = {
   sqlite3 : require('sqlite3').verbose(),
-  dbroot : 'sqlite/',
+  dbroot : __dirname.substring(0,__dirname.lastIndexOf('\\')) + '/sqlite/',
   getDB: function(path){
     return new window.dbutil.sqlite3.Database(path);
   },
