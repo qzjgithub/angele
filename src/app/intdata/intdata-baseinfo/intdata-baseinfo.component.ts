@@ -94,8 +94,9 @@ export class IntdataBaseinfoComponent implements OnInit {
     }
     this.param['type'] = {
       name:'type',
-      dataType: 'TEXT',
-      type: 'input'
+      type: 'select',
+      data: [{text:'文本',value:"text"},{text:'文件',value:"file"}],
+      value: 'text'
     }
     this.param['code'] = {
       name:'code',
