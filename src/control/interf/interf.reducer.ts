@@ -123,5 +123,6 @@ export const getCurrentInterf = createSelector(
  * @returns {any}
  */
 export const getInterfById = (state,projectid,interfid) => {
-  return state['interfs'][projectid]['entities'][interfid];
+  let interfs = state['interfs'][projectid];
+  return interfs ? interfs['entities'][interfid]:null;
 }

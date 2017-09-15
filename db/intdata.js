@@ -55,10 +55,8 @@ window.intdatadb = {
         db.get('SELECT * FROM intdata WHERE status = "true" and parent = "'+ parent +'"',function(err,rows){
           if(err){
             reject(err);
-          }else if(rows){
-            resolve(rows);
           }else{
-            reject(err);
+            resolve(rows);
           }
         });
       })
@@ -70,33 +68,35 @@ window.intdatadb = {
    */
   add:function (name,data) {
     return new Promise((resolve,reject) => {
-      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
-        var sql = "INSERT INTO intdata VALUES( " +
-          "null ," +
-          "$name ," +
-          "$create_time ," +
-          "$modify_time ," +
-          "$type ," +
-          "$code ," +
-          "$content ," +
-          "$status ," +
-          "$comment ," +
-          "$parent" +
-          ")";
-        console.log(sql);
-        var obj_data = {};
-        for(var key in data){
-          obj_data['$'+key] = data[key];
-        }
-        var stm = db.prepare(sql);
-        stm.run(obj_data,function(err){
-          if(err){
-            reject();
-          }else{
-            resolve();
+      this.clearActive(name,data).then(()=>{
+        window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+          var sql = "INSERT INTO intdata VALUES( " +
+            "null ," +
+            "$name ," +
+            "$create_time ," +
+            "$modify_time ," +
+            "$type ," +
+            "$code ," +
+            "$content ," +
+            "$status ," +
+            "$comment ," +
+            "$parent" +
+            ")";
+          console.log(sql);
+          var obj_data = {};
+          for(var key in data){
+            obj_data['$'+key] = data[key];
           }
+          var stm = db.prepare(sql);
+          stm.run(obj_data,function(err){
+            if(err){
+              reject();
+            }else{
+              resolve();
+            }
+          });
+          stm.finalize();
         });
-        stm.finalize();
       });
     });
   },
@@ -128,39 +128,62 @@ window.intdatadb = {
    * @param project
    */
   update: function(name,id,intdata){
-    return new Promise((resolve,reject) => {
-      window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
-        var sql = 'UPDATE intdata SET ' +
-          'name = $name, ' +
-          'modify_time = $modify_time, ' +
-          'type = $type, ' +
-          'code = $code,' +
-          'content = $content, ' +
-          'status = $status, ' +
-          'comment = $comment, ' +
-          'parent = $parent ' +
-          'WHERE id = $id';
-        var stm = db.prepare(sql);
-        var param = {
-          $id: id,
-          $name: intdata.name,
-          $modify_time: new Date(),
-          $type: intdata.type,
-          $code: intdata.code,
-          $content: intdata.content,
-          $status: intdata.status,
-          $comment: intdata.comment,
-          $parent: intdata.parent
-        }
-        stm.run(param,(err,row)=>{
-          if(err){
-            reject(err);
-          }else{
-            resolve(row);
+    return new Promise((resolve,reject)=>{
+      this.clearActive(name,intdata,id).then(() => {
+        window.dbutil.sql(window.dbutil.getProjectDB(name),function(db){
+          var sql = 'UPDATE intdata SET ' +
+            'name = $name, ' +
+            'modify_time = $modify_time, ' +
+            'type = $type, ' +
+            'code = $code,' +
+            'content = $content, ' +
+            'status = $status, ' +
+            'comment = $comment, ' +
+            'parent = $parent ' +
+            'WHERE id = $id';
+          var stm = db.prepare(sql);
+          var param = {
+            $id: id,
+            $name: intdata.name,
+            $modify_time: new Date(),
+            $type: intdata.type,
+            $code: intdata.code,
+            $content: intdata.content,
+            $status: intdata.status,
+            $comment: intdata.comment,
+            $parent: intdata.parent
           }
+          stm.run(param,(err,row)=>{
+            if(err){
+              reject(err);
+            }else{
+              resolve(row);
+            }
+          });
+          stm.finalize();
         });
-        stm.finalize();
       });
     });
+  },
+  clearActive: function(name,intdata,orignId){
+    if(intdata.status=="true"){
+      return this.getActiveIntdataByParent(name,intdata.parent).then((row)=>{
+        if(!orignId || orignId != row.id){
+          new Promise((reslove,reject) =>{
+            row['status'] = "false";
+            window['intdatadb'].update(name,row.id,row).then(()=>{
+              reslove();
+            });
+          })
+        }
+      }).catch((err)=> {
+        console.log(err);
+        return err;
+      })
+    }else{
+      return new Promise((reslove,reject) =>{
+        reslove();
+      })
+    }
   }
 }

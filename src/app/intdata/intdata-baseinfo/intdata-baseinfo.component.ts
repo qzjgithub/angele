@@ -110,7 +110,8 @@ export class IntdataBaseinfoComponent implements OnInit {
     this.param['status'] = {
       name:'status',
       data: [{text:'启用',value:true},{text:'禁用',value:false}],
-      type: 'select'
+      type: 'select',
+      value: false
     }
     this.param['comment'] = {
       name:'comment',

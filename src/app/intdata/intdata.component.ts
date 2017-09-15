@@ -11,6 +11,7 @@ import {getOneIntdatasEntities} from "../../control/intdata/intdata.reducer";
 import * as ProjectActions from '../../control/project/project.action';
 import {getCurrentProject} from "../../control/project/project.reducer";
 import * as ModulActions from '../../control/modul/modul.action';
+import * as InterfActions from '../../control/interf/interf.action';
 import * as IntdataActions from '../../control/intdata/intdata.action';
 import * as pop from '../component/pop/pop.model';
 import {deepAssign} from "../../com-util";
@@ -74,6 +75,7 @@ export class IntdataComponent implements OnInit {
               private router: ActivatedRoute,
               private _router: Router,
               private intdataService: IntdataService,
+              private interfService: InterfService,
               private projectService: ProjectService) {
     console.log(this.router.params);
     // this.router.params.switchMap((params: Params) => {console.log(params);return null;});
@@ -327,9 +329,19 @@ export class IntdataComponent implements OnInit {
   back(event){
     console.log(this.interfid);
     let parentInt = getInterfById(this.store.getState(),this.projectid,this.interfid);
-    this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentInt.parent));
-    console.log(parentInt);
-    this._router.navigate(['interf',{project:this.projectid,modul:parentInt.parent}]);
+    if(!parentInt){
+      this.interfService.getInterfsByProName(this.project.name, (rows)=>{
+        this.store.dispatch(InterfActions.setInterfs(this.projectid,rows));
+        let parentInt = getInterfById(this.store.getState(),this.projectid,this.interfid);
+        this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentInt.parent));
+        console.log(parentInt);
+        this._router.navigate(['interf',{project:this.projectid,modul:parentInt.parent}]);
+      });
+    }else{
+      this.store.dispatch(ModulActions.setCurrentModul(this.projectid,parentInt.parent));
+      console.log(parentInt);
+      this._router.navigate(['interf',{project:this.projectid,modul:parentInt.parent}]);
+    }
   }
 
 }
