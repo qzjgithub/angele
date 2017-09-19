@@ -34,6 +34,7 @@ import { IntdataComponent } from './intdata/intdata.component';
 import { IntdataItemComponent } from './intdata/intdata-item/intdata-item.component';
 import { IntdataBaseinfoComponent } from './intdata/intdata-baseinfo/intdata-baseinfo.component';
 import {INTDATA_PROVIDERS} from "../control/intdata/intdata.service";
+import { FileComponent } from './component/file/file.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'localPro',pathMatch: 'full'},
@@ -70,7 +71,8 @@ const routes: Routes = [
     InterfBaseinfoComponent,
     IntdataComponent,
     IntdataItemComponent,
-    IntdataBaseinfoComponent
+    IntdataBaseinfoComponent,
+    FileComponent
   ],
   imports: [
     BrowserModule,

@@ -103,6 +103,10 @@ export class IntdataBaseinfoComponent implements OnInit {
       dataType: 'TEXT',
       type: 'input'
     }
+    this.param['file'] = {
+      name:'file',
+      type: 'file'
+    }
     this.param['content'] = {
       name:'content',
       dataType: 'TEXT',

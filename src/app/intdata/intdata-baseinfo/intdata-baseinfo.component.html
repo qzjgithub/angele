@@ -15,6 +15,10 @@
     </li>
     <li>
       <label>数据内容</label>
+      <com-file (backControl)="getControl($event,param['file']['name'])" [param]="param['file']"></com-file>
+    </li>
+    <li>
+      <label>数据内容</label>
       <com-textarea (backControl)="getControl($event,param['content']['name'])" [param]="param['content']"></com-textarea>
     </li>
     <li>

@@ -1,0 +1,31 @@
+<section
+  class="input-frame {{param.class||''}}"
+  [class.display]="param['pattern']==='display'"
+  [class.editable]="param['editable']"
+  [class.required]="param['required']"
+>
+  <input
+    type="file"
+    class="input-item file-item"
+    id="{{param.id}}"
+    [accept]="param.accept"
+    [formControl]="control"
+    [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
+    [name]="param.name"
+    [(ngModel)]="param.value"
+    [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
+  >
+  <label
+    class="input-item file-label"
+    [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
+    for="{{param.id}}"
+  >{{param.value || param.placeholder}}</label>
+  <footer class="input-footer">
+    <div
+      *ngIf="!(param.pattern==='display'&& param.disabled) &&
+      control.touched && errorKey"
+      class="error-msg">
+      {{validMsg[errorKey]}}
+    </div>
+  </footer>
+</section>
