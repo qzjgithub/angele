@@ -5,7 +5,10 @@ import * as util from "../../../com-util";
 @Component({
   selector: 'intdata-baseinfo',
   templateUrl: 'intdata-baseinfo.component.html',
-  styleUrls: ['intdata-baseinfo.component.css']
+  styleUrls: ['intdata-baseinfo.component.css'],
+  host: {
+    style: 'display:block;width:50%;'
+  }
 })
 export class IntdataBaseinfoComponent implements OnInit {
 
@@ -52,6 +55,11 @@ export class IntdataBaseinfoComponent implements OnInit {
    */
   pattern: string;
 
+  /**
+   * 当前填写的数据类型
+   */
+  type: string;
+
   constructor() {
     //实例化表单
     this.form = new FormGroup({});
@@ -61,6 +69,7 @@ export class IntdataBaseinfoComponent implements OnInit {
 
     this.disabled = false;
     this.pattern = 'display';
+    this.type = '';
   }
 
   ngOnInit() {
@@ -70,6 +79,7 @@ export class IntdataBaseinfoComponent implements OnInit {
     }
     //生成新的一份project数据，可用于编辑
     this.editData = Object.assign({},this.intdata);
+    this.type = this.editData['type'];
     util.setValue(this.editData, this.param);
     util.setParamOneValue('pattern',this.pattern,this.param);
   }
@@ -142,6 +152,7 @@ export class IntdataBaseinfoComponent implements OnInit {
   togglePattern(event,pattern){
     this.pattern = pattern;
     util.setParamOneValue('pattern',pattern,this.param);
+    util.setParamByKey('file',{value:''},this.param);
     event && event.stopPropagation();
   }
 
@@ -189,6 +200,13 @@ export class IntdataBaseinfoComponent implements OnInit {
   cancel(event){
     this.cancelAdd.emit();
     this.clear(event);
+  }
+
+  /**
+   * 数据类型改变时
+   */
+  typeChanged(event){
+    this.type = event.value;
   }
 
 }

@@ -26,7 +26,7 @@
     [class.manage]="manageIds.indexOf(intdata['id']) > -1"
     [class.selected]="selectIntdata && selectIntdata.id===intdata.id"
     [intdata]="intdata">
-    <intdata-baseinfo [intdata]="intdata" (confirmSave)="updateIntdata($event)"></intdata-baseinfo>
+    <intdata-baseinfo class="flex" [intdata]="intdata" (confirmSave)="updateIntdata($event)"></intdata-baseinfo>
   </app-intdata-item>
   <button
     class="empty-button plain border"

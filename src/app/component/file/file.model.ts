@@ -24,7 +24,7 @@ export const param = {
    * 默认为TEXT
    * 可写{type:'TEXT',msg:'自定义提示信息'}的形式来重写提示信息
    */
-  // dataType: 'TEXT',
+  dataType: 'TEXT',
   /**
    * 添加额外的正则验证
    * 在dataType验证成功之后才做验证

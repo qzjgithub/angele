@@ -3,7 +3,6 @@ import {
   ElementRef, AfterViewInit, AfterViewChecked, DoCheck, ChangeDetectorRef, IterableDiffers, IterableDiffer, OnChanges
 } from '@angular/core';
 import {AbstractControl, FormControl} from "@angular/forms";
-import * as textarea from './textarea.model';
 import * as util from '../../../com-util';
 
 @Component({

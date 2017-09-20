@@ -5,19 +5,19 @@
       <label>名称</label>
       <com-input (backControl)="getControl($event,param['name']['name'])" [param]="param['name']"></com-input>
     </li>
-    <li>
-      <label>数据类型</label>
-      <com-select (backControl)="getControl($event,param['type']['name'])" [param]="param['type']"></com-select>
-    </li>
-    <li>
-    <label>响应码</label>
+      <label>响应码</label>
       <com-input (backControl)="getControl($event,param['code']['name'])" [param]="param['code']"></com-input>
     </li>
     <li>
+      <label>数据类型</label>
+      <com-select (backControl)="getControl($event,param['type']['name'])" [param]="param['type']" (changed)="typeChanged($event)"></com-select>
+    </li>
+    <li>
+    <li *ngIf="type==='file'">
       <label>数据内容</label>
       <com-file (backControl)="getControl($event,param['file']['name'])" [param]="param['file']"></com-file>
     </li>
-    <li>
+    <li *ngIf="type!=='file'">
       <label>数据内容</label>
       <com-textarea (backControl)="getControl($event,param['content']['name'])" [param]="param['content']"></com-textarea>
     </li>

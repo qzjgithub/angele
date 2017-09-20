@@ -6,6 +6,7 @@ import {SimpleDateFormat} from "./DateFormat";
 import * as input from 'app/component/input/input.model';
 import * as select from 'app/component/select/select.model';
 import * as textarea from 'app/component/textarea/textarea.model';
+import * as file from 'app/component/file/file.model';
 /**
  * 深度拷贝对象
  * @param objects 对象数组
@@ -208,6 +209,9 @@ export function setParam(param){
         break;
       case 'textarea':
         param[key] = deepAssign(textarea.param,param[key]);
+        break;
+      case 'file':
+        param[key] = deepAssign(file.param,param[key]);
         break;
     }
   });

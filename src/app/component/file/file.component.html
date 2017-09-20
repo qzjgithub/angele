@@ -8,17 +8,18 @@
     type="file"
     class="input-item file-item"
     id="{{param.id}}"
+    (change)="getValue($event)"
     [accept]="param.accept"
     [formControl]="control"
     [placeholder]="param.pattern!=='display' ? param.placeholder || '' : ''"
     [name]="param.name"
-    [(ngModel)]="param.value"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
   >
   <label
     class="input-item file-label"
     [class.error]="!(param.pattern==='display'&& param.disabled) && control.touched && errorKey"
     for="{{param.id}}"
+    title="{{param.value || param.placeholder}}"
   >{{param.value || param.placeholder}}</label>
   <footer class="input-footer">
     <div

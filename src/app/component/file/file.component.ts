@@ -1,5 +1,6 @@
 import {Component, OnInit, Output, EventEmitter, Input, SimpleChanges, OnChanges} from '@angular/core';
 import {AbstractControl, FormControl, Validators} from "@angular/forms";
+import * as util from '../../../com-util';
 
 @Component({
   selector: 'com-file',
@@ -46,7 +47,7 @@ export class FileComponent implements OnInit ,OnChanges {
     //初始化control
     this.control = new FormControl({value: this.param['value'], disabled: this.param['disabled']});
     //设置control的验证规则
-    this.control.setValidators([Validators.required]);
+    this.control.setValidators(util.setDataTypeValidator(this.param,this.validMsg));
     //监听值得改变
     this.control.valueChanges.subscribe((value) => {
       let errors = {};
@@ -71,9 +72,27 @@ export class FileComponent implements OnInit ,OnChanges {
     }
   }
 
+  /**
+   * 设置file的ID
+   */
   setId(){
     if(!this.param['id']){
       this.param['id'] = 'file_' + new Date().getTime();
+    }
+  }
+
+  /**
+   * 改变时设置file值
+   * @param $event
+   */
+  getValue($event){
+    console.log($event);
+    let value = $event.target.value;
+    this.param['value'] = value;
+    try{
+      this.control.setValue(value);
+    }catch(err){
+      console.log(err);
     }
   }
 }

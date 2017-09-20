@@ -27,7 +27,9 @@ export class IntdataService{
    */
   add(name,data,reject?){
     window['intdatadb'].add(name,data).then((row)=>{
-      console.log(row);
+      if(data.type==='file'){
+        console.log('上传文件');
+      }
       reject && reject(row);
     });
   }
@@ -52,8 +54,18 @@ export class IntdataService{
    */
   update(name,id,intdata,reject?){
     window['intdatadb'].update(name,id,intdata).then(()=>{
+      if(intdata.type==='file'){
+        console.log('上传文件');
+      }
       reject && reject();
     });
+  }
+
+  /**
+   * 上传文件
+   */
+  uploadFile(name,intdata){
+
   }
 }
 
