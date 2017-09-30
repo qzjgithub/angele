@@ -59,6 +59,7 @@ export class FileComponent implements OnInit ,OnChanges {
         this.errorKey = '';
       }
     });
+    console.log(this.param);
     this.backControl.emit(this.control);
   }
 

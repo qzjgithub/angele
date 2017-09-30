@@ -111,6 +111,11 @@ export class IntdataComponent implements OnInit {
   updateIntdatas(){
     const state = this.store.getState();
     this.intdatas = getOneIntdatasEntities(state,this.projectid,this.interfid);
+    this.intdatas.forEach((e) => {
+      if(e.type === 'file'){
+        e['file'] = e.content;
+      }
+    })
   }
 
   /**
@@ -174,6 +179,9 @@ export class IntdataComponent implements OnInit {
     event['create_time'] = new Date();
     event['modify_time'] = new Date();
     event['parent'] = parseInt(this.interfid);
+    if(event.type === 'file'){
+      event.content = event.file;
+    }
     this.intdataService.add(this.project['name'],event,(row)=>{
       this.pattern = 'display';
       this.refresh();
@@ -282,6 +290,9 @@ export class IntdataComponent implements OnInit {
    * 更新模块基本信息
    */
   updateIntdata(event){
+    if(event.type === 'file'){
+      event.content = event.file;
+    }
     this.popData.push(deepAssign(pop.param,{
       content:"确认保存修改的接口基本信息吗？",
       data: {
